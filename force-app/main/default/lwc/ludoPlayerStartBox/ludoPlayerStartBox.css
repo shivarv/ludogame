@@ -1,0 +1,19 @@
+:host(.bluecol) {
+    background-color: blue;
+}
+
+:host(.redcol) {
+    background-color: red;
+}
+
+:host(.greencol) {
+    background-color: green;
+}
+
+:host(.yellowcol) {
+    background-color: yellow;
+}
+
+:host {
+    background-color: grey;
+}
