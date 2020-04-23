@@ -17,3 +17,51 @@
 :host {
     background-color: grey;
 }
+
+.red-background {
+    background-color: red;
+}
+
+.blue-background {
+    background-color: blue;
+}
+
+.green-background {
+    background-color: green;
+}
+
+.yellow-background {
+    background-color: yellow;
+}
+
+.grey-background {
+    background-color: grey;
+}
+
+.default-box {
+    width: 24vw;
+    height: 28vh;
+    background-color: white;
+    display: inline-block;
+    position: absolute;
+}
+
+.top-left {
+    left: 3vw;
+    top: 3vh;
+}
+
+.top-right {
+    left: 58vw;
+    top: 3vh;
+}
+
+.bottom-left {
+    left: 3vw;
+    top: 63vh;
+}
+
+.bottom-right {
+    left: 58vw;
+    top: 63vh;
+}
