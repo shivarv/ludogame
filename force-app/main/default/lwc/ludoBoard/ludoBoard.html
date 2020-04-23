@@ -1,45 +1,47 @@
 <template>
+    <!-- first line box ludo -->
     <div>
-        <div style="height: 35vh;width: 30vw;display: flex;background-color: red;float:left;"> 
+        <div style="background-color: red;" class="playerBox"> 
             <c-ludo-player-start-box class='redcol' box-color='red' box-position='top-left' >
             </c-ludo-player-start-box>
         </div>
 
-        <div style="height: 35vh;width: 25vw;display: flex;background-color: grey;float:left;"> 
+        <div style="background-color: grey;float:left;" class="pathBox"> 
             <c-ludo-middle-path class='greencol' >
             </c-ludo-middle-path>
         </div>
 
-        <div style="height: 35vh;width: 30vw;display: flex;background-color: green;float:left;"> 
+        <div style="background-color: green;" class="playerBox"> 
             <c-ludo-player-start-box class='greencol' box-color='green' box-position='top-right'>
             </c-ludo-player-start-box>
         </div>
     </div>
+    <!-- second line box ludo -->
     <div>
-        <div style="height: 25vh;width: 30vw;display: flex;background-color: grey;float:left;"> 
+        <div style="background-color: grey;" class="secondLinePathBox"> 
             <c-ludo-middle-path class='greencol' >
             </c-ludo-middle-path>
         </div>
-        <div style="height: 25vh;width: 25vw;display: flex;background-color: violet;float:left;"> 
+        <div style="background-color: violet;" class="endBox"> 
             <c-ludo-player-end-box class='greencol' >
             </c-ludo-player-end-box>
         </div>
-        <div style="height: 25vh;width: 30vw;display: flex;background-color: grey;float:left;"> 
+        <div style="background-color: grey;" class="secondLinePathBox"> 
             <c-ludo-middle-path class='greencol' >
             </c-ludo-middle-path>
         </div>
     </div>
-
+    <!-- third line box ludo -->
     <div>
-        <div style="height: 35vh;width: 30vw;display: flex;background-color: blue;float:left;"> 
+        <div style="background-color: blue;" class="playerBox"> 
             <c-ludo-player-start-box class='bluecol'  box-color='blue' box-position='bottom-left'>
             </c-ludo-player-start-box>
         </div>
-        <div style="height: 35vh;width: 25vw;display: flex;background-color: grey;float:left;"> 
+        <div style="background-color: grey;" class="pathBox"> 
             <c-ludo-middle-path class='greencol' >
             </c-ludo-middle-path>
         </div>
-        <div style="height: 35vh;width: 30vw;display: flex;background-color: yellow;float:left;"> 
+        <div style="background-color: yellow;" class="playerBox"> 
             <c-ludo-player-start-box class='yellowcol'  box-color='yellow' box-position='bottom-right'>
             </c-ludo-player-start-box>
         </div>

@@ -1,3 +1,31 @@
 :host{
     text-align: center;
 }
+
+.playerBox {
+    height: 35vh;
+    width: 35vw;
+    display: flex;
+    float:left;
+}
+
+.pathBox {
+    height: 35vh; 
+    width: 20vw; 
+    display: flex; 
+    float: left;
+}
+
+.endBox {
+    height: 25vh; 
+    width: 20vw; 
+    display: flex;
+    float: left;
+}
+
+.secondLinePathBox {
+    height: 25vh; 
+    width: 35vw; 
+    display: flex;
+    float: left;
+}

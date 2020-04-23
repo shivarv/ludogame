@@ -38,16 +38,18 @@
     background-color: grey;
 }
 
+
+
 .default-box {
     width: 24vw;
-    height: 28vh;
+    height: 24vh;
     background-color: white;
     display: inline-block;
     position: absolute;
 }
 
 .top-left {
-    left: 3vw;
+    left: 5vw;
     top: 3vh;
 }
 
@@ -57,11 +59,36 @@
 }
 
 .bottom-left {
-    left: 3vw;
-    top: 63vh;
+    left: 5vw;
+    top: 67vh;
 }
 
 .bottom-right {
-    left: 58vw;
-    top: 63vh;
+    left: 60vw;
+    top: 67vh;
+}
+
+
+.default-innerdiv {
+    position: absolute; 
+    width: 3rem; 
+    height: 2rem; 
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.smalldiv-left {
+    left: 3vw;
+}
+
+.smalldiv-right {
+    right: 4vw;
+}
+
+.smalldiv-top {
+    top: 3vh;
+}
+
+.smalldiv-bottom {
+    bottom: 3vh;
 }
