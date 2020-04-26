@@ -3,28 +3,28 @@
 }
 
 .playerBox {
-    height: 35vh;
+    height: 36vh;
     width: 35vw;
     display: flex;
     float:left;
 }
 
 .pathBox {
-    height: 35vh; 
+    height: 36vh; 
     width: 20vw; 
     display: flex; 
     float: left;
 }
 
 .endBox {
-    height: 25vh; 
+    height: 23vh; 
     width: 20vw; 
     display: flex;
     float: left;
 }
 
 .secondLinePathBox {
-    height: 25vh; 
+    height: 23vh; 
     width: 35vw; 
     display: flex;
     float: left;

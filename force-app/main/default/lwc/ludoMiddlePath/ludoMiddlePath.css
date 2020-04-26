@@ -1,0 +1,14 @@
+.boxCss {
+    width: 5.67vw;
+    height: 7vh;
+    background-color:white;
+    position: relative;
+    display: inline;
+    float: left;
+    border : 1px solid grey;
+}
+.elePosition {
+    display: inline-block;
+    position: absolute;
+    background-color: yellow;
+}
