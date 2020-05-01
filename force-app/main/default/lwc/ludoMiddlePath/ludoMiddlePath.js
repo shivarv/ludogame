@@ -8,7 +8,7 @@ export default class LudoMiddlePath extends LightningElement {
     constructor() {
         super();
         this.elementCount = [];
-        for(let i = 1; i <= 18; i++) {
+        for(let i = 18; i >= 1; i--) {
             this.elementCount.push(i);
         }
     }
@@ -21,7 +21,7 @@ export default class LudoMiddlePath extends LightningElement {
             event.target.innerHTML = '';
             return;
         }
-        this.test++;
+        console.log('inner html '+event.target.innerHTML);
         //divEle.innerHTML = event.target.id;
         divEle.style.background = 'yellow';
         divEle.style.position   = 'absolute';

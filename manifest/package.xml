@@ -16,6 +16,7 @@
         <members>ludoBoard</members>
         <members>ludoPlayerEndBox</members>
         <members>ludoMiddlePath</members>
+        <members>ludoVerticalPath</members>
         <members>ludoPlayerStartBox</members>
         <name>LightningComponentBundle</name>
     </types>
