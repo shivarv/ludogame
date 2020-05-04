@@ -30,6 +30,7 @@ export default class LudoMiddlePath extends LightningElement {
         divEle.style.top = '50%';
         divEle.style.left = '50%';
         divEle.style.borderRadius = '50%';
+        divEle.style.border = '1px solid Black';
         event.target.appendChild(divEle);
     }
 }

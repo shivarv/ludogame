@@ -35,6 +35,8 @@ export default class LudoVerticalPath extends LightningElement {
         divEle.style.borderRadius = '50%';
         divEle.dataset.player = 'red';
         divEle.className = 'divEle';
+        divEle.style.border = '1px solid Black';
+
         divEle.id ='hardCodeId';
         event.target.appendChild(divEle);
     }

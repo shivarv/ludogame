@@ -18,11 +18,16 @@
         <members>ludoMiddlePath</members>
         <members>ludoVerticalPath</members>
         <members>ludoPlayerStartBox</members>
+        <members>utils</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
         <members>*</members>
         <name>StaticResource</name>
+    </types>
+     <types>
+        <members>ludo_Event__e</members>
+        <name>CustomObject</name>
     </types>
     <version>48.0</version>
 </Package>
