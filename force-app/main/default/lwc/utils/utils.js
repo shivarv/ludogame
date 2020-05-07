@@ -30,36 +30,36 @@ const GAMEPERSPECTIVEMAP = {
 const COLORLIST = ['Blue', 'Red', 'Green', 'Yellow'];
 const PLAYERLIST = ['Player1', 'Player2', 'Player3', 'Player4'];
 const COINOBJECTLIST = [
-        {'player' : 'Player1',
-        'details' : [
-            {'name': 'coin1', 'position': -1, 'isEnd': false, 'isStart': false},
-            {'name': 'coin2', 'position': -1, 'isEnd': false, 'isStart': false},
-            {'name': 'coin3', 'position': -1, 'isEnd': false, 'isStart': false},
-            {'name': 'coin4', 'position': -1, 'isEnd': false, 'isStart': false}
-        ]},
-        {'player' : 'Player2',
-        'details' : [
-            {'name': 'coin1', 'position': -1, 'isEnd': false, 'isStart': false},
-            {'name': 'coin2', 'position': -1, 'isEnd': false, 'isStart': false},
-            {'name': 'coin3', 'position': -1, 'isEnd': false, 'isStart': false},
-            {'name': 'coin4', 'position': -1, 'isEnd': false, 'isStart': false}
-        ]},
+    {'player' : 'Player1',
+    'details' : [
+        {'name': 'coin1', 'position': -1, 'isEnd': false, 'isStart': false},
+        {'name': 'coin2', 'position': -1, 'isEnd': false, 'isStart': false},
+        {'name': 'coin3', 'position': -1, 'isEnd': false, 'isStart': false},
+        {'name': 'coin4', 'position': -1, 'isEnd': false, 'isStart': false}
+    ]},
+    {'player' : 'Player2',
+    'details' : [
+        {'name': 'coin1', 'position': -1, 'isEnd': false, 'isStart': false},
+        {'name': 'coin2', 'position': -1, 'isEnd': false, 'isStart': false},
+        {'name': 'coin3', 'position': -1, 'isEnd': false, 'isStart': false},
+        {'name': 'coin4', 'position': -1, 'isEnd': false, 'isStart': false}
+    ]},
 
-        {'player' : 'Player3',
-        'details' : [
-            {'name': 'coin1', 'position': -1, 'isEnd': false, 'isStart': false},
-            {'name': 'coin2', 'position': -1, 'isEnd': false, 'isStart': false},
-            {'name': 'coin3', 'position': -1, 'isEnd': false, 'isStart': false},
-            {'name': 'coin4', 'position': -1, 'isEnd': false, 'isStart': false}
-        ]},
+    {'player' : 'Player3',
+    'details' : [
+        {'name': 'coin1', 'position': -1, 'isEnd': false, 'isStart': false},
+        {'name': 'coin2', 'position': -1, 'isEnd': false, 'isStart': false},
+        {'name': 'coin3', 'position': -1, 'isEnd': false, 'isStart': false},
+        {'name': 'coin4', 'position': -1, 'isEnd': false, 'isStart': false}
+    ]},
 
-        {'player' : 'Player4',
-        'details' : [
-            {'name': 'coin1', 'position': -1, 'isEnd': false, 'isStart': false},
-            {'name': 'coin2', 'position': -1, 'isEnd': false, 'isStart': false},
-            {'name': 'coin3', 'position': -1, 'isEnd': false, 'isStart': false},
-            {'name': 'coin4', 'position': -1, 'isEnd': false, 'isStart': false}
-        ]}
+    {'player' : 'Player4',
+    'details' : [
+        {'name': 'coin1', 'position': -1, 'isEnd': false, 'isStart': false},
+        {'name': 'coin2', 'position': -1, 'isEnd': false, 'isStart': false},
+        {'name': 'coin3', 'position': -1, 'isEnd': false, 'isStart': false},
+        {'name': 'coin4', 'position': -1, 'isEnd': false, 'isStart': false}
+    ]}
 ];
 
 

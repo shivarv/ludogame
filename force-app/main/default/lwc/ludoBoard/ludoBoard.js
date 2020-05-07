@@ -17,12 +17,37 @@ export default class LudoBoard extends LightningElement {
     currentPlayerMove; // which player must make move now
     coinObjectList;
 
+
+    boardPathBoxList;
+
     constructor() {
         super();
         if(this.playerType == 'Player1') {
             this.playerCount = 1;
         }
         this.coinObjectList = COINOBJECTLIST;
+    }
+
+    setupBoardList() {
+        this.boardPathBoxList = [];
+        let colorList = COLORLIST;
+        for(let outerI = 1; outerI <= 4; outerI++) {
+            for(let i = 0; i < 16; i++) {
+                this.boardPathBoxList.push(
+                    {
+                        'path' : 'path' + outerI,
+                        'coinsList' : [],
+                        'isFilled' : false,
+                        'isStartPath' : outerI == 1 ? true : false,
+                        'isFinalPath' : outerI == 4 ? true : false,
+                        'isSafePath' : false,
+                        'safeColorList' : 'ALL'
+                    }
+    
+                );
+            }
+        }
+       
     }
 
     setGameStart() {
