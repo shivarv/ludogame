@@ -1,6 +1,9 @@
 import { LightningElement } from 'lwc';
 import { PLAYERCOLORMAP, COLORLIST, PLAYERLIST, COINOBJECTLIST } from 'c/utils';
 
+
+
+
 export default class LudoBoard extends LightningElement {
 
     playerName;
@@ -75,5 +78,11 @@ export default class LudoBoard extends LightningElement {
     //start the game
     gameStart() {
         this.currentPlayerMove = 'Player1';
+    }
+
+    positionChangeHandler(event) {
+        console.log('in position change handler '+ JSON.stringify(event));
+        console.log('data '+ event.detail.data);
+
     }
 }

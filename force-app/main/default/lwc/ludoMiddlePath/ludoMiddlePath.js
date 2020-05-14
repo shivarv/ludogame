@@ -1,4 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
+import { fireComponentEvent, COMPONENTEVENTTYPES } from 'c/utils';
 
 export default class LudoMiddlePath extends LightningElement {
     @api isHorizontal;
@@ -21,6 +22,15 @@ export default class LudoMiddlePath extends LightningElement {
             event.target.innerHTML = '';
             return;
         }
+        let dataNum = 0;
+        if(event.target.id) {
+            dataNum = event.target.id;
+            this.dispatchEvent(new CustomEvent(COMPONENTEVENTTYPES.positionchangeevent, 
+                { detail: {data: dataNum} }
+                ));
+            //fireComponentEvent(COMPONENTEVENTTYPES.PositionChangeEvent, {data: dataNum}, this);
+        }
+        
         console.log('inner html '+event.target.innerHTML);
         //divEle.innerHTML = event.target.id;
         divEle.style.background = 'yellow';
