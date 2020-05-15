@@ -1,9 +1,9 @@
 <template>
     <template for:each={elementCount} for:item="index">
-        <div key={index} id ={index} class="boxCss"
+        <div key={index} id ={index} class="boxCss" data-val={index}
         onclick={itemChosen}
         >
-        
+        {index}
         </div>
     </template>
     <div style="background:pink;width:2vw;height:2vh;border-Radius:50%"></div>

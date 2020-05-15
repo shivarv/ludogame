@@ -1,19 +1,36 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, api } from 'lwc';
+import { fireComponentEvent, COMPONENTEVENTTYPESMAP, fetchHardCodedBlockValues } from 'c/utils';
 
 export default class LudoVerticalPath extends LightningElement {
+    @api blockType;
     @track elementCount;
     test = 1;
+
     constructor() {
         super();
+    }
+
+    connectedCallback() {
+        console.log(this.blockType);
+        this.setupBlockData();
+    }
+
+
+    setupBlockData() {
+        let data = fetchHardCodedBlockValues(this.blockType);
         this.elementCount = [];
-        for(let i = 1; i <= 18; i++) {
-            this.elementCount.push(i);
+        if( !(data && Array.isArray(data) && data.length > 0)) {
+            return;
+        }        
+        for(let val of data) {
+            this.elementCount.push(val);
         }
     }
 
     itemChosen(event) {
         console.log(JSON.stringify(event.target.id));
-        console.log(JSON.stringify(event.target.key));
+        console.log(JSON.stringify(event.target.dataset.val));
+
         let divEle = document.createElement('div');
         if(this.test == 2) {
             console.log(event.target.querySelectorAll('div'));
@@ -23,6 +40,13 @@ export default class LudoVerticalPath extends LightningElement {
             return;
         }
         this.test++;
+
+        let dataNum = 0;
+        if(event.target.dataset.val) {
+            dataNum = event.target.dataset.val;
+            fireComponentEvent(COMPONENTEVENTTYPESMAP.positionchangeevent, {data: dataNum}, this);
+        }
+
         console.log('inner html '+event.target.innerHTML);
         console.log(JSON.stringify(event.target.querySelectorAll('div')));
         //divEle.innerHTML = event.target.id;

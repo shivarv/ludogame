@@ -1,34 +1,48 @@
 import { LightningElement, api, track } from 'lwc';
-import { fireComponentEvent, COMPONENTEVENTTYPES } from 'c/utils';
+import { fireComponentEvent, COMPONENTEVENTTYPESMAP, fetchHardCodedBlockValues } from 'c/utils';
 
 export default class LudoMiddlePath extends LightningElement {
     @api isHorizontal;
     @track elementCount;
+    @api blockType;
     test = 1;
     // width: 5.83vw;height: 8vh;background-color:green;position: absolute;left:5.83vw;
     constructor() {
         super();
+       // this.blockType = 'block1';
+    }
+
+    connectedCallback() {
+        console.log(this.blockType);
+        this.setupBlockData();
+    }
+
+
+    setupBlockData() {
+        let data = fetchHardCodedBlockValues(this.blockType);
         this.elementCount = [];
-        for(let i = 18; i >= 1; i--) {
-            this.elementCount.push(i);
+        if( !(data && Array.isArray(data) && data.length > 0)) {
+            return;
+        }        
+        for(let val of data) {
+            this.elementCount.push(val);
         }
     }
 
     itemChosen(event) {
         console.log(JSON.stringify(event.target.id));
         console.log(JSON.stringify(event.target.key));
+        //val is the custom data-set value
+        console.log(event.target.dataset.val);
         let divEle = document.createElement('div');
         if(this.test == 2) {
             event.target.innerHTML = '';
             return;
         }
         let dataNum = 0;
-        if(event.target.id) {
-            dataNum = event.target.id;
-            this.dispatchEvent(new CustomEvent(COMPONENTEVENTTYPES.positionchangeevent, 
-                { detail: {data: dataNum} }
-                ));
-            //fireComponentEvent(COMPONENTEVENTTYPES.PositionChangeEvent, {data: dataNum}, this);
+        if(event.target.dataset.val) {
+            dataNum = event.target.dataset.val;
+            fireComponentEvent(COMPONENTEVENTTYPESMAP.positionchangeevent, {data: dataNum}, this);
         }
         
         console.log('inner html '+event.target.innerHTML);

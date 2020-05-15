@@ -12,7 +12,7 @@ const PLAYERCOLORMAP = {
 // GAMESTARTEVENT is used to start the game , from this event player1 makes the move
 // PLAYEJOINEVENT is used to joined to the game
 // GAMEOVEREVENT is used to end the game and show the winner name to others
-const PLATFORMEVENTTYPES = {
+const PLATFORMEVENTTYPESMAP = {
     'RERUNEVENT': 'RERUNEVENT',
     'POSITIONCHANGEEVENT': 'POSITIONCHANGEEVENT',
     'NOCHANGEEVENT': 'NOCHANGEEVENT',
@@ -21,7 +21,7 @@ const PLATFORMEVENTTYPES = {
     'GAMEOVEREVENT': 'GAMEOVEREVENT'
 };
 
-const COMPONENTEVENTTYPES = {
+const COMPONENTEVENTTYPESMAP = {
     'positionchangeevent': 'positionchangeevent'
 };
 //different Perspective based on player1
@@ -66,22 +66,54 @@ const COINOBJECTLIST = [
     ]}
 ];
 
-const HARDCODEDBLOCK1VALUES = [1, 2 , 3 , 4 , 5 , 6,
-                                7, 8, 9, 10, 11, 12,
-                                13, 14, 15, 16, 17, 18
-                            ];
-const HARDCODEDBLOCK2VALUES = [36, 35, 34, 33, 32, 31,
-                                30, 29, 28, 27, 26, 25,
-                                24, 23, 22, 21, 20, 19
-                            ];
-const HARDCODEDBLOCK3VALUES = [36, 35, 34, 33, 32, 31,
-                                30, 29, 28, 27, 26, 25,
-                                24, 23, 22, 21, 20, 19
-                            ];
-const HARDCODEDBLOCK4VALUES = [1, 2 , 3 , 4 , 5 , 6,
-    7, 8, 9, 10, 11, 12,
-    13, 14, 15, 16, 17, 18
-];
+const HARDCODEDBLOCK1VALUESLIST = [ 
+                                    18, 12, 1,
+                                    17, 11, 2,
+                                    16, 10, 3,
+                                    15, 9, 4,
+                                    14, 8, 5,
+                                    13, 7, 6
+                                ];
+const HARDCODEDBLOCK2VALUESLIST = [ 
+                                    31, 32, 33, 34, 35, 36,
+                                    25, 26, 27, 28, 29, 30,
+                                    24, 23, 22, 21, 20, 19
+                                ];
+const HARDCODEDBLOCK3VALUESLIST = [ 
+                                    42, 43, 49,
+                                    41, 44, 50,
+                                    40, 45, 51,
+                                    39, 46, 52,
+                                    38, 47, 53,
+                                    37, 48, 54
+                                ];
+const HARDCODEDBLOCK4VALUESLIST = [ 
+                                    55, 56, 57, 58, 59, 60,
+                                    61, 62, 63, 64, 65, 66,
+                                    67, 68, 69, 70, 71, 72
+                                ];
+
+const fetchHardCodedBlockValues = function(blockName) {
+    let data = null
+    switch(blockName) {
+        case 'block1': 
+            data = this.HARDCODEDBLOCK1VALUESLIST;
+            break;
+        case 'block2': 
+            data = this.HARDCODEDBLOCK2VALUESLIST;
+            break;
+        case 'block3': 
+            data = this.HARDCODEDBLOCK3VALUESLIST;
+            break;
+        case 'block4': 
+            data = this.HARDCODEDBLOCK4VALUESLIST;
+            break;
+        default:
+            data = [];
+    }
+    return data;
+ };
+
 
 //params must be object
 const fireComponentEvent = function(eventName, params, reference) {
@@ -92,8 +124,10 @@ const fireComponentEvent = function(eventName, params, reference) {
 
 
 export {
-    fireComponentEvent,
-    HARDCODEDBLOCK1VALUES, HARDCODEDBLOCK2VALUES, HARDCODEDBLOCK3VALUES, HARDCODEDBLOCK4VALUES,
-    PLAYERCOLORMAP, COLORLIST, COINOBJECTLIST, PLAYERLIST, PLATFORMEVENTTYPES, GAMEPERSPECTIVEMAP,
-    COMPONENTEVENTTYPES
+    fireComponentEvent, fetchHardCodedBlockValues,
+    HARDCODEDBLOCK1VALUESLIST, HARDCODEDBLOCK2VALUESLIST,
+     HARDCODEDBLOCK3VALUESLIST, HARDCODEDBLOCK4VALUESLIST,
+    COLORLIST, COINOBJECTLIST, PLAYERLIST, 
+    PLAYERCOLORMAP,  GAMEPERSPECTIVEMAP, PLATFORMEVENTTYPESMAP, COMPONENTEVENTTYPESMAP
+    
  };
