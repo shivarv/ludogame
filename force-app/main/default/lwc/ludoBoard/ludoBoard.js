@@ -1,7 +1,9 @@
 import { LightningElement } from 'lwc';
-import { PLAYERCOLORMAP, COLORLIST, PLAYERLIST, COINOBJECTLIST } from 'c/utils';
+import { PLAYERCOLORMAP, COLORLIST, PLAYERLIST, COINOBJECTLIST, BLOCKBOXESSIZE,
+    PLATFORMEVENTTYPESMAP
+} from 'c/utils';
 
-
+import publishPlatformEvent from '@salesforce/apex/LudoUtility.publishPlatformEvent';
 
 
 export default class LudoBoard extends LightningElement {
@@ -29,13 +31,14 @@ export default class LudoBoard extends LightningElement {
             this.playerCount = 1;
         }
         this.coinObjectList = COINOBJECTLIST;
+        this.setupBoardList();
     }
 
     setupBoardList() {
         this.boardPathBoxList = [];
         let colorList = COLORLIST;
         for(let outerI = 1; outerI <= 4; outerI++) {
-            for(let i = 0; i < 16; i++) {
+            for(let i = 0; i < BLOCKBOXESSIZE; i++) {
                 this.boardPathBoxList.push(
                     {
                         'path' : 'path' + outerI,
@@ -51,6 +54,16 @@ export default class LudoBoard extends LightningElement {
             }
         }
        
+    }
+
+    publishPlatformEventNotification() {
+        let data = {
+            eventType: PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT,
+            changedFrom: '0',
+            changedTo: '6',
+            playerIndex: '0'
+        };
+        publishPlatformEvent(JSON.stringify(data));
     }
 
     setGameStart() {
@@ -82,6 +95,12 @@ export default class LudoBoard extends LightningElement {
     //start the game
     gameStart() {
         this.currentPlayerMove = 'Player1';
+    }
+
+    componentEventHandler(event) {
+        console.log('component event handler ');
+        console.log(event);
+
     }
 
     // ALL HANDLERS

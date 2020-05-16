@@ -1,3 +1,15 @@
+/*
+sample platform event :
+
+            eventType: PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT,
+            changedFrom: '0',
+            changedTo: '6',
+            playerIndex: '0'
+
+
+*/
+const PLATFORMEVENTSUBSCRIPTIONURL = '/event/shivalwc__ludo_Event__e';
+
 const PLAYERCOLORMAP = {
    'Player1' : 'Blue',
    'Player2' : 'Red',
@@ -5,6 +17,7 @@ const PLAYERCOLORMAP = {
    'Player4' : 'Yellow'
 };
 
+const BLOCKBOXESSIZE = 18;
 // single platform event can be of these types
 // RERUN event is used to fire next roll by the same player
 // POSITIONCHANGE is used to fire change of die's position, includes player cut etc
@@ -21,8 +34,9 @@ const PLATFORMEVENTTYPESMAP = {
     'GAMEOVEREVENT': 'GAMEOVEREVENT'
 };
 
+const GENERICCOMPONENTEVENT = 'componentevent';
 const COMPONENTEVENTTYPESMAP = {
-    'positionchangeevent': 'positionchangeevent'
+    'positionchangeevent': 'positionchangeevent',
 };
 //different Perspective based on player1
 const GAMEPERSPECTIVEMAP = {
@@ -116,14 +130,17 @@ const fetchHardCodedBlockValues = function(blockName) {
 
 
 //params must be object
-const fireComponentEvent = function(eventName, params, reference) {
-    const eventToFire = new CustomEvent(eventName, { detail: params });
+const fireComponentEvent = function( params, reference) {
+    console.log('in fire compponent event ');
+    const eventToFire = new CustomEvent(GENERICCOMPONENTEVENT, { detail: params });
     // Dispatches the event.
     reference.dispatchEvent(eventToFire);
 };
 
 
+
 export {
+    BLOCKBOXESSIZE, PLATFORMEVENTSUBSCRIPTIONURL,
     fireComponentEvent, fetchHardCodedBlockValues,
     HARDCODEDBLOCK1VALUESLIST, HARDCODEDBLOCK2VALUESLIST,
      HARDCODEDBLOCK3VALUESLIST, HARDCODEDBLOCK4VALUESLIST,

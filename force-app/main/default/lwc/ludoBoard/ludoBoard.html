@@ -39,7 +39,7 @@
             </c-ludo-player-start-box>
         </div>
         <div style="background-color: white;" class="pathBox"> 
-            <c-ludo-vertical-path class='greencol' block-type='block1' onpositionchangeevent={positionChangeHandler}>
+            <c-ludo-vertical-path class='greencol' block-type='block1' oncomponentevent={componentEventHandler}>
             </c-ludo-vertical-path>
         </div>
         <div style="background-color: yellow;" class="playerBox"> 
@@ -49,7 +49,7 @@
     </div>
 
     <div>
-         <c-testpe channel='/event/shivalwc__ludo_Event__e'></c-testpe> 
+         <c-ludo-platform-event-subscription channel='/event/shivalwc__ludo_Event__e'></c-ludo-platform-event-subscription> 
 
     </div>    
 </template>

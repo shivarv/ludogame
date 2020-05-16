@@ -35,10 +35,11 @@ export default class Testpe extends LightningElement {
 
             ])
             .then(() => {
+                console.log('event connected1 ');
 
-                Promise.all([loadScript(mainThis, StreamingAPI + '/StreamingAPI/JQueryComet/jquery.cometd.js')])
+                Promise.all([loadScript(mainThis, StreamingAPI + '/StreamingAPI/jquery.cometd.js')])
                     .then(() => {
-                        console.log('event connected ');
+                        console.log('event connected2 ');
                         this.loadSessionId();
                 }).catch(error => {
                     console.log('errror at last script '+ error);
@@ -64,7 +65,7 @@ export default class Testpe extends LightningElement {
 
            //authenticate to the Streaming API
            $.cometd.init({
-               url: window.location.protocol + '//' + window.location.hostname + '/cometd/40.0/',
+               url: window.location.protocol + '//' + window.location.hostname + '/cometd/'+this.apiVersion +'/',
                requestHeaders: { Authorization: authstring },
                appendMessageTypeToURL : false
            });

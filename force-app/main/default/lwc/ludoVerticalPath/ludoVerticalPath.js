@@ -44,7 +44,8 @@ export default class LudoVerticalPath extends LightningElement {
         let dataNum = 0;
         if(event.target.dataset.val) {
             dataNum = event.target.dataset.val;
-            fireComponentEvent(COMPONENTEVENTTYPESMAP.positionchangeevent, {data: dataNum}, this);
+            let inputVal = {data: dataNum, firePlatformEvent: true, eventType: COMPONENTEVENTTYPESMAP.positionchangeevent};
+            fireComponentEvent(JSON.stringify(inputVal), this);
         }
 
         console.log('inner html '+event.target.innerHTML);

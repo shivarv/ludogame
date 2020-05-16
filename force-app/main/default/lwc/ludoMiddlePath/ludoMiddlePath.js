@@ -31,7 +31,6 @@ export default class LudoMiddlePath extends LightningElement {
 
     itemChosen(event) {
         console.log(JSON.stringify(event.target.id));
-        console.log(JSON.stringify(event.target.key));
         //val is the custom data-set value
         console.log(event.target.dataset.val);
         let divEle = document.createElement('div');
@@ -42,8 +41,8 @@ export default class LudoMiddlePath extends LightningElement {
         let dataNum = 0;
         if(event.target.dataset.val) {
             dataNum = event.target.dataset.val;
-            fireComponentEvent(COMPONENTEVENTTYPESMAP.positionchangeevent, {data: dataNum}, this);
-        }
+            let inputVal = {data: dataNum, firePlatformEvent: true, eventType: COMPONENTEVENTTYPESMAP.positionchangeevent};
+            fireComponentEvent(JSON.stringify(inputVal), this);        }
         
         console.log('inner html '+event.target.innerHTML);
         //divEle.innerHTML = event.target.id;
