@@ -71,6 +71,10 @@ export default class LudoBoard extends LightningElement {
 
     }
 
+    removeCoin(name, position, color) {
+
+    }
+
     coinMove(name, position, color) {
         
     }
@@ -80,9 +84,54 @@ export default class LudoBoard extends LightningElement {
         this.currentPlayerMove = 'Player1';
     }
 
+    // ALL HANDLERS
     positionChangeHandler(event) {
         console.log('in position change handler '+ JSON.stringify(event));
         console.log('data '+ event.detail.data);
 
     }
+
+    // GENERIC PLATFORM EVENT HANLDERS
+    //Redirect to the actual handlers
+    handlePlatformEvent() {
+
+    }
+
+    // HANDLE POSITION EVENT
+    //position change event is to move from one place to another
+    handlePositionChangeEvent() {
+
+    }
+
+    // HANDLE RERUNEVENT EVENT
+    // this is rerunevent which occurs when 1 or 6 is created
+    handleReRunEvent() {
+        
+    }
+
+    // HANDLE NOCHANGEEVENT EVENT
+    // this is the no change event 
+    // it means no move is done like all coins are not outside block or cant move 
+    handleNoChangeEvent() {
+        
+    }
+    
+    // HANDLE GAMESTARTEVENT EVENT
+    // this is the game started event , from which the game actually started
+    handleGameStartEvent() {
+        
+    }
+
+    // HANDLE PLAYEJOINEVENT EVENT
+    // new player board creation
+    handlePlayerJoinEvent() {
+        
+    }
+
+    // HANDLE GAMEOVEREVENT EVENT
+    // terminate the game and popup with winner
+    handleGameOverEvent() {
+        
+    }
+
 }

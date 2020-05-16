@@ -5,7 +5,7 @@ export default class LudoPlayerStartBox extends LightningElement {
     @api boxPosition;
 
     get colorClass() { 
-        console.log(' in colorClass '+ this.boxColor);
+       // console.log(' in colorClass '+ this.boxColor);
         if(!this.boxColor) {
             return 'grey-background';
         }
@@ -13,7 +13,7 @@ export default class LudoPlayerStartBox extends LightningElement {
     }
 
     get innerDivTopLeft() {
-        console.log('default-innerdiv smalldiv-top smalldiv-left '+ this.colorClass);
+        //console.log('default-innerdiv smalldiv-top smalldiv-left '+ this.colorClass);
         return 'default-innerdiv smalldiv-top smalldiv-left '+ this.colorClass;
     }
 
@@ -31,7 +31,7 @@ export default class LudoPlayerStartBox extends LightningElement {
 
 
     get positionClass() { 
-        console.log(' in positionClass '+ this.boxPosition);
+        //console.log(' in positionClass '+ this.boxPosition);
         if(!this.boxPosition) {
             return 'default-box top-left';
         }
