@@ -8,6 +8,7 @@ import {
     COMPONENTEVENTTYPESMAP,
     PLATFORMEVENTTYPESMAP,
     PLAYERCOLORMAP,
+    PLAYERLIST,
     fetchHardCodedBlockValues,
     setDivCss
 } from 'c/utils';
@@ -19,7 +20,7 @@ export default class LudoMiddlePath extends LightningElement {
     test = 1;
     @api playerType;
     @api playerIndex;
-    
+
     constructor() {
         super();
         this.playerIndex = 0;
@@ -67,10 +68,11 @@ export default class LudoMiddlePath extends LightningElement {
         console.log('  reRenderLocation '+ locationIndex);
         console.log('  details '+ details);
 
-        let divElements = this.template.querySelectorAll('div');
-        console.log(JSON.stringify(divElements));
-        let divEle = document.createElement('div');
-        setDivCss(divEle, PLAYERLIST[this.playerIndex]);
-      //  event.target.appendChild(divEle);
+        let divToUpdate = this.template.querySelector(`[data-val="${locationIndex}"]`);
+        console.log(divToUpdate.innerHTML);
+        
+        let newCretedDivEle = document.createElement('div');
+        setDivCss(newCretedDivEle, PLAYERLIST[this.playerIndex]);
+        divToUpdate.appendChild(newCretedDivEle);
     }
 }

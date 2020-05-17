@@ -127,9 +127,11 @@ export default class LudoBoard extends LightningElement {
                 //block reference points to the block component onwhich update is necessary now
                 let blockReference = this.getBlockReferenceHelper(data.data) ;  
                 console.log('block reference '+ blockReference.blockType);
-                this.boardPathBoxList[5].coinsList = [PLAYERCOLORMAP.Player1];
-                blockReference.reRenderLocation(data.data, this.boardPathBoxList[5]);
-                console.log(JSON.stringify(result));
+                let blockArrayData =  this.getBlockArrayData(data.data);
+                //dummy coin
+                blockArrayData.coinsList = [PLAYERLIST[0], PLAYERLIST[1]];
+                blockReference.reRenderLocation(data.data, blockArrayData);
+                console.log(JSON.stringify(blockReference));
                 break;
             case PLATFORMEVENTTYPESMAP.NOCHANGEEVENT:
                 console.log('Game NOCHANGEEVENT event type '+data.data);
@@ -156,6 +158,11 @@ export default class LudoBoard extends LightningElement {
             console.log('fire platform event ');
         }
 
+    }
+
+    getBlockArrayData(clickedIndex) {
+        console.log(' getBlockArrayData '+ clickedIndex);
+        return this.boardPathBoxList[clickedIndex - 1];
     }
 
     //on passing number from 1 to 72 , it returns the block to update
