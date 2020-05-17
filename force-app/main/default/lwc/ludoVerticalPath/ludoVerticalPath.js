@@ -1,5 +1,6 @@
 import { LightningElement, track, api } from 'lwc';
-import { fireComponentEvent, COMPONENTEVENTTYPESMAP,PLATFORMEVENTTYPESMAP, fetchHardCodedBlockValues } from 'c/utils';
+import { fireComponentEvent, COMPONENTEVENTTYPESMAP,PLATFORMEVENTTYPESMAP, 
+    fetchHardCodedBlockValues, setDivCss } from 'c/utils';
 
 export default class LudoVerticalPath extends LightningElement {
     @api blockType;
@@ -30,7 +31,7 @@ export default class LudoVerticalPath extends LightningElement {
     itemChosen(event) {
         console.log(JSON.stringify(event.target.id));
         console.log(JSON.stringify(event.target.dataset.val));
-
+        /*
         let divEle = document.createElement('div');
         if(this.test == 2) {
             console.log(event.target.querySelectorAll('div'));
@@ -39,7 +40,7 @@ export default class LudoVerticalPath extends LightningElement {
             this.test = 0;
             return;
         }
-        this.test++;
+        this.test++; */
 
         let dataNum = 0;
         if(event.target.dataset.val) {
@@ -47,22 +48,9 @@ export default class LudoVerticalPath extends LightningElement {
             let inputVal = {data: dataNum, firePlatformEvent: true, eventType: PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT};
             fireComponentEvent(JSON.stringify(inputVal), this);
         }
-
         console.log('inner html '+event.target.innerHTML);
-        console.log(JSON.stringify(event.target.querySelectorAll('div')));
-        //divEle.innerHTML = event.target.id;
-        divEle.style.background = 'yellow';
-        divEle.style.position   = 'absolute';
-        divEle.style.width = '2vw';
-        divEle.style.height = '2vh';
-        divEle.style.top = '50%';
-        divEle.style.left = '50%';
-        divEle.style.borderRadius = '50%';
-        divEle.dataset.player = 'red';
-        divEle.className = 'divEle';
-        divEle.style.border = '1px solid Black';
-
-        divEle.id ='hardCodeId';
+        let divEle = docuent.createElement('div');
+        setDivCss(divEle);
         event.target.appendChild(divEle);
     }
 

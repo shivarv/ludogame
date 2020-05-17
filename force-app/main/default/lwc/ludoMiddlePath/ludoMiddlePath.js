@@ -1,5 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
-import { fireComponentEvent, COMPONENTEVENTTYPESMAP,PLATFORMEVENTTYPESMAP, fetchHardCodedBlockValues } from 'c/utils';
+import { fireComponentEvent, COMPONENTEVENTTYPESMAP,PLATFORMEVENTTYPESMAP, fetchHardCodedBlockValues,
+    setDivCss
+} from 'c/utils';
 
 export default class LudoMiddlePath extends LightningElement {
     @api isHorizontal;
@@ -33,11 +35,6 @@ export default class LudoMiddlePath extends LightningElement {
         console.log(JSON.stringify(event.target.id));
         //val is the custom data-set value
         console.log(event.target.dataset.val);
-        let divEle = document.createElement('div');
-        if(this.test == 2) {
-            event.target.innerHTML = '';
-            return;
-        }
         let dataNum = 0;
         if(event.target.dataset.val) {
             dataNum = event.target.dataset.val;
@@ -45,15 +42,8 @@ export default class LudoMiddlePath extends LightningElement {
             fireComponentEvent(JSON.stringify(inputVal), this);        }
         
         console.log('inner html '+event.target.innerHTML);
-        //divEle.innerHTML = event.target.id;
-        divEle.style.background = 'yellow';
-        divEle.style.position   = 'absolute';
-        divEle.style.width = '2vw';
-        divEle.style.height = '2vh';
-        divEle.style.top = '50%';
-        divEle.style.left = '50%';
-        divEle.style.borderRadius = '50%';
-        divEle.style.border = '1px solid Black';
+        let divEle = document.createElement('div');
+        setDivCss(divEle);
         event.target.appendChild(divEle);
     }
 }

@@ -107,6 +107,20 @@ const HARDCODEDBLOCK4VALUESLIST = [
                                     67, 68, 69, 70, 71, 72
                                 ];
 
+/* functions 
+*/
+
+const  returnNewDivElement = function(divEle) {
+    divEle.style.background = 'yellow';
+    divEle.style.position   = 'absolute';
+    divEle.style.width = '2vw';
+    divEle.style.height = '2vh';
+    divEle.style.top = '50%';
+    divEle.style.left = '50%';
+    divEle.style.borderRadius = '50%';
+    divEle.style.border = '1px solid Black';
+}
+
 const fetchHardCodedBlockValues = function(blockName) {
     let data = null
     switch(blockName) {
@@ -146,9 +160,9 @@ const fireComponentEvent = function( params, reference) {
 
 export {
     BLOCKBOXESSIZE, PLATFORMEVENTSUBSCRIPTIONURL,
-    fireComponentEvent, fetchHardCodedBlockValues,
+    fireComponentEvent, fetchHardCodedBlockValues, returnNewDivElement,
     HARDCODEDBLOCK1VALUESLIST, HARDCODEDBLOCK2VALUESLIST,
-     HARDCODEDBLOCK3VALUESLIST, HARDCODEDBLOCK4VALUESLIST,
+    HARDCODEDBLOCK3VALUESLIST, HARDCODEDBLOCK4VALUESLIST,
     COLORLIST, COINOBJECTLIST, PLAYERLIST, 
     PLAYERCOLORMAP,  GAMEPERSPECTIVEMAP, PLATFORMEVENTTYPESMAP, COMPONENTEVENTTYPESMAP
     
