@@ -34,17 +34,6 @@ export default class LudoVerticalPath extends LightningElement {
     itemChosen(event) {
         console.log(JSON.stringify(event.target.id));
         console.log(JSON.stringify(event.target.dataset.val));
-        /*
-        let divEle = document.createElement('div');
-        if(this.test == 2) {
-            console.log(event.target.querySelectorAll('div'));
-            console.log(this.template.querySelectorAll('.divEle'));
-            event.target.innerHTML = '';
-            this.test = 0;
-            return;
-        }
-        this.test++; */
-
         let dataNum = 0;
         if(event.target.dataset.val) {
             dataNum = event.target.dataset.val;
@@ -52,22 +41,27 @@ export default class LudoVerticalPath extends LightningElement {
             fireComponentEvent(JSON.stringify(inputVal), this);
         }
         console.log('inner html '+event.target.innerHTML);
-        let divEle = docuent.createElement('div');
-        setDivCss(divEle);
-        event.target.appendChild(divEle);
+      //  let divEle = document.createElement('div');
+      //  setDivCss(divEle);
+       // event.target.appendChild(divEle);
     }
 
     @api
-    reRenderLocation(locationIndex, details) {
+    reRenderLocation(locationIndex, playerIndexList) {
         console.log('  reRenderLocation '+ locationIndex);
-        console.log('  details '+ details);
-
+        console.log('  details '+ JSON.stringify(blockArrayData));
+        if(!blockArrayData || !blockArrayData.coinsList || blockArrayData.coinsList.length == 0) {
+            return;
+        }
         let divToUpdate = this.template.querySelector(`[data-val="${locationIndex}"]`);
         console.log(divToUpdate.innerHTML);
-        
-        let newCretedDivEle = document.createElement('div');
-        setDivCss(newCretedDivEle, PLAYERLIST[this.playerIndex]);
-        divToUpdate.appendChild(newCretedDivEle);
+        divToUpdate.innerHTML = '';
+        let coinsList = blockArrayData.coinsList;
+        for(let i in coinsList) {
+            let newCretedDivEle = document.createElement('div');
+            setDivCss(newCretedDivEle, coinsList[i], i, coinsList.length);
+            divToUpdate.appendChild(newCretedDivEle);
+        }
     }
 
 

@@ -64,15 +64,20 @@ export default class LudoMiddlePath extends LightningElement {
     }
 
     @api
-    reRenderLocation(locationIndex, details) {
+    reRenderLocation(locationIndex, blockArrayData) {
         console.log('  reRenderLocation '+ locationIndex);
-        console.log('  details '+ details);
-
+        console.log('  details '+ JSON.stringify(blockArrayData));
+        if(!blockArrayData || !blockArrayData.coinsList || blockArrayData.coinsList.length == 0) {
+            return;
+        }
         let divToUpdate = this.template.querySelector(`[data-val="${locationIndex}"]`);
         console.log(divToUpdate.innerHTML);
-        
-        let newCretedDivEle = document.createElement('div');
-        setDivCss(newCretedDivEle, PLAYERLIST[this.playerIndex]);
-        divToUpdate.appendChild(newCretedDivEle);
+        divToUpdate.innerHTML = '';
+        let coinsList = blockArrayData.coinsList;
+        for(let i in coinsList) {
+            let newCretedDivEle = document.createElement('div');
+            setDivCss(newCretedDivEle, coinsList[i], i, coinsList.length);
+            divToUpdate.appendChild(newCretedDivEle);
+        }
     }
 }

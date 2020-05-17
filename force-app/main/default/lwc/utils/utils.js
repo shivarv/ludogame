@@ -121,15 +121,22 @@ const HARDCODEDBLOCK4VALUESLIST = [
 /* functions 
 */
 
-const  setDivCss = function(divEle, playerType) {
-    divEle.style.background = PLAYERCOLORMAP[playerType] ;
+const  setDivCss = function(divEle, playerType, zIndex, totalSize) {
+    if(!divEle || (!playerType && playerType != 0)  || !PLAYERLIST || !PLAYERLIST[playerType] || !PLAYERCOLORMAP
+        || !PLAYERCOLORMAP[PLAYERLIST[playerType]]
+        ) {
+            console.log('error , empty data ');
+            return null;
+        }
+    divEle.style.background = PLAYERCOLORMAP[PLAYERLIST[playerType]] ;
     divEle.style.position   = 'absolute';
-    divEle.style.width = '2vw';
-    divEle.style.height = '2vh';
+    divEle.style.width = (2 + 0.1 * zIndex) +'vw';
+    divEle.style.height = (2 + 0.1 * zIndex) +'vh';
     divEle.style.top = '50%';
     divEle.style.left = '50%';
     divEle.style.borderRadius = '50%';
     divEle.style.border = '1px solid Black';
+    divEle.style.zIndex = (totalSize - zIndex);
 }
 
 const fetchHardCodedBlockValues = function(blockName) {

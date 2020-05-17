@@ -129,7 +129,7 @@ export default class LudoBoard extends LightningElement {
                 console.log('block reference '+ blockReference.blockType);
                 let blockArrayData =  this.getBlockArrayData(data.data);
                 //dummy coin
-                blockArrayData.coinsList = [PLAYERLIST[0], PLAYERLIST[1]];
+                blockArrayData.coinsList = [0, 0, 1];
                 blockReference.reRenderLocation(data.data, blockArrayData);
                 console.log(JSON.stringify(blockReference));
                 break;
