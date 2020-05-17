@@ -37,6 +37,7 @@ const PLATFORMEVENTTYPESMAP = {
 const GENERICCOMPONENTEVENT = 'componentevent';
 const COMPONENTEVENTTYPESMAP = {
     'positionchangeevent': 'positionchangeevent',
+    'RANDOMNUMBEREVENT': 'RANDOMNUMBEREVENT'
 };
 //different Perspective based on player1
 const GAMEPERSPECTIVEMAP = {
@@ -45,7 +46,17 @@ const GAMEPERSPECTIVEMAP = {
     'Player3' : 26,
     'Player3' : 39
 }
+
+const BLOCKMAP = {
+        'Block1': 'Block1',
+        'Block2': 'Block2',
+        'Block3': 'Block3',
+        'Block4': 'Block4'
+    };
+
 const COLORLIST = ['Blue', 'Red', 'Green', 'Yellow'];
+const BLOCKLIST = ['Block1', 'Block2', 'Block3', 'Block4'];
+
 const PLAYERLIST = ['Player1', 'Player2', 'Player3', 'Player4'];
 const COINOBJECTLIST = [
     {'player' : 'Player1',
@@ -124,16 +135,16 @@ const  setDivCss = function(divEle) {
 const fetchHardCodedBlockValues = function(blockName) {
     let data = null
     switch(blockName) {
-        case 'block1': 
+        case BLOCKMAP.Block1: 
             data = this.HARDCODEDBLOCK1VALUESLIST;
             break;
-        case 'block2': 
+        case BLOCKMAP.Block2: 
             data = this.HARDCODEDBLOCK2VALUESLIST;
             break;
-        case 'block3': 
+        case BLOCKMAP.Block3: 
             data = this.HARDCODEDBLOCK3VALUESLIST;
             break;
-        case 'block4': 
+        case BLOCKMAP.Block4: 
             data = this.HARDCODEDBLOCK4VALUESLIST;
             break;
         default:
@@ -143,6 +154,18 @@ const fetchHardCodedBlockValues = function(blockName) {
  };
 
 
+ const getBlockNumber = function(val) {
+    if(val > 0 && val <= 18) {
+         return BLOCKMAP.Block1;
+    } else if(val > 18 && val <= 36) {
+        return BLOCKMAP.Block2;
+    } else if(val > 36 && val <= 54) {
+        return BLOCKMAP.Block3;
+    } else if(val > 54 && val <= 72) {
+        return BLOCKMAP.Block4;
+    } 
+    return 'Home';
+ }
 
 //params must be object
 
@@ -150,7 +173,7 @@ const fetchHardCodedBlockValues = function(blockName) {
 // {data: dataNum, firePlatformEvent: true, eventType: COMPONENTEVENTTYPESMAP.positionchangeevent}
 
 const fireComponentEvent = function( params, reference) {
-    console.log('in fire compponent event '+ this.GENERICCOMPONENTEVENT +' '+GENERICCOMPONENTEVENT);
+    console.log('in fire compponent event '+GENERICCOMPONENTEVENT);
     const eventToFire = new CustomEvent(GENERICCOMPONENTEVENT, { detail: params });
     // Dispatches the event.
     reference.dispatchEvent(eventToFire);
@@ -164,6 +187,6 @@ export {
     HARDCODEDBLOCK1VALUESLIST, HARDCODEDBLOCK2VALUESLIST,
     HARDCODEDBLOCK3VALUESLIST, HARDCODEDBLOCK4VALUESLIST,
     COLORLIST, COINOBJECTLIST, PLAYERLIST, 
-    PLAYERCOLORMAP,  GAMEPERSPECTIVEMAP, PLATFORMEVENTTYPESMAP, COMPONENTEVENTTYPESMAP
+    PLAYERCOLORMAP, BLOCKMAP, GAMEPERSPECTIVEMAP, PLATFORMEVENTTYPESMAP, COMPONENTEVENTTYPESMAP
     
  };

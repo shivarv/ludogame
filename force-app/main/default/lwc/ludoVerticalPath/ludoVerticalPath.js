@@ -54,5 +54,10 @@ export default class LudoVerticalPath extends LightningElement {
         event.target.appendChild(divEle);
     }
 
+    @api
+    reRenderLocation(locationIndex, details) {
+        console.log('  reRenderLocation '+ locationIndex + ' '+ details);
+    }
+
 
 }

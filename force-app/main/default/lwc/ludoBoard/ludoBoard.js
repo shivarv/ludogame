@@ -1,6 +1,6 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, track } from 'lwc';
 import { PLAYERCOLORMAP, COLORLIST, PLAYERLIST, COINOBJECTLIST, BLOCKBOXESSIZE,
-    PLATFORMEVENTTYPESMAP
+    PLATFORMEVENTTYPESMAP, COMPONENTEVENTTYPESMAP
 } from 'c/utils';
 
 import publishPlatformEvent from '@salesforce/apex/LudoUtility.publishPlatformEvent';
@@ -11,11 +11,13 @@ export default class LudoBoard extends LightningElement {
     playerName;
     playerType; // this player typer 
     isGameStarted = false;
-
+    isRollBoxOpen = false;
+    isLoad= false;
 
     gamePlayerCount; //player who start the game sets this
     playerCount; // it can be two, three or 4 player game
     
+    diceMoveVal;
 
     isGameOver = false; // go on with the game till the game ends
 
@@ -23,7 +25,7 @@ export default class LudoBoard extends LightningElement {
     coinObjectList;
 
 
-    boardPathBoxList;
+    @track boardPathBoxList;
 
     constructor() {
         super();
@@ -32,7 +34,19 @@ export default class LudoBoard extends LightningElement {
         }
         this.coinObjectList = COINOBJECTLIST;
         this.setupBoardList();
+        
     }
+
+    renderedCallback() {
+        console.log('in rendered Callback ');
+        if(this.isLoad) {
+            return;
+            
+        }
+        this.isLoad = true;
+        this.isRollBoxOpen= true;
+    }
+
 
     setupBoardList() {
         this.boardPathBoxList = [];
@@ -109,6 +123,11 @@ export default class LudoBoard extends LightningElement {
             
             case PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT:
                 console.log('Game POSITIONCHANGEEVENT event type '+data.data);
+                let targetId = 'Block3';
+                let result = this.template.querySelectorAll('c-ludo-vertical-path') ;  
+                console.log(result.length);
+                result[0].reRenderLocation(data.data, this.diceMoveVal);
+                console.log(JSON.stringify(result));
                 break;
             case PLATFORMEVENTTYPESMAP.NOCHANGEEVENT:
                 console.log('Game NOCHANGEEVENT event type '+data.data);
@@ -122,9 +141,12 @@ export default class LudoBoard extends LightningElement {
             case PLATFORMEVENTTYPESMAP.GAMEOVEREVENT:
                 console.log('Game GAMEOVEREVENT event type '+data.data);
                 break;
+            case COMPONENTEVENTTYPESMAP.RANDOMNUMBEREVENT:
+                console.log('Comp RANDOMNUMBEREVENT event type '+data.data);
+                this.diceRolledDelegate(data.data);
+                break;
             default:
                 console.log('default '+data.eventType + (data.eventType === PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT));
-                console.log(data.eventType === 'POSITIONCHANGEEVENT');
                 break;
             }
 
@@ -134,6 +156,11 @@ export default class LudoBoard extends LightningElement {
 
     }
 
+    diceRolledDelegate(data) {
+        console.log('in diceRolledDelegate, the rolled dice value is '+ data);
+        this.isRollBoxOpen = false;
+        this.diceMoveVal = data;
+    }
     // ALL HANDLERS
     positionChangeHandler(event) {
         console.log('in position change handler '+ JSON.stringify(event));
