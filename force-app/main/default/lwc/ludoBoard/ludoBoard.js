@@ -99,7 +99,38 @@ export default class LudoBoard extends LightningElement {
 
     componentEventHandler(event) {
         console.log('component event handler ');
-        console.log(event);
+        console.log(event.detail);
+        let data = JSON.parse(event.detail);
+
+        switch(data.eventType) {
+            case PLATFORMEVENTTYPESMAP.RERUNEVENT:
+                console.log('Game RERUNEVENT event type '+data.data);
+                break;
+            
+            case PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT:
+                console.log('Game POSITIONCHANGEEVENT event type '+data.data);
+                break;
+            case PLATFORMEVENTTYPESMAP.NOCHANGEEVENT:
+                console.log('Game NOCHANGEEVENT event type '+data.data);
+                break;        
+            case PLATFORMEVENTTYPESMAP.GAMESTARTEVENT:
+                console.log('Game GAMESTARTEVENT event type '+data.data);
+                break;
+            case PLATFORMEVENTTYPESMAP.PLAYEJOINEVENT:
+                console.log('Game PLAYEJOINEVENT event type '+data.data);
+                break;
+            case PLATFORMEVENTTYPESMAP.GAMEOVEREVENT:
+                console.log('Game GAMEOVEREVENT event type '+data.data);
+                break;
+            default:
+                console.log('default '+data.eventType + (data.eventType === PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT));
+                console.log(data.eventType === 'POSITIONCHANGEEVENT');
+                break;
+            }
+
+        if(data.firePlatformEvent === true) {
+            console.log('fire platform event ');
+        }
 
     }
 

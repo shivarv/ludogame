@@ -1,5 +1,5 @@
 import { LightningElement, track, api } from 'lwc';
-import { fireComponentEvent, COMPONENTEVENTTYPESMAP, fetchHardCodedBlockValues } from 'c/utils';
+import { fireComponentEvent, COMPONENTEVENTTYPESMAP,PLATFORMEVENTTYPESMAP, fetchHardCodedBlockValues } from 'c/utils';
 
 export default class LudoVerticalPath extends LightningElement {
     @api blockType;
@@ -44,7 +44,7 @@ export default class LudoVerticalPath extends LightningElement {
         let dataNum = 0;
         if(event.target.dataset.val) {
             dataNum = event.target.dataset.val;
-            let inputVal = {data: dataNum, firePlatformEvent: true, eventType: COMPONENTEVENTTYPESMAP.positionchangeevent};
+            let inputVal = {data: dataNum, firePlatformEvent: true, eventType: PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT};
             fireComponentEvent(JSON.stringify(inputVal), this);
         }
 

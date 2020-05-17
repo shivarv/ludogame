@@ -7,7 +7,7 @@
         </div>
 
         <div style="background-color: white;float:left;" class="pathBox"> 
-            <c-ludo-vertical-path class='greencol' block-type='block3' onpositionchangeevent={positionChangeHandler}>
+            <c-ludo-vertical-path class='greencol' block-type='block3' oncomponentevent={componentEventHandler}>
             </c-ludo-vertical-path>
             
         </div>
@@ -20,7 +20,7 @@
     <!-- second line box ludo -->
     <div>
         <div style="background-color: white;" class="secondLinePathBox"> 
-            <c-ludo-middle-path class='greencol' is-horizontal block-type='block2' onpositionchangeevent={positionChangeHandler}>
+            <c-ludo-middle-path class='greencol' is-horizontal block-type='block2' oncomponentevent={componentEventHandler}>
             </c-ludo-middle-path>
         </div>
         <div style="background-color: violet;" class="endBox"> 
@@ -28,7 +28,7 @@
             </c-ludo-player-end-box>
         </div>
         <div style="background-color: white;" class="secondLinePathBox"> 
-            <c-ludo-middle-path class='greencol'  is-horizontal block-type='block4' onpositionchangeevent={positionChangeHandler}>
+            <c-ludo-middle-path class='greencol'  is-horizontal block-type='block4' oncomponentevent={componentEventHandler}>
             </c-ludo-middle-path>
         </div>
     </div>

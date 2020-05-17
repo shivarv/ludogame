@@ -129,9 +129,14 @@ const fetchHardCodedBlockValues = function(blockName) {
  };
 
 
+
 //params must be object
+
+// sample component event 
+// {data: dataNum, firePlatformEvent: true, eventType: COMPONENTEVENTTYPESMAP.positionchangeevent}
+
 const fireComponentEvent = function( params, reference) {
-    console.log('in fire compponent event ');
+    console.log('in fire compponent event '+ this.GENERICCOMPONENTEVENT +' '+GENERICCOMPONENTEVENT);
     const eventToFire = new CustomEvent(GENERICCOMPONENTEVENT, { detail: params });
     // Dispatches the event.
     reference.dispatchEvent(eventToFire);
