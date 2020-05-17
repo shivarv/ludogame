@@ -1,6 +1,7 @@
 import { LightningElement, track } from 'lwc';
 import { PLAYERCOLORMAP, COLORLIST, PLAYERLIST, COINOBJECTLIST, BLOCKBOXESSIZE,
-    PLATFORMEVENTTYPESMAP, COMPONENTEVENTTYPESMAP
+    PLATFORMEVENTTYPESMAP, COMPONENTEVENTTYPESMAP, BLOCKMAP,
+    getBlockNumber
 } from 'c/utils';
 
 import publishPlatformEvent from '@salesforce/apex/LudoUtility.publishPlatformEvent';
@@ -125,7 +126,7 @@ export default class LudoBoard extends LightningElement {
                 console.log('Game POSITIONCHANGEEVENT event type '+data.data);
                 let targetId = 'Block3';
                 let result = this.template.querySelectorAll('c-ludo-vertical-path') ;  
-                console.log(result.length);
+                console.log(result.length + ' '+ result[0].blockType);
                 this.boardPathBoxList[5].coinsList = [PLAYERCOLORMAP.Player1];
                 result[0].reRenderLocation(data.data, this.boardPathBoxList[5]);
                 console.log(JSON.stringify(result));
@@ -155,6 +156,22 @@ export default class LudoBoard extends LightningElement {
             console.log('fire platform event ');
         }
 
+    }
+
+    //on passing number from 1 to 72 , it returns the block to update
+    getBlockReferenceHelper(clickedIndex) {
+        
+        let result;  
+        let blockVal = getBlockNumber(clickedIndex);
+        if(blockVal === BLOCKMAP.Block1 || blockVal === BLOCKMAP.Block3) {
+            result = this.template.querySelectorAll('c-ludo-vertical-path');  
+        } else if(blockVal === BLOCKMAP.Block2 || blockVal === BLOCKMAP.Block4) {
+            result = this.template.querySelectorAll('c-ludo-vertical-path');  
+        }
+        if(!(result && Array.isArray(result) && result.length > 0 && result.length === 2)) {
+            return null;
+        }
+        return result[0].blockType === blockVal ? result[0] : result[1].blockType === blockVal ? result[1] : null;
     }
 
     diceRolledDelegate(data) {
