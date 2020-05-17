@@ -123,12 +123,12 @@ export default class LudoBoard extends LightningElement {
                 break;
             
             case PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT:
-                console.log('Game POSITIONCHANGEEVENT event type '+data.data);
-                let targetId = 'Block3';
-                let result = this.template.querySelectorAll('c-ludo-vertical-path') ;  
-                console.log(result.length + ' '+ result[0].blockType);
+                console.log('Game POSITIONCHANGEEVENT event type '+ data.data);
+                //block reference points to the block component onwhich update is necessary now
+                let blockReference = this.getBlockReferenceHelper(data.data) ;  
+                console.log('block reference '+ blockReference.blockType);
                 this.boardPathBoxList[5].coinsList = [PLAYERCOLORMAP.Player1];
-                result[0].reRenderLocation(data.data, this.boardPathBoxList[5]);
+                blockReference.reRenderLocation(data.data, this.boardPathBoxList[5]);
                 console.log(JSON.stringify(result));
                 break;
             case PLATFORMEVENTTYPESMAP.NOCHANGEEVENT:
@@ -166,12 +166,18 @@ export default class LudoBoard extends LightningElement {
         if(blockVal === BLOCKMAP.Block1 || blockVal === BLOCKMAP.Block3) {
             result = this.template.querySelectorAll('c-ludo-vertical-path');  
         } else if(blockVal === BLOCKMAP.Block2 || blockVal === BLOCKMAP.Block4) {
-            result = this.template.querySelectorAll('c-ludo-vertical-path');  
+            result = this.template.querySelectorAll('c-ludo-middle-path');  
         }
-        if(!(result && Array.isArray(result) && result.length > 0 && result.length === 2)) {
+
+        //queryselecttorAll returns nodelist, not array , thus  Array.isArray(result) will be false
+        console.log('is true '+Array.isArray(result));
+        if(!(result  && result.length === 2)) {
+            console.log('in result null ');
             return null;
         }
-        return result[0].blockType === blockVal ? result[0] : result[1].blockType === blockVal ? result[1] : null;
+        console.log(' all block values '+ result[0].blockType + ' '+ result[1].blockType);
+        return result[0].blockType === blockVal ? result[0] : result[1];
+        //return result[0].blockType === blockVal ? result[0] : (result[1].blockType === blockVal ? result[1] : null);
     }
 
     diceRolledDelegate(data) {

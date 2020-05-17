@@ -183,7 +183,7 @@ const fireComponentEvent = function( params, reference) {
 
 export {
     BLOCKBOXESSIZE, PLATFORMEVENTSUBSCRIPTIONURL,
-    fireComponentEvent, fetchHardCodedBlockValues, setDivCss,
+    fireComponentEvent, fetchHardCodedBlockValues, setDivCss, getBlockNumber,
     HARDCODEDBLOCK1VALUESLIST, HARDCODEDBLOCK2VALUESLIST,
     HARDCODEDBLOCK3VALUESLIST, HARDCODEDBLOCK4VALUESLIST,
     COLORLIST, COINOBJECTLIST, PLAYERLIST, 
