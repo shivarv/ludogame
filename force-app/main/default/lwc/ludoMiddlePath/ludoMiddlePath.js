@@ -7,6 +7,7 @@ import {
     fireComponentEvent,
     COMPONENTEVENTTYPESMAP,
     PLATFORMEVENTTYPESMAP,
+    PLAYERCOLORMAP,
     fetchHardCodedBlockValues,
     setDivCss
 } from 'c/utils';
@@ -16,12 +17,13 @@ export default class LudoMiddlePath extends LightningElement {
     @track elementCount;
     @api blockType;
     test = 1;
-    // width: 5.83vw;height: 8vh;background-color:green;position: absolute;left:5.83vw;
+    @api playerType;
+    @api playerIndex;
+    
     constructor() {
         super();
-        // this.blockType = 'block1';
+        this.playerIndex = 0;
     }
-
     connectedCallback() {
         console.log(this.blockType);
         this.setupBlockData();
@@ -55,13 +57,20 @@ export default class LudoMiddlePath extends LightningElement {
         }
 
         console.log('inner html ' + event.target.innerHTML);
-        let divEle = document.createElement('div');
-        setDivCss(divEle);
-        event.target.appendChild(divEle);
+       // let divEle = document.createElement('div');
+       // setDivCss(divEle);
+       // event.target.appendChild(divEle);
     }
 
     @api
-    reRenderLocation(locationIndex) {
+    reRenderLocation(locationIndex, details) {
         console.log('  reRenderLocation '+ locationIndex);
+        console.log('  details '+ details);
+
+        let divElements = this.template.querySelectorAll('div');
+        console.log(JSON.stringify(divElements));
+        let divEle = document.createElement('div');
+        setDivCss(divEle, PLAYERLIST[this.playerIndex]);
+      //  event.target.appendChild(divEle);
     }
 }

@@ -1,14 +1,17 @@
 import { LightningElement, track, api } from 'lwc';
-import { fireComponentEvent, COMPONENTEVENTTYPESMAP,PLATFORMEVENTTYPESMAP, 
+import { fireComponentEvent, COMPONENTEVENTTYPESMAP,PLATFORMEVENTTYPESMAP, PLAYERCOLORMAP,
+    PLAYERLIST,
     fetchHardCodedBlockValues, setDivCss } from 'c/utils';
 
 export default class LudoVerticalPath extends LightningElement {
     @api blockType;
     @track elementCount;
     test = 1;
-
+    @api playerType;
+    @api playerIndex;
     constructor() {
         super();
+        this.playerIndex = 0;
     }
 
     connectedCallback() {
@@ -56,7 +59,19 @@ export default class LudoVerticalPath extends LightningElement {
 
     @api
     reRenderLocation(locationIndex, details) {
-        console.log('  reRenderLocation '+ locationIndex + ' '+ details);
+        console.log('  reRenderLocation '+ locationIndex);
+        console.log('  details '+ details);
+
+        let divElements = this.template.querySelectorAll('div');
+        console.log(divElements.length);
+        console.log(JSON.stringify(divElements));
+        console.log(divElements[0].innerHTML);
+        console.log(divElements[5].innerHTML);
+
+        divElements[5].innerHTML = '';
+        let divEle = document.createElement('div');
+        setDivCss(divEle, PLAYERLIST[this.playerIndex]);
+        divElements[5].appendChild(divEle);
     }
 
 

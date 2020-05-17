@@ -11,10 +11,10 @@ sample platform event :
 const PLATFORMEVENTSUBSCRIPTIONURL = '/event/shivalwc__ludo_Event__e';
 
 const PLAYERCOLORMAP = {
-   'Player1' : 'Blue',
-   'Player2' : 'Red',
-   'Player3' : 'Green',
-   'Player4' : 'Yellow'
+   'Player1' : 'blue',
+   'Player2' : 'red',
+   'Player3' : 'green',
+   'Player4' : 'yellow'
 };
 
 const BLOCKBOXESSIZE = 18;
@@ -121,8 +121,8 @@ const HARDCODEDBLOCK4VALUESLIST = [
 /* functions 
 */
 
-const  setDivCss = function(divEle) {
-    divEle.style.background = 'yellow';
+const  setDivCss = function(divEle, playerType) {
+    divEle.style.background = PLAYERCOLORMAP[playerType] ;
     divEle.style.position   = 'absolute';
     divEle.style.width = '2vw';
     divEle.style.height = '2vh';

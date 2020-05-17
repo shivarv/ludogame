@@ -126,7 +126,8 @@ export default class LudoBoard extends LightningElement {
                 let targetId = 'Block3';
                 let result = this.template.querySelectorAll('c-ludo-vertical-path') ;  
                 console.log(result.length);
-                result[0].reRenderLocation(data.data, this.diceMoveVal);
+                this.boardPathBoxList[5].coinsList = [PLAYERCOLORMAP.Player1];
+                result[0].reRenderLocation(data.data, this.boardPathBoxList[5]);
                 console.log(JSON.stringify(result));
                 break;
             case PLATFORMEVENTTYPESMAP.NOCHANGEEVENT:
