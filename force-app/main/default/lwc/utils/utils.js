@@ -110,7 +110,7 @@ const HARDCODEDBLOCK4VALUESLIST = [
 /* functions 
 */
 
-const  returnNewDivElement = function(divEle) {
+const  setDivCss = function(divEle) {
     divEle.style.background = 'yellow';
     divEle.style.position   = 'absolute';
     divEle.style.width = '2vw';
@@ -160,7 +160,7 @@ const fireComponentEvent = function( params, reference) {
 
 export {
     BLOCKBOXESSIZE, PLATFORMEVENTSUBSCRIPTIONURL,
-    fireComponentEvent, fetchHardCodedBlockValues, returnNewDivElement,
+    fireComponentEvent, fetchHardCodedBlockValues, setDivCss,
     HARDCODEDBLOCK1VALUESLIST, HARDCODEDBLOCK2VALUESLIST,
     HARDCODEDBLOCK3VALUESLIST, HARDCODEDBLOCK4VALUESLIST,
     COLORLIST, COINOBJECTLIST, PLAYERLIST, 
