@@ -50,13 +50,16 @@ export default class LudoVerticalPath extends LightningElement {
     reRenderLocation(locationIndex, playerIndexList) {
         console.log('  reRenderLocation '+ locationIndex);
         console.log('  details '+ JSON.stringify(blockArrayData));
-        if(!blockArrayData || !blockArrayData.coinsList || blockArrayData.coinsList.length == 0) {
+        if(!blockArrayData || !blockArrayData.coinsList) {
             return;
         }
         let divToUpdate = this.template.querySelector(`[data-val="${locationIndex}"]`);
         console.log(divToUpdate.innerHTML);
         divToUpdate.innerHTML = '';
         let coinsList = blockArrayData.coinsList;
+        if(!blockArrayData.coinsList) {
+            return;
+        }
         for(let i in coinsList) {
             let newCretedDivEle = document.createElement('div');
             setDivCss(newCretedDivEle, coinsList[i], i, coinsList.length);
