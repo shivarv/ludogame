@@ -8,6 +8,8 @@ sample platform event :
 
 
 */
+const CURRENTORGNAMESPACE = 'shivalwc';
+
 const PLATFORMEVENTSUBSCRIPTIONURL = '/event/shivalwc__ludo_Event__e';
 
 const PLAYERCOLORMAP = {
@@ -190,7 +192,7 @@ const fireComponentEvent = function( params, reference) {
 
 
 export {
-    BLOCKBOXESSIZE, PLATFORMEVENTSUBSCRIPTIONURL,
+    BLOCKBOXESSIZE, PLATFORMEVENTSUBSCRIPTIONURL, CURRENTORGNAMESPACE,
     fireComponentEvent, fetchHardCodedBlockValues, setDivCss, getBlockNumber,
     HARDCODEDBLOCK1VALUESLIST, HARDCODEDBLOCK2VALUESLIST,
     HARDCODEDBLOCK3VALUESLIST, HARDCODEDBLOCK4VALUESLIST,
