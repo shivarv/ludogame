@@ -37,7 +37,8 @@ const PLATFORMEVENTTYPESMAP = {
 const GENERICCOMPONENTEVENT = 'componentevent';
 const COMPONENTEVENTTYPESMAP = {
     'positionchangeevent': 'positionchangeevent',
-    'RANDOMNUMBEREVENT': 'RANDOMNUMBEREVENT'
+    'RANDOMNUMBEREVENT': 'RANDOMNUMBEREVENT',
+    'BOARDSETUPEVENT': 'BOARDSETUPEVENT'
 };
 //different Perspective based on player1
 const GAMEPERSPECTIVEMAP = {

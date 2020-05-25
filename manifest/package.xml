@@ -2,8 +2,47 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
         <members>LudoUtility</members>
+        <members>LudoEventTypes</members>
         <name>ApexClass</name>
     </types>
+
+     <types>
+        <members>*</members>
+        <name>ApexTestSuite</name>
+    </types>
+    <types>
+        <members>LudoGameApp</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>ludoBoard</members>
+        <members>ludoGame</members>
+        <members>ludoGameRequest</members>
+        <members>ludoPlayerEndBox</members>
+        <members>ludoMiddlePath</members>
+        <members>ludoVerticalPath</members>
+        <members>ludoPlayerStartBox</members>
+        <members>ludoRollModal</members>
+        <members>ludoPlatformEventSubscription</members>
+        <members>utils</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>StreamingAPI</members>
+        <name>StaticResource</name>
+    </types>
+
+     <types>
+        <members>LudoPlayer__c</members>
+        <members>LudoBoard__c</members>
+        <members>LudoEvent__e</members>
+        <name>CustomObject</name>
+    </types>
+    <version>48.0</version>
+</Package>
+
+<!--
+
     <types>
         <members>*</members>
         <name>ApexTestSuite</name>
@@ -27,9 +66,4 @@
         <members>StreamingAPI</members>
         <name>StaticResource</name>
     </types>
-     <types>
-        <members>ludo_Event__e</members>
-        <name>CustomObject</name>
-    </types>
-    <version>48.0</version>
-</Package>
+-->

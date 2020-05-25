@@ -1,0 +1,12 @@
+<template>
+    <template if:false={isGameSetupDone}>
+        <div class="slds-m-around_medium">
+            <c-ludo-game-request oncomponentevent={componentEventHandler}></c-ludo-game-request>
+        </div>
+    </template>
+    <template if:true={isGameSetupDone}>
+        <div class="slds-m-around_medium">
+            <c-ludo-board></c-ludo-board>
+        </div>
+    </template>
+</template>
