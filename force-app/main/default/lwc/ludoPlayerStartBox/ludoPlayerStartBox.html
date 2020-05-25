@@ -1,10 +1,16 @@
 <template>
     <div class={positionClass}>
-
-        <div class ={innerDivTopLeft}></div>
-        <div class ={innerDivTopRight}></div>
-        <div class ={innerDivBottomLeft}></div>
-        <div class ={innerDivBottomRight}></div>
-    
+        <template if:true={canShow4}>
+            <div class ={innerDivTopLeft}></div>
+        </template>
+        <template if:true={canShow3}>
+            <div class ={innerDivTopRight}></div>
+        </template>
+        <template if:true={canShow2}>
+            <div class ={innerDivBottomLeft}></div>
+        </template>
+        <template if:true={canShow1}>
+            <div class ={innerDivBottomRight}></div>
+        </template>
     </div>
 </template>

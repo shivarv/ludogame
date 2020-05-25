@@ -3,6 +3,40 @@ import { LightningElement, api } from 'lwc';
 export default class LudoPlayerStartBox extends LightningElement {
     @api boxColor;
     @api boxPosition;
+    @api playerType;
+
+    MAXPOINTINBOX = 4;
+    MINPOINTINBOX = 0;
+
+    @api
+    countPointInBox;
+    
+    constructor() {
+        super();
+        this.countPointInBox = this.MAXPOINTINBOX;
+        console.log(this.playerType);
+    }
+
+    connectedCallback() {
+        console.log('in connected callback ' );
+        this.countPointInBox = this.MAXPOINTINBOX;
+        console.log(this.playerType);
+    }
+    get canShow4() {
+        return this.countPointInBox > 3;
+    }
+
+    get canShow3() {
+        return this.countPointInBox > 2;
+    }
+
+    get canShow2() {
+        return this.countPointInBox > 1;
+    }
+
+    get canShow1() {
+        return this.countPointInBox > 0;
+    }
 
     get colorClass() { 
        // console.log(' in colorClass '+ this.boxColor);
@@ -45,5 +79,39 @@ export default class LudoPlayerStartBox extends LightningElement {
             return 'default-box bottom-right';
         } 
         return 'default-box top-left';
+    }
+
+    @api
+    decrementCountIndex() {
+        if(this.countPointInBox === this.MINPOINTINBOX) {
+            return;
+        }
+        this.countPointInBox--;
+    }
+
+    @api
+    incrementCountIndex() {
+        if(this.countPointInBox === this.MAXPOINTINBOX) {
+            return;
+        }
+        this.countPointInBox++;
+    }
+
+    @api
+    attachClickEventListener() {
+        console.log(' in attachClickEventListener ');
+        this.addEventListener('click', this.handleClick);
+
+    }
+
+    handleClick() {
+        console.log('in handle click ludoPlayerBox '+this.playerType );
+        this.removeEventListener('click', this.handleClick);
+    }
+
+    removeClickEventListener() {
+        console.log(' in removeClickEventListener ');
+        this.removeEventListener('click', this.handleClick);
+
     }
 }

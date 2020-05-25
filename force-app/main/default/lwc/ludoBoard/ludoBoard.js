@@ -33,7 +33,7 @@ export default class LudoBoard extends LightningElement {
     constructor() {
         super();
         //sample
-        this.playerType == 'Player1';
+        this.playerType = 'Player1';
         this.playerIndex = 0;
         if(this.playerType == 'Player1') {
             this.playerCount = 1;
@@ -226,10 +226,33 @@ export default class LudoBoard extends LightningElement {
         //return result[0].blockType === blockVal ? result[0] : (result[1].blockType === blockVal ? result[1] : null);
     }
 
-    diceRolledDelegate(data) {
-        console.log('in diceRolledDelegate, the rolled dice value is '+ data);
+    diceRolledDelegate(diceMoveVal) {
+        console.log('in diceRolledDelegate, the rolled dice value is '+ diceMoveVal);
+        let mainThis = this;
         this.isRollBoxOpen = false;
-        this.diceMoveVal = data;
+        this.diceMoveVal = diceMoveVal;
+        if(! (diceMoveVal === 1 || diceMoveVal === 6) ) {
+            return;
+        }
+        let result = this.template.querySelectorAll('c-ludo-player-start-box');  
+        let eleRef;
+        console.log(this.playerType);
+        if(!this.playerType || !result || result.length === 0) {
+            return null;
+        }
+        
+        result.forEach(function(element) {
+            console.log(JSON.stringify(element) + ' '+element.playerType);
+            
+            if(element.playerType === mainThis.playerType) {
+                eleRef = element;
+            }
+               
+        }, this);
+        if(!eleRef) {
+            console.log('no ref obtained ');
+        }
+        eleRef.attachClickEventListener();
     }
     // ALL HANDLERS
     positionChangeHandler(event) {
