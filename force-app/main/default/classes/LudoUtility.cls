@@ -1,14 +1,24 @@
 public without sharing class LudoUtility {
 
+    public static String player1 = 'Player1';
+    public static String player2 = 'Player2';
+    public static String player3 = 'Player3';
+    public static String player4 = 'Player4';
+    
     @AuraEnabled
-    public static string getSessionId() {
+    public static String getSessionId() {
         return UserInfo.getSessionId();
     }
 
+    
     @AuraEnabled
-    public static void publishPlatformEvent(String data) {
+    public static void publishPlatformEvent(String data, LudoEventTypes.LUDOEVENTENUM eventType, String playerType) {
         List<shivalwc__LudoEvent__e> platformGameEvent = new List<shivalwc__LudoEvent__e>();
-        platformGameEvent.add(new shivalwc__LudoEvent__e(shivalwc__eventData__c = data));
+        platformGameEvent.add(new shivalwc__LudoEvent__e(shivalwc__eventData__c = data,
+                                shivalwc__eventType__c = eventType.name(),
+                                shivalwc__playerType__c	= playerType
+        
+        ));
         // Call method to publish events
         List<Database.SaveResult> results = EventBus.publish(platformGameEvent);
         

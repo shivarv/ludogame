@@ -8,8 +8,8 @@ public class LudoEventTypes {
     public enum LUDOEVENTENUM {
         RERUNEVENT, POSITIONCHANGEEVENT,
         NOCHANGEEVENT, GAMESTARTEVENT,
-        GAMEOVEREVENT, PLAYEJOINEVENT,
-        GAMESYNCEVENT
+        GAMEOVEREVENT, PLAYERJOINEVENT,
+        GAMESYNCEVENT, ERROREVENT, DEFAULTEVENT
     } 
     // Sample EVENT  Values , string value for shivalwc__eventData__c
     /* RERUNEVENT, POSITIONCHANGEEVENT
@@ -19,10 +19,14 @@ public class LudoEventTypes {
 		'isHome':  // means if the coin is safe
     }
 	*/
-    /* NOCHANGEEVENT, GAMESTARTEVENT, GAMEOVEREVENT, GAMESYNCEVENT, PLAYEJOINEVENT
+    /* NOCHANGEEVENT, GAMESTARTEVENT, GAMEOVEREVENT, GAMESYNCEVENT
     {
        // empty data
     }
-	*/
+    */
+    
+    /* PLAYERJOINEVENT
+
+    */
    
 }

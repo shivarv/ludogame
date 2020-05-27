@@ -263,7 +263,8 @@ export default class LudoBoard extends LightningElement {
 
     // GENERIC PLATFORM EVENT HANLDERS
     //Redirect to the actual handlers
-    handlePlatformEvent() {
+    PlatformEventHandler(event) {
+        console.log('in handle platform event '+ JSON.stringify(event));
 
     }
 

@@ -10,10 +10,18 @@ public with sharing class LudoCreatePlayer {
            
             playerRecord  = (shivalwc__LudoPlayer__c) JSON.deserialize(recordData,
                                                     shivalwc__LudoPlayer__c.class);
-            if(playerRecord.playerType__c == 'Player1') {
+            playerRecord.shivalwc__unique_Id_Validation__c = ((
+                playerRecord.shivalwc__ludoBoard__c == null ? '' : playerRecord.shivalwc__ludoBoard__c)
+            	    + '-'  +
+                (String.isBlank(playerRecord.shivalwc__playerType__c) ? '' : playerRecord.shivalwc__playerType__c)
+                );
+            if(playerRecord.playerType__c == LudoUtility.player1) {
                 playerRecord.shivalwc__ludoBoard__c = createPlayerBoard(playerCount);
             }
             insert playerRecord;
+            if(playerRecord.playerType__c != LudoUtility.player1) {
+                LudoUtility.publishPlatformEvent('', LudoEventTypes.LUDOEVENTENUM.PLAYERJOINEVENT, playerRecord.playerType__c);
+            }
         }
         catch(DMLEXCEPTION e) {
 

@@ -58,7 +58,13 @@ export default class LudoPlatformEventSubscription extends LightningElement {
         }
     }
 
+    firePlatformComponentEvent(data, eventType) {
+        console.log('in fireRandomNumberEvent');
+        let inputData = {data: data, isPlatformEvent: true, eventType: eventType};
+        fireComponentEvent(JSON.stringify(inputData), this)
+    }
     loadSessionId() {
+        let mainThis = this;
        console.log(' in loadSessionId method ');
        getSessionId().then(sessionId => {
            console.log('(LWC Streaming API) Session ID: '+sessionId);
@@ -74,7 +80,7 @@ export default class LudoPlatformEventSubscription extends LightningElement {
            console.log('after init');
            $.cometd.subscribe(PLATFORMEVENTSUBSCRIPTIONURL, function (message){
                 console.log(JSON.stringify(message));
-                fireComponentEvent
+                mainThis.firePlatformComponentEvent(JSON.stringify(message));
            });
        });
     }
