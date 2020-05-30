@@ -10,7 +10,7 @@ sample platform event :
 */
 const CURRENTORGNAMESPACE = 'shivalwc';
 
-const PLATFORMEVENTSUBSCRIPTIONURL = '/event/shivalwc__ludo_Event__e';
+const PLATFORMEVENTSUBSCRIPTIONURL = '/event/shivalwc__LudoEvent__e';
 
 const PLAYERCOLORMAP = {
    'Player1' : 'blue',
@@ -35,6 +35,8 @@ const PLATFORMEVENTTYPESMAP = {
     'PLAYEJOINEVENT': 'PLAYEJOINEVENT',
     'GAMEOVEREVENT': 'GAMEOVEREVENT'
 };
+
+
 
 const GENERICCOMPONENTEVENT = 'componentevent';
 const COMPONENTEVENTTYPESMAP = {

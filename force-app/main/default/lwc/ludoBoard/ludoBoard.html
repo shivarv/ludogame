@@ -49,7 +49,8 @@
     </div>
 
     <div>
-         <c-ludo-platform-event-subscription channel='/event/shivalwc__ludo_Event__e'></c-ludo-platform-event-subscription> 
+         <c-ludo-platform-event-subscription channel='/event/shivalwc__ludo_Event__e'
+          player-type={playerType} player-board-id = {playerBoardId}></c-ludo-platform-event-subscription> 
     </div>   
 
     <template if:true={isRollBoxOpen}>

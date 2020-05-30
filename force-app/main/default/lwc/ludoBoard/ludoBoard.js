@@ -1,4 +1,4 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, api } from 'lwc';
 import { PLAYERCOLORMAP, COLORLIST, PLAYERLIST, COINOBJECTLIST, BLOCKBOXESSIZE,
     PLATFORMEVENTTYPESMAP, COMPONENTEVENTTYPESMAP, BLOCKMAP,
     getBlockNumber
@@ -13,13 +13,15 @@ export default class LudoBoard extends LightningElement {
     playerType; // this player typer 
     playerIndex;
 
+    @api playerBoardId;
+
     isGameStarted = false;
     isRollBoxOpen = false;
     isLoad= false;
 
     gamePlayerCount; //player who start the game sets this
     playerCount; // it can be two, three or 4 player game
-    
+    currentPlayerMove; // current player to make move
     diceMoveVal;
 
     isGameOver = false; // go on with the game till the game ends
@@ -32,6 +34,11 @@ export default class LudoBoard extends LightningElement {
 
     constructor() {
         super();
+      
+    }
+
+    connectedCallback() {
+        
         //sample
         this.playerType = 'Player1';
         this.playerIndex = 0;
@@ -39,6 +46,7 @@ export default class LudoBoard extends LightningElement {
             this.playerCount = 1;
             this.playerIndex = 0;
         }
+        this.playerBoardId = 'sampleId';
         this.coinObjectList = COINOBJECTLIST;
         this.setupBoardList();
         
@@ -129,24 +137,9 @@ export default class LudoBoard extends LightningElement {
                 break;
             
             case PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT:
-                try {
-                console.log('Game POSITIONCHANGEEVENT event type '+ data.data);
-                //block reference points to the block component onwhich update is necessary now
-                //let blockReference = this.getBlockReferenceHelper(data.data) ;  
-                //console.log('block reference '+ blockReference.blockType);
-                let blockArrayData =  this.getBlockArrayData(data.data);
-                //dummy coin
-                blockArrayData.coinsList = [0, 0, 1];
-                let blockArrayData2 = this.getBlockArrayData(parseInt(data.data) + parseInt(this.diceMoveVal) );
-                blockArrayData2.coinsList = [0, 0, 1];
-                this.calcNewCoinListData(data.data, parseInt(data.data) + parseInt(this.diceMoveVal), this.playerIndex);
-                this.moveCoinsOnBoardUi(data.data, blockArrayData);
-                this.moveCoinsOnBoardUi(parseInt(data.data) + parseInt(this.diceMoveVal), blockArrayData);
-                //console.log(JSON.stringify(blockReference));
+                this.positionChangeHandler(data);
                 break;
-                } catch(e) {
-                    console.log( ' exception '+ JSON.stringify(e));
-                }
+
             case PLATFORMEVENTTYPESMAP.NOCHANGEEVENT:
                 console.log('Game NOCHANGEEVENT event type '+data.data);
                 break;        
@@ -254,10 +247,28 @@ export default class LudoBoard extends LightningElement {
         }
         eleRef.attachClickEventListener();
     }
+
+
     // ALL HANDLERS
-    positionChangeHandler(event) {
-        console.log('in position change handler '+ JSON.stringify(event));
-        console.log('data '+ event.detail.data);
+    positionChangeHandler(data) {
+        console.log('in position change handler '+ JSON.stringify(data));
+        try {
+            console.log('Game POSITIONCHANGEEVENT event type '+ data.data);
+            //block reference points to the block component onwhich update is necessary now
+            //let blockReference = this.getBlockReferenceHelper(data.data) ;  
+            //console.log('block reference '+ blockReference.blockType);
+            let blockArrayData =  this.getBlockArrayData(data.data);
+            //dummy coin
+            blockArrayData.coinsList = [0, 0, 1];
+            let blockArrayData2 = this.getBlockArrayData(parseInt(data.data) + parseInt(this.diceMoveVal) );
+            blockArrayData2.coinsList = [0, 0, 1];
+            this.calcNewCoinListData(data.data, parseInt(data.data) + parseInt(this.diceMoveVal), this.playerIndex);
+            this.moveCoinsOnBoardUi(data.data, blockArrayData);
+            this.moveCoinsOnBoardUi(parseInt(data.data) + parseInt(this.diceMoveVal), blockArrayData);
+            //console.log(JSON.stringify(blockReference));
+            } catch(e) {
+                console.log( ' exception '+ JSON.stringify(e));
+            }
 
     }
 

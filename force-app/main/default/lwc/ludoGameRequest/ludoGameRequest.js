@@ -3,6 +3,8 @@ import {
     PLAYERLIST, fireComponentEvent, COMPONENTEVENTTYPESMAP 
 } from 'c/utils';
 import createPlayerMethod from '@salesforce/apex/LudoCreatePlayer.createPlayer';
+import requestToJoinMethod from '@salesforce/apex/LudoCreatePlayer.requestToJoin';
+
 import LUDO_OBJECT_NAME from '@salesforce/schema/LudoPlayer__c.Name';
 import LUDO_OBJECT_BOARDID from '@salesforce/schema/LudoPlayer__c.ludoBoard__c';
 import LUDO_OBJECT_PLAYERTYPE from '@salesforce/schema/LudoPlayer__c.playerType__c';
@@ -29,16 +31,18 @@ export default class LudoGameRequest extends LightningElement {
         this.name = event.target.value;
     }
 
-    handlePlayerChange(event) {
-        this.chosenPlayerType = event.detail.value;
-    }
 
     handleLudoIdChange(event) {
         this.ludoId = event.target.value;
     }
 
-    handlePlayerSubmit(event) {
-        console.log('in handle Player Submit ');
+    requestToJoinSubmit(event) {
+        console.log('in requestToJoinSubmit ');
+
+    }
+
+    createGameSubmit(event) {
+        console.log('in createGameSubmit ');
         let objectNameApi = LUDO_OBJECT_NAME.fieldApiName;
         let boardIdApi = LUDO_OBJECT_BOARDID.fieldApiName;
         let playerTypeApi = LUDO_OBJECT_PLAYERTYPE.fieldApiName;
@@ -49,14 +53,17 @@ export default class LudoGameRequest extends LightningElement {
         };
         playerObject[objectNameApi] = this.name;
         playerObject[boardIdApi] = '';
-        playerObject[playerTypeApi] = this.chosenPlayerType;
         playerObject[uniqueIdApi] = '';
         console.log('input data '+ JSON.stringify(playerObject));
         
         createPlayerMethod({'recordData': JSON.stringify(playerObject), 'playerCount': 4})
         .then(result => {
            console.log(' result is '+ JSON.stringify(result));
-           mainThis.fireSetupEvent();
+           if(result.isError) {
+               alert(' error in create player '+ result.errorMessage);
+               return;
+           }
+           mainThis.fireSetupEvent(result.outputData);
         })
         .catch(error => {
             console.log('error is '+ JSON.stringify(error));
@@ -64,10 +71,12 @@ export default class LudoGameRequest extends LightningElement {
         }); 
     }
 
-    fireSetupEvent() {
-        let inputVal = {data: {name: this.name, playerType: this.chosenPlayerType,
-            boardId: this.boardId}, eventType: COMPONENTEVENTTYPESMAP.BOARDSETUPEVENT};
+    fireSetupEvent(resultString) {
+        let result = JSON.parse(resultString);
+        let inputVal = {data: {playerName : result.playerName, playerType: result.playerType,
+            playerBoardId: result.playerBoardId, playerJoinedNo: result.playerJoinedNo,
+            playerMaxCount: result.playerMaxCount
+        }, eventType: COMPONENTEVENTTYPESMAP.BOARDSETUPEVENT};
         fireComponentEvent(JSON.stringify(inputVal), this);
-
     }
 }

@@ -14,7 +14,7 @@ export default class LudoPlayerStartBox extends LightningElement {
     constructor() {
         super();
         this.countPointInBox = this.MAXPOINTINBOX;
-        console.log(this.playerType);
+        // console.log(this.playerType);
     }
 
     connectedCallback() {

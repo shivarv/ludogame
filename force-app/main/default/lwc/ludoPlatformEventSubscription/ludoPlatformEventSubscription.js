@@ -1,5 +1,5 @@
 import { LightningElement, api } from 'lwc';
-import { fireComponentEvent, PLATFORMEVENTSUBSCRIPTIONURL} from 'c/utils';
+import { fireComponentEvent, PLATFORMEVENTTYPESMAP, PLATFORMEVENTSUBSCRIPTIONURL} from 'c/utils';
 
 import getSessionId from '@salesforce/apex/LudoUtility.getSessionId';
 import { loadScript } from 'lightning/platformResourceLoader';
@@ -16,11 +16,16 @@ export default class LudoPlatformEventSubscription extends LightningElement {
     //If true then user can see console logs with data.
     @api debug = false;
 
+    @api playerType;
+
+    @api playerBoardId;
+    
     cometd;
     subscription;
 
-    connectedCallback(){
-       this.loadCometdScript();
+    connectedCallback() {
+        console.log(' ludo platform event connect callback '+this.playerType);
+        this.loadCometdScript();
     }
 
    
@@ -80,8 +85,29 @@ export default class LudoPlatformEventSubscription extends LightningElement {
            console.log('after init');
            $.cometd.subscribe(PLATFORMEVENTSUBSCRIPTIONURL, function (message){
                 console.log(JSON.stringify(message));
-                mainThis.firePlatformComponentEvent(JSON.stringify(message));
+                if(!message || !message.payload || !message.payload.shivalwc__eventType__c || 
+                    !message.payload.shivalwc__playerType__c || message.payload.shivalwc__playerType__c === mainThis.playerType) {
+                    console.log('either boardid or playerType is not right ');
+                    return;
+                }
+
+               // mainThis.firePlatformComponentEvent(JSON.stringify(message));
            });
        });
     }
 }
+
+/*
+sample event 
+
+
+{ "data": {"schema":"evXyheBJg2LpRlq33WW5FQ",
+"payload": {"shivalwc__playerType__c" : "Player1",
+        "CreatedById":"0052v00000YGFrOAAX",
+        "shivalwc__eventData__c": "{positionFrom: 1, positionTo:5,isHome:false}",
+        "CreatedDate":"2020-05-29T16:02:37Z",
+        "shivalwc__eventType__c":"POSITIONCHANGEEVENT"},
+        "event":{"replayId":2241548}},
+        "channel":"/event/shivalwc__LudoEvent__e"}
+
+*/

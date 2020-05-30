@@ -4,21 +4,20 @@
     <lightning-input type="input" label="name" onblur={handleNameChange}>
     </lightning-input>
     
-    <lightning-combobox
-    name="playerType"
-    label="Player"
-    placeholder="Choose Player"
-    value={chosenPlayerType}
-    onchange={handlePlayerChange}
-    options={playerTypeList}>
-    </lightning-combobox>
+   
 
     <lightning-input type="input" label="Ludo Id" onblur={handleLudoIdChange}
     > </lightning-input>
     <lightning-button
         variant="brand"
-        label="Start Game"
-        onclick={handlePlayerSubmit}>
+        label="Create Game"
+        onclick={requestToJoinSubmit}>
+    </lightning-button>
+
+    <lightning-button
+        variant="brand"
+        label="Request To Join"
+        onclick={createGameSubmit}>
     </lightning-button>
 
 </template>

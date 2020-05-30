@@ -4,7 +4,7 @@
         <members>LudoUtility</members>
         <members>LudoEventTypes</members>
         <members>LudoPlayerTriggerHandler</members>
-        <members>LudoCreatePlayer</members>
+        <members>LudoCreatePlayer</members
         <name>ApexClass</name>
     </types>
      <types>

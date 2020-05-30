@@ -26,7 +26,13 @@ public class LudoEventTypes {
     */
     
     /* PLAYERJOINEVENT
-
+        {
+            'playerName':
+            'playerType' :,
+            'playerBoardId':,
+            'playerJoinedNo':,
+            'playerMaxCount':
+        }
     */
    
 }
