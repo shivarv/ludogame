@@ -1,4 +1,15 @@
 <template>
+    <div>
+        <div  class="playerInfoBox"> 
+            <c-ludo-player-info player-name={player2Name} is-current-move={isPlayer2Move} 
+            is-player-joined={isPlayer2Joined}></c-ludo-player-info>
+        </div>
+        <div class="playerInfoGapBox">
+        </div>
+        <div class="playerInfoBox">
+            <c-ludo-player-info player-name={player3Name} is-current-move={isPlayer3Move} is-player-joined={isPlayer3Joined}></c-ludo-player-info>
+        </div>
+    </div>
     <!-- first line box ludo -->
     <div>
         <div style="background-color: red;" class="playerBox"> 
@@ -52,6 +63,17 @@
          <c-ludo-platform-event-subscription channel='/event/shivalwc__ludo_Event__e'
           player-type={playerType} player-board-id = {playerBoardId}></c-ludo-platform-event-subscription> 
     </div>   
+
+    <div>
+        <div class="playerInfoBox"> 
+            <c-ludo-player-info player-name={player1Name} is-current-move={isPlayer1Move} is-player-joined={isPlayer1Joined}></c-ludo-player-info>
+        </div>
+        <div class="playerInfoGapBox">
+        </div>
+        <div class="playerInfoBox">
+            <c-ludo-player-info player-name={player4Name} is-current-move={isPlayer4Move} is-player-joined={isPlayer4Joined}></c-ludo-player-info>
+        </div>
+    </div>
 
     <template if:true={isRollBoxOpen}>
 

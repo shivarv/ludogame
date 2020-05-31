@@ -1,6 +1,7 @@
 import { LightningElement, track, api } from 'lwc';
 import { PLAYERCOLORMAP, COLORLIST, PLAYERLIST, COINOBJECTLIST, BLOCKBOXESSIZE,
-    PLATFORMEVENTTYPESMAP, COMPONENTEVENTTYPESMAP, BLOCKMAP,
+    PLATFORMEVENTTYPESMAP, COMPONENTEVENTTYPESMAP, BLOCKMAP, PLAYERNAMEMAP,
+    PLAYERINDEXMAP,
     getBlockNumber
 } from 'c/utils';
 
@@ -11,18 +12,14 @@ export default class LudoBoard extends LightningElement {
 
     playerIndex;
 
-    @api playerName;
-    @api playerType; // Player1 etc
     @api playerBoardId;
-    @api playerJoinedNo;
-    @api playerMaxCount;
+    @api playerJoinedNo; //player who start the game sets this
+    @api playerMaxCount; // it can be two, three or 4 player game
 
 
     isGameStarted = false;
     isRollBoxOpen = false;
-    isLoad= false;
 
-    gamePlayerCount; //player who start the game sets this
     playerCount; // it can be two, three or 4 player game
     currentPlayerMove; // current player to make move
     diceMoveVal;
@@ -35,35 +32,83 @@ export default class LudoBoard extends LightningElement {
 
     @track boardPathBoxList;
 
+
+    //individual value is needed
+    player1Name;
+    isPlayer1Move = false;
+    isPlayer1Joined;
+    player2Name;
+    isPlayer2Move = false;
+    isPlayer2Joined;
+    player3Name;
+    isPlayer3Move = false;
+    isPlayer3Joined;
+    player4Name;
+    isPlayer4Move = false;
+    isPlayer4Joined;
+
+
+    isFirstLoaded = false;
+
+    
+
+    @api
+    get playerName(){
+        return this._playerName;
+    }
+
+    //Set method use to setup greeting message in upper case.
+    set playerName(value){
+        this._playerName = value;
+    }
+
+    @api
+    get playerType(){
+        return this._playerType;
+    }
+
+    set playerType(value){
+        this._playerType = value;
+        this.setPlayerIndex();
+        this.setIndividualPlayerVariable();
+    }
+
+    
     constructor() {
         super();
-      
-    }
-
-    connectedCallback() {
-        
-        //sample
-        this.playerType = 'Player1';
-        this.playerIndex = 0;
-        if(this.playerType == 'Player1') {
-            this.playerCount = 1;
-            this.playerIndex = 0;
-        }
-        this.playerBoardId = 'sampleId';
         this.coinObjectList = COINOBJECTLIST;
         this.setupBoardList();
-        
     }
 
-    renderedCallback() {
-        console.log('in rendered Callback ');
-        if(this.isLoad) {
-            return;
-            
-        }
-        this.isLoad = true;
-        this.isRollBoxOpen= false;
+    setPlayerIndex() {
+        console.log(' in setPlayerIndex method '+ PLAYERINDEXMAP[this._playerType]);
+        this.playerIndex = PLAYERINDEXMAP[this._playerType];
     }
+
+    setIndividualPlayerVariable() {
+        console.log('in setIndividualPlayerVariable method' + this._playerType);
+        if(this._playerType === PLAYERNAMEMAP.Player1) {
+            this.isPlayer1Joined = true;
+            this.player1Name = this._playerName;
+        } else if(this._playerType === PLAYERNAMEMAP.Player2) {
+            this.isPlayer2Joined = true;
+            this.player2Name = this._playerName;
+        } else if(this._playerType === PLAYERNAMEMAP.Player3) {
+            this.isPlayer3Joined = true;
+            this.player3Name = this._playerName;
+        } else if(this._playerType === PLAYERNAMEMAP.Player4) {
+            this.isPlayer4Joined = true;
+            this.player4Name = this._playerName;
+        } else {
+            console.log('invalid error ');
+        }
+        console.log('Player 1 data '+ this.player1Name + ' '+this.isPlayer1Joined + ' '+this.isPlayer1Move);
+        console.log('Player 2 data '+ this.player2Name + ' '+this.isPlayer2Joined + ' '+this.isPlayer2Move);
+        console.log('Player 3 data '+ this.player3Name + ' '+this.isPlayer3Joined + ' '+this.isPlayer3Move);
+        console.log('Player 4 data '+ this.player4Name + ' '+this.isPlayer4Joined + ' '+this.isPlayer4Move);
+    }
+
+    
 
 
     setupBoardList() {
@@ -106,7 +151,7 @@ export default class LudoBoard extends LightningElement {
     newPlayerJoined() {
         console.log('new player joined');
         this.playerCount++;
-        if(this.playerCount == this.gamePlayerCount) {
+        if(this.playerCount == this.playerMaxCount) {
             //fire event to startGame
         }
     }

@@ -36,7 +36,18 @@ const PLATFORMEVENTTYPESMAP = {
     'GAMEOVEREVENT': 'GAMEOVEREVENT'
 };
 
-
+const PLAYERNAMEMAP = {
+    'Player1': 'Player1',
+    'Player2': 'Player2',
+    'Player3': 'Player3',
+    'Player4': 'Player4'
+};
+const PLAYERINDEXMAP = {
+    'Player1': 0,
+    'Player2': 1,
+    'Player3': 2,
+    'Player4': 3
+};
 
 const GENERICCOMPONENTEVENT = 'componentevent';
 const COMPONENTEVENTTYPESMAP = {
@@ -63,6 +74,7 @@ const COLORLIST = ['Blue', 'Red', 'Green', 'Yellow'];
 const BLOCKLIST = ['Block1', 'Block2', 'Block3', 'Block4'];
 
 const PLAYERLIST = ['Player1', 'Player2', 'Player3', 'Player4'];
+
 const COINOBJECTLIST = [
     {'player' : 'Player1',
     'details' : [
@@ -199,6 +211,7 @@ export {
     HARDCODEDBLOCK1VALUESLIST, HARDCODEDBLOCK2VALUESLIST,
     HARDCODEDBLOCK3VALUESLIST, HARDCODEDBLOCK4VALUESLIST,
     COLORLIST, COINOBJECTLIST, PLAYERLIST, 
-    PLAYERCOLORMAP, BLOCKMAP, GAMEPERSPECTIVEMAP, PLATFORMEVENTTYPESMAP, COMPONENTEVENTTYPESMAP
+    PLAYERCOLORMAP, BLOCKMAP, GAMEPERSPECTIVEMAP, PLATFORMEVENTTYPESMAP, COMPONENTEVENTTYPESMAP,
+    PLAYERNAMEMAP, PLAYERINDEXMAP
     
  };

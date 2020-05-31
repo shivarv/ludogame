@@ -2,6 +2,23 @@
     text-align: center;
 }
 
+.playerInfoBox {
+    height: 6vh;
+    width: 35vw;
+    display: flex;
+    float:left;
+    border: 1px solid grey;
+
+}
+
+.playerInfoGapBox {
+    height: 6vh;
+    width: 20vw; 
+    display: flex; 
+    float: left;
+    border: 1px solid grey;
+}
+
 .playerBox {
     height: 36vh;
     width: 35vw;
@@ -14,6 +31,8 @@
     width: 20vw; 
     display: flex; 
     float: left;
+    border-bottom: 1px solid grey;
+
 }
 
 .endBox {

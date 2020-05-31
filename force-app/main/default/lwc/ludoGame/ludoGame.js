@@ -14,18 +14,22 @@ export default class LudoGame extends LightningElement {
 
     componentEventHandler(event) {
         console.log('in ludoGame comp component event handler ');
-        let data = JSON.parse(event.detail);
-        console.log(JSON.stringify(data));
+        let parsedObject = JSON.parse(event.detail);
+        console.log(JSON.stringify(parsedObject));
         //set boardId here
         //return if isGameSetupDone is true or if data is empty
-        if(this.isGameSetupDone || !data || !data.eventType || data.eventType !== COMPONENTEVENTTYPESMAP.BOARDSETUPEVENT) {
+        if(this.isGameSetupDone || !parsedObject || !parsedObject.eventType || parsedObject.eventType !== COMPONENTEVENTTYPESMAP.BOARDSETUPEVENT) {
             return;
         }
-        this.playerName = data.playerName;
-        this.playerType = data.playerType;
-        this.playerBoardId = data.playerBoardId;
-        this.playerJoinedNo = data.playerJoinedNo;
-        this.playerMaxCount = data.playerMaxCount;
+        this.playerName = parsedObject.data.playerName;
+        this.playerType = parsedObject.data.playerType;
+        this.playerBoardId = parsedObject.data.playerBoardId;
+        this.playerJoinedNo = parsedObject.data.playerJoinedNo;
+        this.playerMaxCount = parsedObject.data.maxPlayerCount;
+        console.log('in ludoGame method '+ this.playerName + ' '+
+        this.playerType + ' '+ this.playerBoardId + ' '+ this.playerJoinedNo
+        + ' '+ this.playerMaxCount
+        );
         this.isGameSetupDone = true;
     }
 }
