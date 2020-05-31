@@ -106,6 +106,7 @@ export default class LudoGameRequest extends LightningElement {
     fireSetupEvent(resultString) {
         console.log('in fire setup event '+ resultString);
         let result = JSON.parse(resultString);
+        // list of players [{playerType, name, isJoined} must be passed from here
         let inputVal = {data: {playerName : result.playerName, playerType: result.playerType,
             playerBoardId: result.playerBoardId, playerJoinedNo: result.playerJoinedNo,
             playerMaxCount: result.playerMaxCount
