@@ -14,11 +14,14 @@ public without sharing class LudoUtility {
     }
 
     @AuraEnabled
-    public static void publishPlatformEvent(String data, LudoEventTypes.LUDOEVENTENUM eventType, String playerType) {
+    public static void publishPlatformEvent(String data, LudoEventTypes.LUDOEVENTENUM eventType, String playerType,
+    String ludoBoardId
+    ) {
         List<shivalwc__LudoEvent__e> platformGameEvent = new List<shivalwc__LudoEvent__e>();
         platformGameEvent.add(new shivalwc__LudoEvent__e(shivalwc__eventData__c = data,
                                 shivalwc__eventType__c = eventType.name(),
-                                shivalwc__playerType__c	= playerType
+                                shivalwc__playerType__c	= playerType,
+                                shivalwc__ludoBoardId__c = ludoBoardId
         
         ));
         // Call method to publish events

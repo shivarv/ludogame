@@ -24,7 +24,7 @@ export default class LudoPlatformEventSubscription extends LightningElement {
     subscription;
 
     connectedCallback() {
-        console.log(' ludo platform event connect callback '+this.playerType);
+        console.log(' ludo platform event connect callback '+this.playerType + ' ' +this.playerBoardId);
         this.loadCometdScript();
     }
 
@@ -85,8 +85,13 @@ export default class LudoPlatformEventSubscription extends LightningElement {
            console.log('after init');
            $.cometd.subscribe(PLATFORMEVENTSUBSCRIPTIONURL, function (message){
                 console.log(JSON.stringify(message));
-                if(!message || !message.payload || !message.payload.shivalwc__eventType__c || 
-                    !message.payload.shivalwc__playerType__c || message.payload.shivalwc__playerType__c === mainThis.playerType) {
+                if(!message || !message.payload
+                    || !message.payload.shivalwc__playerType__c 
+                    || message.payload.shivalwc__playerType__c === mainThis.playerType
+                    || !message.payload.shivalwc__ludoBoardId__c
+                    || message.payload.shivalwc__ludoBoardId__c !== mainThis.playerBoardId
+                    || !message.payload.shivalwc__eventType__c
+                ) {
                     console.log('either boardid or playerType is not right ');
                     return;
                 }

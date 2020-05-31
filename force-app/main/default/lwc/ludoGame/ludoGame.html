@@ -6,7 +6,10 @@
     </template>
     <template if:true={isGameSetupDone}>
         <div class="slds-m-around_medium">
-            <c-ludo-board player-board-id={playerBoardId}></c-ludo-board>
+            <c-ludo-board player-board-id={playerBoardId}
+                    player-type={playerType} player-joined-no={playerJoinedNo}
+                    player-max-count={playerMaxCount}
+            ></c-ludo-board>
         </div>
     </template>
 </template>

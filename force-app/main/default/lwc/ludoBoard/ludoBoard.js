@@ -9,11 +9,14 @@ import publishPlatformEvent from '@salesforce/apex/LudoUtility.publishPlatformEv
 
 export default class LudoBoard extends LightningElement {
 
-    playerName;
-    playerType; // this player typer 
     playerIndex;
 
+    @api playerName;
+    @api playerType; // Player1 etc
     @api playerBoardId;
+    @api playerJoinedNo;
+    @api playerMaxCount;
+
 
     isGameStarted = false;
     isRollBoxOpen = false;
@@ -59,7 +62,7 @@ export default class LudoBoard extends LightningElement {
             
         }
         this.isLoad = true;
-        this.isRollBoxOpen= true;
+        this.isRollBoxOpen= false;
     }
 
 

@@ -4,20 +4,32 @@
     <lightning-input type="input" label="name" onblur={handleNameChange}>
     </lightning-input>
     
-   
+    <lightning-radio-group
+        name="radioButtonGroup"
+        label="Radio Button Group"
+        options={requestOptions}
+        value={chosenRequestType}
+        onchange={handleRequestTypeChange}
+    >
+    </lightning-radio-group>
 
-    <lightning-input type="input" label="Ludo Id" onblur={handleLudoIdChange}
-    > </lightning-input>
-    <lightning-button
-        variant="brand"
-        label="Create Game"
-        onclick={requestToJoinSubmit}>
-    </lightning-button>
+    <template if:true={canShowCreate}>
+        <lightning-combobox
+            name="NumberOfPlayer" label="Number of Player"
+            value={maxPlayerCount} options={playerNumbersList}
+            onchange={handleMaxPlayerCountChange}>
+        </lightning-combobox>
+        <lightning-button variant="brand" label="Create Game" onclick={createGameSubmit}>
+        </lightning-button>
+    </template>
 
-    <lightning-button
-        variant="brand"
-        label="Request To Join"
-        onclick={createGameSubmit}>
-    </lightning-button>
+    <template if:false={canShowCreate}>
+        <lightning-input type="input" label="Ludo Id" onchange={handleLudoIdChange}> </lightning-input>
+        <lightning-button variant="brand" label="Join Game" onclick={requestToJoinSubmit}>
+        </lightning-button>
+    </template>
 
+    <template if:true={isSpinnerOpen}>
+        <lightning-spinner variant="brand" size="large"></lightning-spinner>
+    </template>
 </template>

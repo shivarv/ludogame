@@ -7,7 +7,7 @@ public with sharing class LudoCreatePlayer {
     }   */
     @auraEnabled
     public static LudoOutputData requestToJoin(String recordData) {
-        Integer playerMaxCount;
+        Integer maxPlayerCount;
         Integer playerJoinedNo;
 
         Map<String, String> outputMap = null;
@@ -39,16 +39,16 @@ public with sharing class LudoCreatePlayer {
                 return outputData;
             }
             playerJoinedNo = Integer.valueOf(playerBoard.shivalwc__joinedPlayerCount__c) + 1;
-            playerMaxCount = Integer.valueOf(playerBoard.shivalwc__playerCount__c);
+            maxPlayerCount = Integer.valueOf(playerBoard.shivalwc__playerCount__c);
             playerBoard.shivalwc__joinedPlayerCount__c = playerJoinedNo;
-            if(playerJoinedNo == playerMaxCount) {
+            if(playerJoinedNo == maxPlayerCount) {
                 playerBoard.shivalwc__isGameStarted__c = true;
             }
             playerRecord.shivalwc__playerType__c = (LudoUtility.player	+ playerJoinedNo);
             insert playerRecord;
             update playerBoard;
             outputMap = createOutputMap(playerRecord.name,  playerRecord.shivalwc__playerType__c,
-                playerRecord.shivalwc__ludoBoard__c, playerJoinedNo, playerMaxCount
+                playerRecord.shivalwc__ludoBoard__c, playerJoinedNo, maxPlayerCount
             );
             System.debug(JSON.serialize(outputMap));
             outputData.setOutputDatas(JSON.serialize(outputMap), false, '');
@@ -60,57 +60,63 @@ public with sharing class LudoCreatePlayer {
         }
         
         catch(EXCEPTION e) {
-            outputData.setOutputDatas('', true, e.getMessage());
+            System.debug(e.getStackTraceString());
+            System.debug(e.getLineNumber());
+
+            outputData.setOutputDatas('', true, e.getMessage() + ' '+e.getLineNumber()
+            + e.getStackTraceString()
+            );
         }
         return outputData;
     }
 
     private static Map<String, String>  createOutputMap(String playerName,
-        String playerType, String playerBoardId, Integer playerJoinedNo, Integer playerMaxCount
+        String playerType, String playerBoardId, Integer playerJoinedNo, Integer maxPlayerCount
     ) {
         Map<String, String> outputMap = new Map<String, String> ();
         outputMap.put('playerName', playerName);
         outputMap.put('playerType', playerType);
         outputMap.put('playerBoardId', playerBoardId);
         outputMap.put('playerJoinedNo', String.valueOf(playerJoinedNo));
-        outputMap.put('playerMaxCount', String.valueOf(playerMaxCount));
+        outputMap.put('maxPlayerCount', String.valueOf(maxPlayerCount));
         return outputMap;
     }
 
     @auraEnabled
-    public static shivalwc__LudoPlayer__c createPlayer(String recordData, Integer playerCount) {
-        if(String.isBlank(recordData)) {
+    public static LudoOutputData createPlayer(String playerName, Integer maxPlayerCount) {
+        Map<String, String> outputMap = null;
+        LudoOutputData outputData = new LudoOutputData();
+        Integer playerJoinedNo = 1;
+        if(String.isBlank(playerName) || maxPlayerCount == null) {
             return null;
         }
-        shivalwc__LudoPlayer__c playerRecord = null;
+        shivalwc__LudoPlayer__c playerRecord = new shivalwc__LudoPlayer__c();
+        Id ludoBoardId = null;
         try {
-           
-            playerRecord  = (shivalwc__LudoPlayer__c) JSON.deserialize(recordData,
-                                                    shivalwc__LudoPlayer__c.class);
-            playerRecord.shivalwc__unique_Id_Validation__c = ((
-                playerRecord.shivalwc__ludoBoard__c == null ? '' : playerRecord.shivalwc__ludoBoard__c)
-            	    + '-'  +
-                (String.isBlank(playerRecord.shivalwc__playerType__c) ? '' : playerRecord.shivalwc__playerType__c)
-                );
-            if(playerRecord.playerType__c == LudoUtility.player1) {
-                playerRecord.shivalwc__ludoBoard__c = createPlayerBoard(playerCount);
-            }
+            ludoBoardId = createPlayerBoard(maxPlayerCount);
+            playerRecord.Name = playerName;
+            playerRecord.playerType__c = LudoUtility.player1;
+            playerRecord.shivalwc__ludoBoard__c = ludoBoardId;
             insert playerRecord;
-            if(playerRecord.playerType__c != LudoUtility.player1) {
-                LudoUtility.publishPlatformEvent('', LudoEventTypes.LUDOEVENTENUM.PLAYERJOINEVENT, playerRecord.playerType__c);
-            }
+            outputMap = createOutputMap(playerRecord.name,  playerRecord.shivalwc__playerType__c,
+                playerRecord.shivalwc__ludoBoard__c, playerJoinedNo, maxPlayerCount
+            );
+            System.debug(JSON.serialize(outputMap));
+            outputData.setOutputDatas(JSON.serialize(outputMap), false, '');
         }
         catch(DMLEXCEPTION e) {
-
+            outputData.setOutputDatas('', true, e.getMessage());
         }
         catch(EXCEPTION e) {
-
+            outputData.setOutputDatas('', true, e.getMessage());
         }
-        return playerRecord;
+        return outputData;
     }
 
     private static Id createPlayerBoard(Integer playerCount) {
-        shivalwc__LudoBoard__c playerBoard = new  shivalwc__LudoBoard__c(shivalwc__playerCount__c = playerCount);
+        shivalwc__LudoBoard__c playerBoard = new  shivalwc__LudoBoard__c(
+            shivalwc__joinedPlayerCount__c = 1,    
+            shivalwc__playerCount__c = playerCount);
         insert playerBoard;
         return playerBoard.Id;
     }
