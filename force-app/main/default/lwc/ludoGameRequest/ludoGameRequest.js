@@ -31,9 +31,9 @@ export default class LudoGameRequest extends LightningElement {
         ];
 
         this.playerNumbersList = [  
-                        { label: '2', value: 2 },
-                        { label: '3', value: 3 },
-                        { label: '4', value: 4 }
+                        { label: '2', value: '2' },
+                        { label: '3', value: '3' },
+                        { label: '4', value: '4' }
         ];
         this.maxPlayerCount = this.playerNumbersList[2].value;
         this.chosenRequestType = this.requestOptions[0].value;
@@ -42,7 +42,6 @@ export default class LudoGameRequest extends LightningElement {
     }
 
     handleMaxPlayerCountChange(event) {
-        console.log('in handleMaxPlayerCountChange '+JSON.stringify(event));
         this.maxPlayerCount = event.detail.value;
     }
 
@@ -89,7 +88,7 @@ export default class LudoGameRequest extends LightningElement {
     createGameSubmit(event) {
         console.log('in createGameSubmit ');
         let mainThis = this;
-        createPlayerMethod({'playerName': this.playerName, 'maxPlayerCount': this.maxPlayerCount})
+        createPlayerMethod({'playerName': this.playerName, 'maxPlayerCount': parseInt(this.maxPlayerCount)})
         .then(result => {
             console.log(' result is '+ JSON.stringify(result));
             if(result.isError) {
@@ -106,8 +105,10 @@ export default class LudoGameRequest extends LightningElement {
     fireSetupEvent(resultString) {
         console.log('in fire setup event '+ resultString);
         let result = JSON.parse(resultString);
+        let playersListText = (!result.playersJoinedList) ? null :  result.playersJoinedList;
         // list of players [{playerType, name, isJoined} must be passed from here
         let inputVal = {data: {playerName : result.playerName, playerType: result.playerType,
+            playersJoinedList: playersListText,  
             playerBoardId: result.playerBoardId, playerJoinedNo: result.playerJoinedNo,
             playerMaxCount: result.playerMaxCount
         }, eventType: COMPONENTEVENTTYPESMAP.BOARDSETUPEVENT};

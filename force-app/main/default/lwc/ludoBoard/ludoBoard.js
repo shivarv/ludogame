@@ -36,14 +36,14 @@ export default class LudoBoard extends LightningElement {
     //individual value is needed
     player1Name;
     isPlayer1Move = false;
-    isPlayer1Joined;
-    player2Name;
+    isPlayer1Joined = false;
+    player2Name = false
     isPlayer2Move = false;
-    isPlayer2Joined;
-    player3Name;
+    isPlayer2Joined = false
+    player3Name = false
     isPlayer3Move = false;
-    isPlayer3Joined;
-    player4Name;
+    isPlayer3Joined = false
+    player4Name = false
     isPlayer4Move = false;
     isPlayer4Joined;
 
@@ -63,15 +63,32 @@ export default class LudoBoard extends LightningElement {
     }
 
     @api
-    get playerType(){
+    get playerType() {
         return this._playerType;
     }
 
     set playerType(value){
         this._playerType = value;
         this.setPlayerIndex();
-        this.setIndividualPlayerVariable();
+        this.setIndividualPlayerVariable(this._playerType, this._playerName, true);
     }
+
+    //it is a string data
+    @api 
+    get playersJoinedListData() {
+        return this._playersJoinedListData;
+    }
+
+    set playersJoinedListData(value) {
+        console.log(' in playersJoinedListData method '+ value);
+        this._playersJoinedListData = value;
+        console.log(' in playersJoinedListData method '+ this._playersJoinedListData);
+        if(this._playersJoinedListData) {
+            this.setAlreadyJoinedPlayersList();
+        }
+    }
+
+
 
     
     constructor() {
@@ -80,25 +97,39 @@ export default class LudoBoard extends LightningElement {
         this.setupBoardList();
     }
 
+    setAlreadyJoinedPlayersList() {
+        console.log(' in setAlreadyJoinedPlayersList method '+ this._playersJoinedListData);
+        let playersData = '';
+        if(!this._playersJoinedListData) {
+            return;
+        }
+        playersData = JSON.parse(this._playersJoinedListData);
+        for(let i = 0; i < playersData.length; i++) {
+            console.log(JSON.stringify(playersData));
+            this.setIndividualPlayerVariable(playersData[i].playerType, 
+                                    playersData[i].playerName, true);
+        }
+    }
+
     setPlayerIndex() {
         console.log(' in setPlayerIndex method '+ PLAYERINDEXMAP[this._playerType]);
         this.playerIndex = PLAYERINDEXMAP[this._playerType];
     }
 
-    setIndividualPlayerVariable() {
-        console.log('in setIndividualPlayerVariable method' + this._playerType);
-        if(this._playerType === PLAYERNAMEMAP.Player1) {
-            this.isPlayer1Joined = true;
-            this.player1Name = this._playerName;
-        } else if(this._playerType === PLAYERNAMEMAP.Player2) {
-            this.isPlayer2Joined = true;
-            this.player2Name = this._playerName;
-        } else if(this._playerType === PLAYERNAMEMAP.Player3) {
-            this.isPlayer3Joined = true;
-            this.player3Name = this._playerName;
-        } else if(this._playerType === PLAYERNAMEMAP.Player4) {
-            this.isPlayer4Joined = true;
-            this.player4Name = this._playerName;
+    setIndividualPlayerVariable(playerType, playerName, isJoined) {
+        console.log('in setIndividualPlayerVariable method');
+        if(playerType === PLAYERNAMEMAP.Player1) {
+            this.isPlayer1Joined = isJoined;
+            this.player1Name = playerName;
+        } else if(playerType === PLAYERNAMEMAP.Player2) {
+            this.isPlayer2Joined = isJoined;
+            this.player2Name = playerName;
+        } else if(playerType === PLAYERNAMEMAP.Player3) {
+            this.isPlayer3Joined = isJoined;
+            this.player3Name = playerName;
+        } else if(playerType === PLAYERNAMEMAP.Player4) {
+            this.isPlayer4Joined = isJoined;
+            this.player4Name = playerName;
         } else {
             console.log('invalid error ');
         }
@@ -194,8 +225,9 @@ export default class LudoBoard extends LightningElement {
             case PLATFORMEVENTTYPESMAP.GAMESTARTEVENT:
                 console.log('Game GAMESTARTEVENT event type '+data.data);
                 break;
-            case PLATFORMEVENTTYPESMAP.PLAYEJOINEVENT:
+            case PLATFORMEVENTTYPESMAP.PLAYERJOINEVENT:
                 console.log('Game PLAYEJOINEVENT event type '+data.data);
+                this.handlePlayerJoinEvent(data.data);
                 break;
             case PLATFORMEVENTTYPESMAP.GAMEOVEREVENT:
                 console.log('Game GAMEOVEREVENT event type '+data.data);
@@ -354,8 +386,18 @@ export default class LudoBoard extends LightningElement {
 
     // HANDLE PLAYEJOINEVENT EVENT
     // new player board creation
-    handlePlayerJoinEvent() {
-        
+    // sample data format
+    //"{"maxPlayerCount":"4",
+    //"playerJoinedNo":"2",
+    //"playerBoardId":"a062v00001fWxo0AAC",
+    //"playerType":"Player2","playerName":"shiv2"} // all in string
+    handlePlayerJoinEvent(data) {
+        console.log('in player join vent handler '+ data);
+        let parsedInputData = JSON.parse(data);
+        let playerTypeValue = parsedInputData.playerType;
+        let playerNameValue = parsedInputData.playerName;
+        let playerIsJoined = true;
+        this.setIndividualPlayerVariable(playerTypeValue, playerNameValue, playerIsJoined);        
     }
 
     // HANDLE GAMEOVEREVENT EVENT

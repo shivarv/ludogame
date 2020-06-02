@@ -6,8 +6,10 @@ public without sharing class LudoUtility {
     public static final String player4 = 'Player4';
 
     public static final String player = 'Player';
+    public static final String playersJoinedListText = 'playersJoinedList';
+    public static final String playerTypeText = 'playerType';
+    public static final String playerNameText = 'playerName';
 
-    
     @AuraEnabled
     public static String getSessionId() {
         return UserInfo.getSessionId();

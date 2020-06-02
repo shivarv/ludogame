@@ -63,11 +63,12 @@ export default class LudoPlatformEventSubscription extends LightningElement {
         }
     }
 
-    firePlatformComponentEvent(data, eventType) {
+    firePlatformComponentEvent(dataString, eventType) {
         console.log('in fireRandomNumberEvent');
-        let inputData = {data: data, isPlatformEvent: true, eventType: eventType};
+        let inputData = {data: dataString, isPlatformEvent: true, eventType: eventType};
         fireComponentEvent(JSON.stringify(inputData), this)
     }
+
     loadSessionId() {
         let mainThis = this;
        console.log(' in loadSessionId method ');
@@ -84,19 +85,24 @@ export default class LudoPlatformEventSubscription extends LightningElement {
           
            console.log('after init');
            $.cometd.subscribe(PLATFORMEVENTSUBSCRIPTIONURL, function (message){
-                console.log(JSON.stringify(message));
-                if(!message || !message.payload
-                    || !message.payload.shivalwc__playerType__c 
-                    || message.payload.shivalwc__playerType__c === mainThis.playerType
-                    || !message.payload.shivalwc__ludoBoardId__c
-                    || message.payload.shivalwc__ludoBoardId__c !== mainThis.playerBoardId
-                    || !message.payload.shivalwc__eventType__c
+                console.log(' in event subscription '+JSON.stringify(message));
+                console.log(' playerBoardId '+ mainThis.playerBoardId );
+                console.log(' playerBoardId '+ mainThis.playerType );
+
+                if(!message || !message.data || !message.data.payload
+                    || !message.data.payload.shivalwc__playerType__c 
+                    || message.data.payload.shivalwc__playerType__c === mainThis.playerType
+                    || !message.data.payload.shivalwc__ludoBoardId__c
+                    || message.data.payload.shivalwc__ludoBoardId__c !== mainThis.playerBoardId
+                    || !message.data.payload.shivalwc__eventType__c
                 ) {
                     console.log('either boardid or playerType is not right ');
                     return;
                 }
 
-               // mainThis.firePlatformComponentEvent(JSON.stringify(message));
+                mainThis.firePlatformComponentEvent(message.data.payload.shivalwc__eventData__c,
+                        message.data.payload.shivalwc__eventType__c
+                );
            });
        });
     }

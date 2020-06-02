@@ -11,6 +11,7 @@ export default class LudoGame extends LightningElement {
     playerBoardId;
     playerJoinedNo;
     playerMaxCount;
+    playersJoinedDataString;
 
     componentEventHandler(event) {
         console.log('in ludoGame comp component event handler ');
@@ -26,6 +27,8 @@ export default class LudoGame extends LightningElement {
         this.playerBoardId = parsedObject.data.playerBoardId;
         this.playerJoinedNo = parsedObject.data.playerJoinedNo;
         this.playerMaxCount = parsedObject.data.maxPlayerCount;
+        this.playersJoinedDataString = parsedObject.data.playersJoinedList;
+        console.log('players joined data string '+ this.playersJoinedDataString);
         console.log('in ludoGame method '+ this.playerName + ' '+
         this.playerType + ' '+ this.playerBoardId + ' '+ this.playerJoinedNo
         + ' '+ this.playerMaxCount

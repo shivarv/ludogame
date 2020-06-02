@@ -61,7 +61,9 @@
 
     <div>
          <c-ludo-platform-event-subscription channel='/event/shivalwc__ludo_Event__e'
-          player-type={playerType} player-board-id = {playerBoardId}></c-ludo-platform-event-subscription> 
+          player-type={playerType} player-board-id = {playerBoardId}
+          oncomponentevent={componentEventHandler}
+          ></c-ludo-platform-event-subscription> 
     </div>   
 
     <div>

@@ -9,7 +9,7 @@ public with sharing class LudoCreatePlayer {
     public static LudoOutputData requestToJoin(String recordData) {
         Integer maxPlayerCount;
         Integer playerJoinedNo;
-
+        String playersListString = '';
         Map<String, String> outputMap = null;
         // playerStreamed - Player1
         // playerType - Player2
@@ -51,12 +51,15 @@ public with sharing class LudoCreatePlayer {
                 playerRecord.shivalwc__ludoBoard__c, playerJoinedNo, maxPlayerCount
             );
             System.debug(JSON.serialize(outputMap));
+            playersListString = joinedPlayerDetailsString(playerBoard.Id);
+            //fire platform to let players know that new player has joined
+            LudoUtility.publishPlatformEvent(JSON.serialize(outputMap), 
+                LudoEventTypes.LUDOEVENTENUM.PLAYERJOINEVENT, playerRecord.shivalwc__playerType__c,
+                playerRecord.shivalwc__ludoBoard__c
+                );
+            // only new playerwho joins need this data
+            outputMap.put(LudoUtility.playersJoinedListText, playersListString);
             outputData.setOutputDatas(JSON.serialize(outputMap), false, '');
-            if(playerBoard.shivalwc__isGameStarted__c == true) {
-                //fire platform event for sync
-                LudoUtility.publishPlatformEvent(JSON.serialize(outputMap), 
-                    LudoEventTypes.LUDOEVENTENUM.PLAYERJOINEVENT, playerRecord.shivalwc__playerType__c);
-            }
         }
         
         catch(EXCEPTION e) {
@@ -68,6 +71,22 @@ public with sharing class LudoCreatePlayer {
             );
         }
         return outputData;
+    }
+
+    private static String joinedPlayerDetailsString(Id ludoBoardId) {
+        List<Map<String, String>> outputList = new List<Map<String, String>>();
+        List<shivalwc__LudoPlayer__c> playersList = [SELECT id, shivalwc__playerType__c, Name FROM shivalwc__LudoPlayer__c WHERE
+                                    shivalwc__ludoBoard__c = :ludoBoardId];
+        if(playersList == null || playersList.isEmpty()) {
+            return '';
+        }
+        for(shivalwc__LudoPlayer__c indPlayer: playersList) {
+            Map<String, String> indOutputMap = new Map<String, String>();
+            indOutputMap.put(LudoUtility.playerNameText, indPlayer.Name);
+            indOutputMap.put(LudoUtility.playerTypeText, indPlayer.shivalwc__playerType__c);
+            outputList.add(indOutputMap);
+        }
+        return JSON.serialize(outputList);
     }
 
     private static Map<String, String>  createOutputMap(String playerName,
