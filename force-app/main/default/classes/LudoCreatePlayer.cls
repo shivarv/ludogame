@@ -93,11 +93,11 @@ public with sharing class LudoCreatePlayer {
         String playerType, String playerBoardId, Integer playerJoinedNo, Integer maxPlayerCount
     ) {
         Map<String, String> outputMap = new Map<String, String> ();
-        outputMap.put('playerName', playerName);
-        outputMap.put('playerType', playerType);
-        outputMap.put('playerBoardId', playerBoardId);
-        outputMap.put('playerJoinedNo', String.valueOf(playerJoinedNo));
-        outputMap.put('maxPlayerCount', String.valueOf(maxPlayerCount));
+        outputMap.put(LudoConstants.PLAYERNAMETEXT, playerName);
+        outputMap.put(LudoConstants.PLAYERTYPETEXT, playerType);
+        outputMap.put(LudoConstants.PLAYERBOARDIDTEXT, playerBoardId);
+        outputMap.put(LudoConstants.PLAYERJOINEDNOTEXT, String.valueOf(playerJoinedNo));
+        outputMap.put(LudoConstants.MAXPLAYERCOUNTTEXT, String.valueOf(maxPlayerCount));
         return outputMap;
     }
 
@@ -132,6 +132,14 @@ public with sharing class LudoCreatePlayer {
         return outputData;
     }
 
+    @auraEnabled
+    public static void fireGameStartPlatformEvent(String eventData, String ludoBoardId) {
+        String playerType = LudoUtility.player1; // player1 will start the game event
+        System.debug('in fireGameStartPlatformEvent method ');
+        LudoUtility.publishPlatformEvent(eventData, LudoEventTypes.LUDOEVENTENUM.GAMESTARTEVENT,
+                                            playerType, ludoBoardId);
+    }
+
     private static Id createPlayerBoard(Integer playerCount) {
         shivalwc__LudoBoard__c playerBoard = new  shivalwc__LudoBoard__c(
             shivalwc__joinedPlayerCount__c = 1,    
@@ -139,4 +147,7 @@ public with sharing class LudoCreatePlayer {
         insert playerBoard;
         return playerBoard.Id;
     }
+
+
+
 }

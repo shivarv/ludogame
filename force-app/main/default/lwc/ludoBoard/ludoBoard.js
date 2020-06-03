@@ -6,33 +6,27 @@ import { PLAYERCOLORMAP, COLORLIST, PLAYERLIST, COINOBJECTLIST, BLOCKBOXESSIZE,
 } from 'c/utils';
 
 import publishPlatformEvent from '@salesforce/apex/LudoUtility.publishPlatformEvent';
-
+import publishGameStartPlatformEventMethod from '@salesforce/apex/LudoCreatePlayer.fireGameStartPlatformEvent';
 
 export default class LudoBoard extends LightningElement {
 
     playerIndex;
-
-    @api playerBoardId;
+    //@api playerBoardId;
     @api playerJoinedNo; //player who start the game sets this
     @api playerMaxCount; // it can be two, three or 4 player game
-
 
     isGameStarted = false;
     isRollBoxOpen = false;
 
     playerCount; // it can be two, three or 4 player game
-    currentPlayerMove; // current player to make move
+    currentPlayerMove = false; // current player to make move
     diceMoveVal;
 
     isGameOver = false; // go on with the game till the game ends
 
-    currentPlayerMove; // which player must make move now
     coinObjectList;
 
-
     @track boardPathBoxList;
-
-
     //individual value is needed
     player1Name;
     isPlayer1Move = false;
@@ -46,19 +40,28 @@ export default class LudoBoard extends LightningElement {
     player4Name = false
     isPlayer4Move = false;
     isPlayer4Joined;
-
-
     isFirstLoaded = false;
 
-    
+    _playerName;
+    _playerType;
+    _playerBoardId;
 
     @api
-    get playerName(){
+    get playerBoardId() {
+        return this._playerBoardId;
+    }
+
+    set playerBoardId(value) {
+        this._playerBoardId = value;
+    }
+
+    @api
+    get playerName() {
         return this._playerName;
     }
 
     //Set method use to setup greeting message in upper case.
-    set playerName(value){
+    set playerName(value) {
         this._playerName = value;
     }
 
@@ -67,11 +70,12 @@ export default class LudoBoard extends LightningElement {
         return this._playerType;
     }
 
-    set playerType(value){
+    set playerType(value) {
         this._playerType = value;
         this.setPlayerIndex();
         this.setIndividualPlayerVariable(this._playerType, this._playerName, true);
     }
+
 
     //it is a string data
     @api 
@@ -88,13 +92,24 @@ export default class LudoBoard extends LightningElement {
         }
     }
 
-
-
-    
     constructor() {
         super();
         this.coinObjectList = COINOBJECTLIST;
         this.setupBoardList();
+    }
+
+    // only player1 does this last player joined
+    publishGameStartEvent() {
+        console.log(' in publishGameStartEvent ' + this._playerBoardId);
+        let mainThis = this;
+        publishGameStartPlatformEventMethod({'eventData':'','ludoBoardId':this._playerBoardId})
+            .then(result => {
+            console.log('success publishGameStartEvent ');
+            mainThis.gameStartEventHandler();
+        }).catch(error => {
+            console.log('error is '+ JSON.stringify(error));
+        });
+       
     }
 
     setAlreadyJoinedPlayersList() {
@@ -137,10 +152,13 @@ export default class LudoBoard extends LightningElement {
         console.log('Player 2 data '+ this.player2Name + ' '+this.isPlayer2Joined + ' '+this.isPlayer2Move);
         console.log('Player 3 data '+ this.player3Name + ' '+this.isPlayer3Joined + ' '+this.isPlayer3Move);
         console.log('Player 4 data '+ this.player4Name + ' '+this.isPlayer4Joined + ' '+this.isPlayer4Move);
+
+        //if player1 received event on player4 joined, means the game is started
+        if(this._playerType === PLAYERNAMEMAP.Player1 && playerType === PLAYERNAMEMAP.Player4) {
+            console.log(' current player type is '+ this._playerType + ' and joined player set is '+ playerType );
+            this.publishGameStartEvent();
+        }
     }
-
-    
-
 
     setupBoardList() {
         this.boardPathBoxList = [];
@@ -174,10 +192,6 @@ export default class LudoBoard extends LightningElement {
         publishPlatformEvent(JSON.stringify(data));
     }
 
-    setGameStart() {
-        this.isGameStarted = true;
-    }
-
     // new player joined 
     newPlayerJoined() {
         console.log('new player joined');
@@ -209,40 +223,45 @@ export default class LudoBoard extends LightningElement {
         console.log('component event handler ');
         console.log(event.detail);
         let data = JSON.parse(event.detail);
+        try {
+            switch(data.eventType) {
+                case PLATFORMEVENTTYPESMAP.RERUNEVENT:
+                    console.log('Game RERUNEVENT event type '+data.data);
+                    break;
+                
+                case PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT:
+                    this.positionChangeHandler(data);
+                    break;
 
-        switch(data.eventType) {
-            case PLATFORMEVENTTYPESMAP.RERUNEVENT:
-                console.log('Game RERUNEVENT event type '+data.data);
-                break;
-            
-            case PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT:
-                this.positionChangeHandler(data);
-                break;
+                case PLATFORMEVENTTYPESMAP.NOCHANGEEVENT:
+                    console.log('Game NOCHANGEEVENT event type '+data.data);
+                    break;        
+                case PLATFORMEVENTTYPESMAP.GAMESTARTEVENT:
+                    console.log('Game GAMESTARTEVENT event type '+data.data);
+                    this.gameStartEventHandler();
+                    break;
+                case PLATFORMEVENTTYPESMAP.PLAYERJOINEVENT:
+                    console.log('Game PLAYEJOINEVENT event type '+data.data);
+                    this.handlePlayerJoinEvent(data.data);
+                    break;
+                case PLATFORMEVENTTYPESMAP.GAMEOVEREVENT:
+                    console.log('Game GAMEOVEREVENT event type '+data.data);
+                    break;
+                case COMPONENTEVENTTYPESMAP.RANDOMNUMBEREVENT:
+                    console.log('Comp RANDOMNUMBEREVENT event type '+data.data);
+                    this.diceRolledDelegate(data.data);
+                    break;
+                default:
+                    console.log('default '+data.eventType + (data.eventType === PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT));
+                    break;
+                }
 
-            case PLATFORMEVENTTYPESMAP.NOCHANGEEVENT:
-                console.log('Game NOCHANGEEVENT event type '+data.data);
-                break;        
-            case PLATFORMEVENTTYPESMAP.GAMESTARTEVENT:
-                console.log('Game GAMESTARTEVENT event type '+data.data);
-                break;
-            case PLATFORMEVENTTYPESMAP.PLAYERJOINEVENT:
-                console.log('Game PLAYEJOINEVENT event type '+data.data);
-                this.handlePlayerJoinEvent(data.data);
-                break;
-            case PLATFORMEVENTTYPESMAP.GAMEOVEREVENT:
-                console.log('Game GAMEOVEREVENT event type '+data.data);
-                break;
-            case COMPONENTEVENTTYPESMAP.RANDOMNUMBEREVENT:
-                console.log('Comp RANDOMNUMBEREVENT event type '+data.data);
-                this.diceRolledDelegate(data.data);
-                break;
-            default:
-                console.log('default '+data.eventType + (data.eventType === PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT));
-                break;
+            if(data.firePlatformEvent === true) {
+                console.log('fire platform event ');
             }
-
-        if(data.firePlatformEvent === true) {
-            console.log('fire platform event ');
+        }
+        catch(e) {
+            console.log('exception in handler '+ JSON.stringify(e));
         }
 
     }
@@ -346,10 +365,9 @@ export default class LudoBoard extends LightningElement {
             this.moveCoinsOnBoardUi(data.data, blockArrayData);
             this.moveCoinsOnBoardUi(parseInt(data.data) + parseInt(this.diceMoveVal), blockArrayData);
             //console.log(JSON.stringify(blockReference));
-            } catch(e) {
+        } catch(e) {
                 console.log( ' exception '+ JSON.stringify(e));
-            }
-
+        }
     }
 
     // GENERIC PLATFORM EVENT HANLDERS
@@ -380,8 +398,13 @@ export default class LudoBoard extends LightningElement {
     
     // HANDLE GAMESTARTEVENT EVENT
     // this is the game started event , from which the game actually started
-    handleGameStartEvent() {
-        
+    gameStartEventHandler() {
+        console.log(' in game start event handler ');
+        this.isGameStarted = true;
+        // if playerType == player1 , then its your playermove
+        if(this._playerType === PLAYERNAMEMAP.Player1) {
+            this.currentPlayerMove = true;
+        }
     }
 
     // HANDLE PLAYEJOINEVENT EVENT
