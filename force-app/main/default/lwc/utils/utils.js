@@ -76,37 +76,28 @@ const BLOCKLIST = ['Block1', 'Block2', 'Block3', 'Block4'];
 const PLAYERLIST = ['Player1', 'Player2', 'Player3', 'Player4'];
 
 const COINOBJECTLIST = [
-    {'player' : 'Player1',
-    'details' : [
-        {'name': 'coin1', 'position': -1, 'isEnd': false, 'isStart': false},
-        {'name': 'coin2', 'position': -1, 'isEnd': false, 'isStart': false},
-        {'name': 'coin3', 'position': -1, 'isEnd': false, 'isStart': false},
-        {'name': 'coin4', 'position': -1, 'isEnd': false, 'isStart': false}
-    ]},
-    {'player' : 'Player2',
-    'details' : [
-        {'name': 'coin1', 'position': -1, 'isEnd': false, 'isStart': false},
-        {'name': 'coin2', 'position': -1, 'isEnd': false, 'isStart': false},
-        {'name': 'coin3', 'position': -1, 'isEnd': false, 'isStart': false},
-        {'name': 'coin4', 'position': -1, 'isEnd': false, 'isStart': false}
-    ]},
+    
+        {name: 'coin1', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player1, uniqueId: ('coin1' + PLAYERNAMEMAP.Player1)},
+        {name: 'coin2', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player1, uniqueId: ('coin2' + PLAYERNAMEMAP.Player1)},
+        {name: 'coin3', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player1, uniqueId: ('coin3' + PLAYERNAMEMAP.Player1)},
+        {name: 'coin4', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player1, uniqueId: ('coin4' + PLAYERNAMEMAP.Player1)},
 
-    {'player' : 'Player3',
-    'details' : [
-        {'name': 'coin1', 'position': -1, 'isEnd': false, 'isStart': false},
-        {'name': 'coin2', 'position': -1, 'isEnd': false, 'isStart': false},
-        {'name': 'coin3', 'position': -1, 'isEnd': false, 'isStart': false},
-        {'name': 'coin4', 'position': -1, 'isEnd': false, 'isStart': false}
-    ]},
+        {name: 'coin1', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player2, uniqueId: ('coin1' + PLAYERNAMEMAP.Player2)},
+        {name: 'coin2', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player2, uniqueId: ('coin2' + PLAYERNAMEMAP.Player2)},
+        {name: 'coin3', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player2, uniqueId: ('coin3' + PLAYERNAMEMAP.Player2)},
+        {name: 'coin4', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player2, uniqueId: ('coin4' + PLAYERNAMEMAP.Player2)},
 
-    {'player' : 'Player4',
-    'details' : [
-        {'name': 'coin1', 'position': -1, 'isEnd': false, 'isStart': false},
-        {'name': 'coin2', 'position': -1, 'isEnd': false, 'isStart': false},
-        {'name': 'coin3', 'position': -1, 'isEnd': false, 'isStart': false},
-        {'name': 'coin4', 'position': -1, 'isEnd': false, 'isStart': false}
-    ]}
+        {name: 'coin1', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player3, uniqueId: ('coin1' + PLAYERNAMEMAP.Player3)},
+        {name: 'coin2', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player3, uniqueId: ('coin2' + PLAYERNAMEMAP.Player3)},
+        {name: 'coin3', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player3, uniqueId: ('coin3' + PLAYERNAMEMAP.Player3)},
+        {name: 'coin4', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player3, uniqueId: ('coin4' + PLAYERNAMEMAP.Player3)},
+
+        {name: 'coin1', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player4, uniqueId: ('coin1' + PLAYERNAMEMAP.Player4)},
+        {name: 'coin2', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player4, uniqueId: ('coin2' + PLAYERNAMEMAP.Player4)},
+        {name: 'coin3', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player4, uniqueId: ('coin3' + PLAYERNAMEMAP.Player4)},
+        {name: 'coin4', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player4, uniqueId: ('coin4' + PLAYERNAMEMAP.Player4)}
 ];
+
 
 const HARDCODEDBLOCK1VALUESLIST = [ 
                                     18, 12, 1,
