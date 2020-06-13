@@ -9,8 +9,17 @@ sample platform event :
 
 */
 const CURRENTORGNAMESPACE = 'shivalwc';
+const LUDOEVENTNAME = 'LudoEvent__e';
+const PLATFORMEVENTSUBSCRIPTIONURL = '/event/'+CURRENTORGNAMESPACE+'__'+LUDOEVENTNAME;
 
-const PLATFORMEVENTSUBSCRIPTIONURL = '/event/shivalwc__LudoEvent__e';
+const APEXOUTPUTCONSTANTMAP = {
+    'playerName' : 'playerName',
+    'playerType' : 'playerType',
+    'playerBoardId' : 'playerBoardId',
+    'playerJoinedNo' : 'playerJoinedNo',
+    'maxPlayerCount' : 'maxPlayerCount',
+    'isLastPlayer' : 'isLastPlayer'
+};
 
 const PLAYERCOLORMAP = {
    'Player1' : 'blue',
@@ -53,7 +62,8 @@ const GENERICCOMPONENTEVENT = 'componentevent';
 const COMPONENTEVENTTYPESMAP = {
     'positionchangeevent': 'positionchangeevent',
     'RANDOMNUMBEREVENT': 'RANDOMNUMBEREVENT',
-    'BOARDSETUPEVENT': 'BOARDSETUPEVENT'
+    'BOARDSETUPEVENT': 'BOARDSETUPEVENT',
+    'PLAYERMOVECOINPOSITION': 'PLAYERMOVECOINPOSITION'
 };
 //different Perspective based on player1
 const GAMEPERSPECTIVEMAP = {
@@ -187,9 +197,12 @@ const fetchHardCodedBlockValues = function(blockName) {
 // sample component event 
 // {data: dataNum, firePlatformEvent: true, eventType: COMPONENTEVENTTYPESMAP.positionchangeevent}
 
-const fireComponentEvent = function( params, reference) {
+const fireComponentEvent = function( params, reference, isBubbles, isComposed) {
     console.log('in fire compponent event '+GENERICCOMPONENTEVENT);
-    const eventToFire = new CustomEvent(GENERICCOMPONENTEVENT, { detail: params });
+    const eventToFire = new CustomEvent(GENERICCOMPONENTEVENT, { detail: params,
+                                            bubbles: isBubbles, composed: isComposed
+    
+                        });
     // Dispatches the event.
     reference.dispatchEvent(eventToFire);
 };
@@ -203,6 +216,6 @@ export {
     HARDCODEDBLOCK3VALUESLIST, HARDCODEDBLOCK4VALUESLIST,
     COLORLIST, COINOBJECTLIST, PLAYERLIST, 
     PLAYERCOLORMAP, BLOCKMAP, GAMEPERSPECTIVEMAP, PLATFORMEVENTTYPESMAP, COMPONENTEVENTTYPESMAP,
-    PLAYERNAMEMAP, PLAYERINDEXMAP
+    PLAYERNAMEMAP, PLAYERINDEXMAP, APEXOUTPUTCONSTANTMAP
     
  };

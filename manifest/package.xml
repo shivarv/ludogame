@@ -3,8 +3,8 @@
     <types>
         <members>LudoUtility</members>
         <members>LudoEventTypes</members>
-        <members>LudoPlayerTriggerHandler</members>
         <members>LudoCreatePlayer</members>
+        <members>LudoOutputData</members>
         <name>ApexClass</name>
     </types>
      <types>
@@ -19,12 +19,13 @@
         <members>ludoBoard</members>
         <members>ludoGame</members>
         <members>ludoGameRequest</members>
-        <members>ludoPlayerEndBox</members>
         <members>ludoMiddlePath</members>
-        <members>ludoVerticalPath</members>
+        <members>ludoPlatformEventSubscription</members>
+        <members>ludoPlayerEndBox</members>
+        <members>ludoPlayerInfo</members>
         <members>ludoPlayerStartBox</members>
         <members>ludoRollModal</members>
-        <members>ludoPlatformEventSubscription</members>
+        <members>ludoVerticalPath</members>
         <members>utils</members>
         <name>LightningComponentBundle</name>
     </types>

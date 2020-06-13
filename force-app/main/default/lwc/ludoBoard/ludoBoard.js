@@ -31,20 +31,38 @@ export default class LudoBoard extends LightningElement {
     player1Name;
     isPlayer1Move = false;
     isPlayer1Joined = false;
+    isPlayer1Last = false;
     player2Name = false
     isPlayer2Move = false;
     isPlayer2Joined = false
+    isPlayer2Last = false;
     player3Name = false
     isPlayer3Move = false;
     isPlayer3Joined = false
+    isPlayer3Last = false;
     player4Name = false
     isPlayer4Move = false;
     isPlayer4Joined;
+    isPlayer4Last = false;
     isFirstLoaded = false;
 
+    playerClickCoin = false;
+    
+    _isLastPlayer;
     _playerName;
     _playerType;
     _playerBoardId;
+
+    @api
+    get isLastPlayer() {
+        return this._isLastPlayer;
+    }
+
+    set isLastPlayer(value) {
+        this._isLastPlayer = value;
+        //set isLast Player
+        this.setIndividualPlayerVariable(this._playerType, this._playerName, true, true);
+    }
 
     @api
     get playerBoardId() {
@@ -73,7 +91,7 @@ export default class LudoBoard extends LightningElement {
     set playerType(value) {
         this._playerType = value;
         this.setPlayerIndex();
-        this.setIndividualPlayerVariable(this._playerType, this._playerName, true);
+        this.setIndividualPlayerVariable(this._playerType, this._playerName, true, false);
     }
 
 
@@ -92,6 +110,7 @@ export default class LudoBoard extends LightningElement {
         }
     }
 
+    
     constructor() {
         super();
         this.coinObjectList = COINOBJECTLIST;
@@ -105,7 +124,7 @@ export default class LudoBoard extends LightningElement {
         publishGameStartPlatformEventMethod({'eventData':'','ludoBoardId':this._playerBoardId})
             .then(result => {
             console.log('success publishGameStartEvent ');
-            mainThis.gameStartEventHandler();
+            mainThis.setGameStartAndPlayerMove();
         }).catch(error => {
             console.log('error is '+ JSON.stringify(error));
         });
@@ -122,7 +141,7 @@ export default class LudoBoard extends LightningElement {
         for(let i = 0; i < playersData.length; i++) {
             console.log(JSON.stringify(playersData));
             this.setIndividualPlayerVariable(playersData[i].playerType, 
-                                    playersData[i].playerName, true);
+                                    playersData[i].playerName, true, false);
         }
     }
 
@@ -131,20 +150,24 @@ export default class LudoBoard extends LightningElement {
         this.playerIndex = PLAYERINDEXMAP[this._playerType];
     }
 
-    setIndividualPlayerVariable(playerType, playerName, isJoined) {
+    setIndividualPlayerVariable(playerType, playerName, isJoined, isLastPlayer) {
         console.log('in setIndividualPlayerVariable method');
         if(playerType === PLAYERNAMEMAP.Player1) {
             this.isPlayer1Joined = isJoined;
             this.player1Name = playerName;
+            this.isPlayer1Last = isLastPlayer;
         } else if(playerType === PLAYERNAMEMAP.Player2) {
             this.isPlayer2Joined = isJoined;
             this.player2Name = playerName;
+            this.isPlayer2Last = isLastPlayer;
         } else if(playerType === PLAYERNAMEMAP.Player3) {
             this.isPlayer3Joined = isJoined;
             this.player3Name = playerName;
+            this.isPlayer3Last = isLastPlayer;
         } else if(playerType === PLAYERNAMEMAP.Player4) {
             this.isPlayer4Joined = isJoined;
             this.player4Name = playerName;
+            this.isPlayer4Last = isLastPlayer;
         } else {
             console.log('invalid error ');
         }
@@ -157,6 +180,9 @@ export default class LudoBoard extends LightningElement {
         if(this._playerType === PLAYERNAMEMAP.Player1 && playerType === PLAYERNAMEMAP.Player4) {
             console.log(' current player type is '+ this._playerType + ' and joined player set is '+ playerType );
             this.publishGameStartEvent();
+        }
+        if(isLastPlayer === true) {
+            this.setGameStartAndPlayerMove();
         }
     }
 
@@ -319,10 +345,12 @@ export default class LudoBoard extends LightningElement {
     }
 
     diceRolledDelegate(diceMoveVal) {
+        // if its 1, attach event to startbox , else attach event to the location on the boardbox
         console.log('in diceRolledDelegate, the rolled dice value is '+ diceMoveVal);
         let mainThis = this;
         this.isRollBoxOpen = false;
         this.diceMoveVal = diceMoveVal;
+        this.playerClickCoin = true;
         if(! (diceMoveVal === 1 || diceMoveVal === 6) ) {
             return;
         }
@@ -343,7 +371,9 @@ export default class LudoBoard extends LightningElement {
         }, this);
         if(!eleRef) {
             console.log('no ref obtained ');
+            return;
         }
+        // call the attach event
         eleRef.attachClickEventListener();
     }
 
@@ -400,11 +430,18 @@ export default class LudoBoard extends LightningElement {
     // this is the game started event , from which the game actually started
     gameStartEventHandler() {
         console.log(' in game start event handler ');
+        this.setGameStartAndPlayerMove();
+
+    }
+
+    setGameStartAndPlayerMove() {
+        console.log(' in setGameStartAndPlayerMove method ');
         this.isGameStarted = true;
         // if playerType == player1 , then its your playermove
         if(this._playerType === PLAYERNAMEMAP.Player1) {
             this.currentPlayerMove = true;
         }
+
     }
 
     // HANDLE PLAYEJOINEVENT EVENT
@@ -420,7 +457,9 @@ export default class LudoBoard extends LightningElement {
         let playerTypeValue = parsedInputData.playerType;
         let playerNameValue = parsedInputData.playerName;
         let playerIsJoined = true;
-        this.setIndividualPlayerVariable(playerTypeValue, playerNameValue, playerIsJoined);        
+        let isLastPlayer = (!parsedInputData || !parsedInputData.isLastPlayer || parsedInputData.isLastPlayer.toLowerCase() !== 'true') ? 
+                                    false : true;
+        this.setIndividualPlayerVariable(playerTypeValue, playerNameValue, playerIsJoined, isLastPlayer);        
     }
 
     // HANDLE GAMEOVEREVENT EVENT

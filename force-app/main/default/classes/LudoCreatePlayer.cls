@@ -98,6 +98,8 @@ public with sharing class LudoCreatePlayer {
         outputMap.put(LudoConstants.PLAYERBOARDIDTEXT, playerBoardId);
         outputMap.put(LudoConstants.PLAYERJOINEDNOTEXT, String.valueOf(playerJoinedNo));
         outputMap.put(LudoConstants.MAXPLAYERCOUNTTEXT, String.valueOf(maxPlayerCount));
+        outputMap.put(LudoConstants.ISLASTPLAYERTEXT, String.valueOf(playerJoinedNo == maxPlayerCount));
+
         return outputMap;
     }
 

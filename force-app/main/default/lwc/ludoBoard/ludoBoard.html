@@ -2,12 +2,13 @@
     <div>
         <div  class="playerInfoBox"> 
             <c-ludo-player-info player-name={player2Name} is-current-move={isPlayer2Move} 
-            is-player-joined={isPlayer2Joined}></c-ludo-player-info>
+            is-player-joined={isPlayer2Joined} oncomponentevent={componentEventHandler}></c-ludo-player-info>
         </div>
         <div class="playerInfoGapBox">
         </div>
         <div class="playerInfoBox">
-            <c-ludo-player-info player-name={player3Name} is-current-move={isPlayer3Move} is-player-joined={isPlayer3Joined}></c-ludo-player-info>
+            <c-ludo-player-info player-name={player3Name} is-current-move={isPlayer3Move} 
+            is-player-joined={isPlayer3Joined} oncomponentevent={componentEventHandler}></c-ludo-player-info>
         </div>
     </div>
     <!-- first line box ludo -->
@@ -68,20 +69,16 @@
 
     <div>
         <div class="playerInfoBox"> 
-            <c-ludo-player-info player-name={player1Name} is-current-move={isPlayer1Move} is-player-joined={isPlayer1Joined}></c-ludo-player-info>
+            <c-ludo-player-info player-name={player1Name} is-current-move={isPlayer1Move} 
+            is-player-joined={isPlayer1Joined} oncomponentevent={componentEventHandler}></c-ludo-player-info>
         </div>
         <div class="playerInfoGapBox">
         </div>
         <div class="playerInfoBox">
-            <c-ludo-player-info player-name={player4Name} is-current-move={isPlayer4Move} is-player-joined={isPlayer4Joined}></c-ludo-player-info>
+            <c-ludo-player-info player-name={player4Name} is-current-move={isPlayer4Move}
+             is-player-joined={isPlayer4Joined} oncomponentevent={componentEventHandler}></c-ludo-player-info>
         </div>
     </div>
 
-    <template if:true={isRollBoxOpen}>
-
-    <div>
-        <c-ludo-roll-modal oncomponentevent={componentEventHandler} ></c-ludo-roll-modal>
-    </div>
     
-    </template>
 </template>

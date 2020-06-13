@@ -14,6 +14,10 @@ export default class LudoPlayerInfo extends LightningElement {
         console.log('in connectcallback ludoplayerInfo '+ this.playerName + ' '+ this.isCurrentMove);
     }
 
+    componentEventHandler(event) {
+        console.log('in event handler of ludoplayer info box');
+    }
+
 
 
 }

@@ -106,7 +106,7 @@ export default class LudoPlayerStartBox extends LightningElement {
 
     handleClick() {
         console.log('in handle click ludoPlayerBox '+this.playerType );
-        this.removeEventListener('click', this.handleClick);
+        //this.removeEventListener('click', this.handleClick);
     }
 
     removeClickEventListener() {

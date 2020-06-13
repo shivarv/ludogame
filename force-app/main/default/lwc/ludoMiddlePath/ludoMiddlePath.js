@@ -54,7 +54,7 @@ export default class LudoMiddlePath extends LightningElement {
                 firePlatformEvent: true,
                 eventType: PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT
             };
-            fireComponentEvent(JSON.stringify(inputVal), this);
+            fireComponentEvent(JSON.stringify(inputVal), this, false, false);
         }
 
         console.log('inner html ' + event.target.innerHTML);
@@ -82,5 +82,24 @@ export default class LudoMiddlePath extends LightningElement {
             setDivCss(newCretedDivEle, coinsList[i], i, coinsList.length);
             divToUpdate.appendChild(newCretedDivEle);
         }
+    }
+   
+    // method to attach click event listener to the coin elements of current player
+    @api
+    attachClickEventListener(listOfObjectPosition) {
+        console.log(' in attachClickEventListener');
+        //find the elements and attach event listener to those
+        this.addEventListener('click', this.handleClick);
+    }
+
+    handleClick() {
+        console.log('in handle click ludoPlayerBox '+this.playerType );
+        //this.removeEventListener('click', this.handleClick);
+    }
+
+    @api
+    removeClickEventListener() {
+        console.log(' in removeClickEventListener ');
+        this.removeEventListener('click', this.handleClick);
     }
 }

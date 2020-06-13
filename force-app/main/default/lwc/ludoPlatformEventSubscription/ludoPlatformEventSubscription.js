@@ -66,7 +66,7 @@ export default class LudoPlatformEventSubscription extends LightningElement {
     firePlatformComponentEvent(dataString, eventType) {
         console.log('in fireRandomNumberEvent');
         let inputData = {data: dataString, isPlatformEvent: true, eventType: eventType};
-        fireComponentEvent(JSON.stringify(inputData), this)
+        fireComponentEvent(JSON.stringify(inputData), this, false, false)
     }
 
     loadSessionId() {

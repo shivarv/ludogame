@@ -38,7 +38,7 @@ export default class LudoVerticalPath extends LightningElement {
         if(event.target.dataset.val) {
             dataNum = event.target.dataset.val;
             let inputVal = {data: dataNum, firePlatformEvent: true, eventType: PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT};
-            fireComponentEvent(JSON.stringify(inputVal), this);
+            fireComponentEvent(JSON.stringify(inputVal), this, false, false);
         }
         console.log('inner html '+event.target.innerHTML);
       //  let divEle = document.createElement('div');
@@ -65,6 +65,27 @@ export default class LudoVerticalPath extends LightningElement {
             setDivCss(newCretedDivEle, coinsList[i], i, coinsList.length);
             divToUpdate.appendChild(newCretedDivEle);
         }
+    }
+
+
+    // method to attach click event listener to the coin elements of current player
+    @api
+    attachClickEventListener(listOfObjectPosition) {
+        console.log(' in attachClickEventListener');
+        //find the elements and attach event listener to those
+        this.addEventListener('click', this.handleClick);
+    }
+
+    handleClick() {
+        console.log('in handle click ludoPlayerBox '+this.playerType );
+        this.removeEventListener('click', this.handleClick);
+        //fireChosenMoveElement
+    }
+
+    @api
+    removeClickEventListener() {
+        console.log(' in removeClickEventListener ');
+        this.removeEventListener('click', this.handleClick);
     }
 
 

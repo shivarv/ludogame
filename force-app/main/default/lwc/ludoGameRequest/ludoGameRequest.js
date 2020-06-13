@@ -110,8 +110,9 @@ export default class LudoGameRequest extends LightningElement {
         let inputVal = {data: {playerName : result.playerName, playerType: result.playerType,
             playersJoinedList: playersListText,  
             playerBoardId: result.playerBoardId, playerJoinedNo: result.playerJoinedNo,
-            playerMaxCount: result.playerMaxCount
+            playerMaxCount: result.playerMaxCount,
+            isLastPlayer: result.isLastPlayer
         }, eventType: COMPONENTEVENTTYPESMAP.BOARDSETUPEVENT};
-        fireComponentEvent(JSON.stringify(inputVal), this);
+        fireComponentEvent(JSON.stringify(inputVal), this, false, false);
     }
 }
