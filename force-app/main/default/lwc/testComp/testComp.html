@@ -5,5 +5,20 @@
         label="Start Game"
         onclick={handlePlayerSubmit}>
     </lightning-button>
+
+
+    <lightning-button
+        variant="brand"
+        label="Change child value"
+        onclick={changeChildValue}>
+    </lightning-button>
+
+    <lightning-button
+        variant="brand"
+        label="Change parent value"
+        onclick={changeParentValue}>
+    </lightning-button>
     
+
+    <c-test-get-set-method test-val={testVal} test-text={testText}></c-test-get-set-method>
 </template>

@@ -10,6 +10,10 @@ import LUDO_OBJECT_UNIQUEID from '@salesforce/schema/LudoPlayer__c.unique_Id_Val
 
 export default class TestComp extends LightningElement {
 
+    testVal = 2;
+
+    testText = 'hello default';
+
     constructor() {
         super();
         console.log(' LUDO_OBJECT_NAME '+ LUDO_OBJECT_NAME.fieldApiName + ' '  +
@@ -51,5 +55,20 @@ export default class TestComp extends LightningElement {
             console.log('error is '+ JSON.stringify(error));
             this.error = error;
         }); 
+    }
+
+    changeParentValue() {
+        console.log('in changeParentValue ');
+        this.testVal = this.testVal + 1;
+
+
+        this.testText += 'updated';
+    }
+
+    changeChildValue() {
+        console.log('in changeChildValue ');
+        let ele = this.template.querySelector('c-test-get-set-method').setDataMethod();
+
+
     }
 }
