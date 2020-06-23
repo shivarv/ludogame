@@ -64,8 +64,8 @@ export default class LudoPlatformEventSubscription extends LightningElement {
     }
 
     firePlatformComponentEvent(dataString, eventType) {
-        console.log('in fireRandomNumberEvent');
-        let inputData = {data: dataString, isPlatformEvent: true, eventType: eventType};
+        console.log('in firePlatformComponentEvent Method');
+        let inputData = {data: dataString, firePlatformEvent: false, eventType: eventType};
         fireComponentEvent(JSON.stringify(inputData), this, false, false)
     }
 
@@ -87,14 +87,14 @@ export default class LudoPlatformEventSubscription extends LightningElement {
            $.cometd.subscribe(PLATFORMEVENTSUBSCRIPTIONURL, function (message){
                 console.log(' in event subscription '+JSON.stringify(message));
                 console.log(' playerBoardId '+ mainThis.playerBoardId );
-                console.log(' playerBoardId '+ mainThis.playerType );
+                console.log(' playerType '+ mainThis.playerType );
 
                 if(!message || !message.data || !message.data.payload
                     || !message.data.payload.shivalwc__playerType__c 
-                    || message.data.payload.shivalwc__playerType__c === mainThis.playerType
                     || !message.data.payload.shivalwc__ludoBoardId__c
-                    || message.data.payload.shivalwc__ludoBoardId__c !== mainThis.playerBoardId
                     || !message.data.payload.shivalwc__eventType__c
+                    || message.data.payload.shivalwc__ludoBoardId__c !== mainThis.playerBoardId
+                    || message.data.payload.shivalwc__playerType__c === mainThis.playerType
                 ) {
                     console.log('either boardid or playerType is not right ');
                     return;

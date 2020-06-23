@@ -137,7 +137,7 @@ public with sharing class LudoCreatePlayer {
     @auraEnabled
     public static void fireGameStartPlatformEvent(String eventData, String ludoBoardId) {
         String playerType = LudoUtility.player1; // player1 will start the game event
-        System.debug('in fireGameStartPlatformEvent method ');
+        System.debug('in fireGameStartPlatformEvent method '+eventData);
         LudoUtility.publishPlatformEvent(eventData, LudoEventTypes.LUDOEVENTENUM.GAMESTARTEVENT,
                                             playerType, ludoBoardId);
     }

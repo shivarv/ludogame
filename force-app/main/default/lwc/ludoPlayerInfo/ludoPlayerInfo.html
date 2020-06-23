@@ -8,9 +8,7 @@
 
     <span>
         <template if:true={isCurrentMove}>
-            <div>
-                <c-ludo-dice ></c-ludo-dice>
-            </div>
+            <c-ludo-dice oncomponentevent={componentEventHandler} is-open={isCurrentMove}></c-ludo-dice>
         </template>
     </span>
 </template>

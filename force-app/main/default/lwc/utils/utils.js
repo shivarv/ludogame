@@ -11,6 +11,7 @@ sample platform event :
 const CURRENTORGNAMESPACE = 'shivalwc';
 const LUDOEVENTNAME = 'LudoEvent__e';
 const PLATFORMEVENTSUBSCRIPTIONURL = '/event/'+CURRENTORGNAMESPACE+'__'+LUDOEVENTNAME;
+const MAXVALUEFORHOME = 57;
 
 const APEXOUTPUTCONSTANTMAP = {
     'playerName' : 'playerName',
@@ -71,6 +72,14 @@ const GAMEPERSPECTIVEMAP = {
     'Player2' : 13,
     'Player3' : 26,
     'Player3' : 39
+}
+
+//different Perspective based on player1
+const PLAYERSTARTPOSITIONMAP = {
+    'Player1' : 14, // no 14 is for blue
+    'Player2' : 32, // no 32 is for red
+    'Player3' : 50, // no 50 is for green
+    'Player3' : 71 // no 71 is for yellow
 }
 
 const BLOCKMAP = {
@@ -138,6 +147,33 @@ const HARDCODEDBLOCK4VALUESLIST = [
 
 /* functions 
 */
+
+
+const getNextPlayerName = function(playerType) {
+    let  index = getNextPlayerIndex(playerType);
+    if(index == null || index == -1) {
+        return '';
+    }
+    return PLAYERLIST[index];
+}
+
+const getNextPlayerIndex = function(playerType) {
+    console.log(' in getNext Player method ');
+    let index;
+    let nextIndex;
+    if(!PLAYERLIST || PLAYERLIST.length === 0) {
+        console.log('error , PlayerList is null or empty');
+        return null;
+    }
+    index = PLAYERLIST.indexOf(playerType);
+    if(index === -1) {
+        console.log('error , no playerIndex is found');
+        return null;
+    }
+    nextIndex = (index === PLAYERLIST.length - 1) ? 0 : index + 1;
+    console.log( nextIndex + ' '+ PLAYERLIST[nextIndex]);
+    return nextIndex;
+}
 
 const  setDivCss = function(divEle, playerType, zIndex, totalSize) {
     if(!divEle || (!playerType && playerType != 0)  || !PLAYERLIST || !PLAYERLIST[playerType] || !PLAYERCOLORMAP
@@ -209,9 +245,12 @@ const fireComponentEvent = function( params, reference, isBubbles, isComposed) {
 
 
 
+
+
+
 export {
-    BLOCKBOXESSIZE, PLATFORMEVENTSUBSCRIPTIONURL, CURRENTORGNAMESPACE,
-    fireComponentEvent, fetchHardCodedBlockValues, setDivCss, getBlockNumber,
+    BLOCKBOXESSIZE, PLATFORMEVENTSUBSCRIPTIONURL, CURRENTORGNAMESPACE, MAXVALUEFORHOME,
+    fireComponentEvent, fetchHardCodedBlockValues, setDivCss, getBlockNumber, getNextPlayerIndex,
     HARDCODEDBLOCK1VALUESLIST, HARDCODEDBLOCK2VALUESLIST,
     HARDCODEDBLOCK3VALUESLIST, HARDCODEDBLOCK4VALUESLIST,
     COLORLIST, COINOBJECTLIST, PLAYERLIST, 

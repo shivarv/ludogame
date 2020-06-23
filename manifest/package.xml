@@ -17,6 +17,7 @@
     </types>
     <types>
         <members>ludoBoard</members>
+        <members>ludoDice</members>
         <members>ludoGame</members>
         <members>ludoGameRequest</members>
         <members>ludoMiddlePath</members>
