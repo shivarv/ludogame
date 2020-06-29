@@ -5,10 +5,18 @@
     <span>
         {isCurrentMove}
     </span>
+    <span>
+        {currentPlayerTypeTurn}
+    </span>
+    <span>
+        {thisPlayerType}
+    </span>
 
     <span>
         <template if:true={isCurrentMove}>
-            <c-ludo-dice oncomponentevent={componentEventHandler} is-open={isCurrentMove}></c-ludo-dice>
+            <c-ludo-dice oncomponentevent={componentEventHandler} is-open={isCurrentMove}
+            current-player-type-turn={currentPlayerTypeTurn} this-player-type={thisPlayerType}
+            ></c-ludo-dice>
         </template>
     </span>
 </template>

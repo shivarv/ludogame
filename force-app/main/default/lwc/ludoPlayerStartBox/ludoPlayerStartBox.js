@@ -98,10 +98,16 @@ export default class LudoPlayerStartBox extends LightningElement {
     }
 
     @api
-    attachClickEventListener() {
+    attachClickEventListener(listOfObjectPosition) {
         console.log(' in attachClickEventListener ');
         this.addEventListener('click', this.handleClick);
+    }
 
+    @api
+    attachClickEventListenerToIndividualElement(element) {
+        console.log(' in attachClickEventListenerToIndividualElement '+ element);
+         //find the elements and attach event listener to those
+        this.addEventListener('click', this.handleClick);
     }
 
     handleClick() {

@@ -12,6 +12,7 @@ const CURRENTORGNAMESPACE = 'shivalwc';
 const LUDOEVENTNAME = 'LudoEvent__e';
 const PLATFORMEVENTSUBSCRIPTIONURL = '/event/'+CURRENTORGNAMESPACE+'__'+LUDOEVENTNAME;
 const MAXVALUEFORHOME = 57;
+const HOME = 'HOME';
 
 const APEXOUTPUTCONSTANTMAP = {
     'playerName' : 'playerName',
@@ -215,7 +216,7 @@ const fetchHardCodedBlockValues = function(blockName) {
  };
 
 
- const getBlockNumber = function(val) {
+ const getBlockNumberName = function(val) {
     if(val > 0 && val <= 18) {
          return BLOCKMAP.Block1;
     } else if(val > 18 && val <= 36) {
@@ -225,7 +226,25 @@ const fetchHardCodedBlockValues = function(blockName) {
     } else if(val > 54 && val <= 72) {
         return BLOCKMAP.Block4;
     } 
-    return 'Home';
+    return HOME;
+ }
+
+ // this method is a helper method to get list of values 
+ // from the objList based on the propertyValueProvided
+ const getPropertyValuesFromObjectList = function(objList, propertyValue) {
+    let valuesList = [];
+    let len;
+    if(!objList || objList.length === 0 || !propertyValue) {
+        return null;
+    }
+    len = objList.length;
+    for(let i = 0; i < len; i++) {
+    	if(!objList[i][propertyValue]) {
+        	continue;
+        }
+        valuesList.push(objList[i][propertyValue]);
+    }
+    return valuesList;
  }
 
 //params must be object
@@ -249,8 +268,9 @@ const fireComponentEvent = function( params, reference, isBubbles, isComposed) {
 
 
 export {
-    BLOCKBOXESSIZE, PLATFORMEVENTSUBSCRIPTIONURL, CURRENTORGNAMESPACE, MAXVALUEFORHOME,
-    fireComponentEvent, fetchHardCodedBlockValues, setDivCss, getBlockNumber, getNextPlayerIndex,
+    BLOCKBOXESSIZE, PLATFORMEVENTSUBSCRIPTIONURL, CURRENTORGNAMESPACE, MAXVALUEFORHOME, HOME, 
+    fireComponentEvent, fetchHardCodedBlockValues, setDivCss, getBlockNumberName, 
+    getNextPlayerIndex, getNextPlayerName, getPropertyValuesFromObjectList,
     HARDCODEDBLOCK1VALUESLIST, HARDCODEDBLOCK2VALUESLIST,
     HARDCODEDBLOCK3VALUESLIST, HARDCODEDBLOCK4VALUESLIST,
     COLORLIST, COINOBJECTLIST, PLAYERLIST, 

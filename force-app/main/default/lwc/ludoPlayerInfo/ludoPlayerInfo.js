@@ -4,6 +4,8 @@ export default class LudoPlayerInfo extends LightningElement {
     @api playerName;
     @api isCurrentMove;
     @api isPlayerJoined;
+    @api currentPlayerTypeTurn;
+    @api thisPlayerType;
 
     constructor() {
         super();

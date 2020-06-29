@@ -76,6 +76,14 @@ export default class LudoVerticalPath extends LightningElement {
         this.addEventListener('click', this.handleClick);
     }
 
+    // to attach to individual ele block div
+    @api
+    attachClickEventListenerToIndividualElement(element) {
+        console.log(' in attachClickEventListenerToIndividualElement '+ element);
+        //find the elements and attach event listener to those
+        this.addEventListener('click', this.handleClick);
+    }
+
     handleClick() {
         console.log('in handle click ludoPlayerBox '+this.playerType );
         this.removeEventListener('click', this.handleClick);

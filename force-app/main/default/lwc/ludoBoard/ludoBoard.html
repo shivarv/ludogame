@@ -1,13 +1,16 @@
 <template>
     <div>
         <div  class="playerInfoBox"> 
+            <lightning-button variant="base" label="test method " onclick={dummyTest} class="slds-m-left_x-small"></lightning-button>
             <c-ludo-player-info player-name={player2Name} is-current-move={isPlayer2Move} 
+            current-player-type-turn={currentPlayerTurn} this-player-type={playerType}
             is-player-joined={isPlayer2Joined} oncomponentevent={componentEventHandler}></c-ludo-player-info>
         </div>
         <div class="playerInfoGapBox">
         </div>
         <div class="playerInfoBox">
             <c-ludo-player-info player-name={player3Name} is-current-move={isPlayer3Move} 
+            current-player-type-turn={currentPlayerTurn} this-player-type={playerType}
             is-player-joined={isPlayer3Joined} oncomponentevent={componentEventHandler}></c-ludo-player-info>
         </div>
     </div>
@@ -70,12 +73,14 @@
     <div>
         <div class="playerInfoBox"> 
             <c-ludo-player-info player-name={player1Name} is-current-move={isPlayer1Move} 
+            current-player-type-turn={currentPlayerTurn} this-player-type={playerType}
             is-player-joined={isPlayer1Joined} oncomponentevent={componentEventHandler}></c-ludo-player-info>
         </div>
         <div class="playerInfoGapBox">
         </div>
         <div class="playerInfoBox">
-            <c-ludo-player-info player-name={player4Name} is-current-move={isPlayer4Move}
+            <c-ludo-player-info player-name={player4Name} is-current-move={isPlayer4Move} 
+            current-player-type-turn={currentPlayerTurn} this-player-type={playerType}
              is-player-joined={isPlayer4Joined} oncomponentevent={componentEventHandler}></c-ludo-player-info>
         </div>
     </div>
