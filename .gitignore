@@ -45,3 +45,6 @@ force-app/main/default/lwc/testComp/testComp.js
 force-app/main/default/lwc/testComp/testComp.js
 force-app/main/default/lwc/testComp/testComp.html
 force-app/main/default/lwc/testComp/testComp.js
+force-app/main/default/lwc/testmoment/testmoment.html
+force-app/main/default/lwc/testmoment/testmoment.js
+force-app/main/default/lwc/testmoment/testmoment.js-meta.xml

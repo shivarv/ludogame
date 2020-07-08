@@ -18,8 +18,6 @@ export default class LudoBoard extends LightningElement {
 
     playerIndex;
     
-    recentlyActivatedNumList;
-    recentlyActivatedBlockList;
     recentlyActivatedBlockValueMap;
 
     @api playerJoinedNo; //player who start the game sets this
@@ -321,11 +319,16 @@ export default class LudoBoard extends LightningElement {
                 case PLATFORMEVENTTYPESMAP.RERUNEVENT:
                     console.log('Game RERUNEVENT event type '+data.data);
                     break;
+                    
+                case  PLATFORMEVENTTYPESMAP.COINCLICKEDEVENT:
+                    console.log('Game COINCLICKEDEVENT event type '+data.data);
+                    this.handleCoinClickedEvent(data);
+                    break;
                 
                 case PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT:
                     //this.positionChangeHandler(data);
                     //this.handlePositionChangeEvent(data);
-                    this.handleNoChangeEvent(data)
+                    this.handleNoChangeEvent(data);
                     break;
 
                 case PLATFORMEVENTTYPESMAP.NOCHANGEEVENT:
@@ -483,27 +486,35 @@ export default class LudoBoard extends LightningElement {
         eleRef.attachClickEventListener([]);
     }
 
-    isMovePresentForPlayer() {
-        console.log(' in isMovePresentForPlayer method ');
+    isMovePresentForPlayer(diceMoveVal) {
+        console.log(' in isMovePresentForPlayer method '+diceMoveVal);
         let currentPlayerCoinsList = this.getCurrentPlayerCoins();
         let isMoveAllowed = false;
         let nonStartedCoinsList;
-        let isAllAtStartBox = true;
+        let startedAndNonEndedCoinsList;
+
+        let isAnyAtStartBox = true;
         let i = 0;
-        let len = currentPlayerCoinsList.length;
+        let startedElementslen;
         nonStartedCoinsList = currentPlayerCoinsList.filter(function(indCoin) {
                                     return indCoin.isStart === false;
                             });
-        isAllAtStartBox = (nonStartedCoinsList.length === 4);
-        if(isAllAtStartBox) {
-            isMoveAllowed = (diceMoveVal === 1) ? true : false;
+        startedAndNonEndedCoinsList  = currentPlayerCoinsList.filter(function(indCoin) {
+            return (indCoin.isEnd === false && indCoin.isStart === true);
+        });
+        startedElementslen = startedAndNonEndedCoinsList.length;
+        isAnyAtStartBox = (nonStartedCoinsList.length > 0);
+        if(isAnyAtStartBox && diceMoveVal === 1) {
+            isMoveAllowed = true;
             return isMoveAllowed;
         }
-        while(i < len) {
-            if(currentPlayerCoinsList[i].isEnd === false && (currentPlayerCoinsList[i].position + diceVal <= MAXVALUEFORHOME)) {
+        while(i < startedElementslen) {
+            if(startedAndNonEndedCoinsList[i].position + diceMoveVal <= MAXVALUEFORHOME) {
                 isMoveAllowed = true;
+                break;
             }
         }
+        console.log(' in isMovePresentForPlayer '+ isMoveAllowed);
         return isMoveAllowed;
     }
 
@@ -541,7 +552,7 @@ export default class LudoBoard extends LightningElement {
         }
     }
 
-    // HANDLE RANDOMNUMBEREVENT
+    // HANDLE RANDOMNUMBEREVENT or for diceClick event
     handleRandomNumberEvent(data) {
         console.log(' in handleRandomNumberEvent method');
         this.canPlayerClickCoin = true;
@@ -549,11 +560,12 @@ export default class LudoBoard extends LightningElement {
             console.error(' no data value or data.data value');
         }
         let numberValue = parseInt(data.data);
+        this.diceMoveVal = numberValue;
         if(this.isMovePresentForPlayer(numberValue)) {
-            this.canPlayerClickCoin = false;
-        } else {
             this.changePlayerTurnToNextPlayer();
-            this.activateActionListenerToPlayer();
+            this.activateActionListenerToPlayer(numberValue);
+        } else {
+            this.canPlayerClickCoin = false;
         }
         if(data.firePlatformEvent === true) {
             if( this.canPlayerClickCoin === false) {
@@ -568,8 +580,6 @@ export default class LudoBoard extends LightningElement {
 
         //after deactivating , clear the recentlyactivatedList
         this.canPlayerClickCoin = false;
-        this.recentlyActivatedNumList = null; 
-        this.recentlyActivatedBlockList = null; 
     }
 
     dummyTest(event) {
@@ -581,46 +591,41 @@ export default class LudoBoard extends LightningElement {
     activateActionListenerToPlayer(numEle) {
         console.log('in activateActionListenerToPlayer method '+numEle);
         let posValueOfCoinsList;
-        let blockRefValMap;
+        let blockNameListValMap;
         let allBlockNameCmpRef;
         //contains Map grouped by blockName and list of elementNums in it
-        let len;
-        let isStartActivate = false;
-        let startActivateIndex = 0;
         posValueOfCoinsList = this.getCurrentPlayerCoinPositionList(numEle);
         if(!posValueOfCoinsList || posValueOfCoinsList.length === 0) {
             // this shouldnt happen because empty check is already made
             console.error('error no posValueOfCoinsList ');
-            this.recentlyActivatedNumList = null;
-            this.recentlyActivatedBlockList = null
-            return;
+            return false;
         }
-        blockRefValMap = this.getBlockReferenceValueMap(posValueOfCoinsList);
-        if(!blockRefList || blockRefList.length === 0) {
+        blockNameListValMap = this.getBlockReferenceValueMap(posValueOfCoinsList);
+        if(!blockNameListValMap) {
             console.error('error no blockRefListFound ');
-            this.recentlyActivatedNumList = null;
-            this.recentlyActivatedBlockList = null
-            return;
+            return false;
         }
         allBlockNameCmpRef = this.getAllPathBlocksNameAndCompRefMap();
-        len = blockRefList.length;
-        for(let i = 0; i < len; i++) {
-            console.log(' blockRefList[i] ' +JSON.stringify(blockRefList[i]));
-            if(posValueOfCoinsList[i] === -1) {
-                isStartActivate = true;
-                startActivateIndex = i;
-            } else {
-                blockRefList[i].attachClickEventListener([]);
+        allBlockNameCmpRef[HOME] = this.getCurrentPlayerStartBlockReference(this.playerType);
+        if(!allBlockNameCmpRef) {
+            console.error('error no allBlockNameCmpRef ');
+            return false;
+        }
+        console.log(' blockRefList[i] ' +JSON.stringify(allBlockNameCmpRef));
+        for(let key in blockNameListValMap) {
+            console.log('blockNameListValMap[key] : key : ' + key + ' : value : '+
+                        JSON.stringify(blockNameListValMap[key]));
+            if(!allBlockNameCmpRef[key]) {
+                console.error(' error in ref map ');
             }
+            let blockCmpRef = allBlockNameCmpRef[key];
+            blockCmpRef.attachClickEventListener(blockNameListValMap[key]);
         }
-        //because need to activate only once
-        if(isStartActivate) {
-            blockRefList[i].attachClickEventListener([]);
-        }
-        this.recentlyActivatedNumList = posValueOfCoinsList; 
-        this.recentlyActivatedBlockList = blockRefList; 
+        return true;
     }
 
+    //this return blockName and list of values including home reference
+    // this is each coin path location which is not in end
     getBlockReferenceValueMap(posValueOfCoinsList) {
         console.log(' in getBlockReferenceValueMap methd '+ posValueOfCoinsList);
         let blockAndPositionMap = {};
@@ -669,7 +674,7 @@ export default class LudoBoard extends LightningElement {
                                     return indCoin.isEnd === false && indCoin.isStart === true;
                             });
         if(startedAndNonEndedCoinsList && startedAndNonEndedCoinsList.length !== 0) {
-            posValueOfCoinList = getPropertyValuesFromObjectList(startedAndNonEndedCoinsList);
+            posValueOfCoinList = getPropertyValuesFromObjectList(startedAndNonEndedCoinsList, 'position');
         }
         if(numEle === 1) {
             let startArrayLength = !nonStartedCoinsList ? 0 : nonStartedCoinsList.length;
@@ -698,6 +703,22 @@ export default class LudoBoard extends LightningElement {
         
     }
 
+    // HANDLE COINCLICKED EVENT
+    // this is the event that gets triggered when player clicks on coin
+    handleCoinClickedEvent(data) {
+        console.log('in handleCoinClickedEvent method ' + JSON.stringify(data));
+        this.changePlayerTurnToNextPlayer();
+        if(!data) {
+            console.error(' empty error in handleCoinClickedEvent '+ data);
+            return;
+        }
+        if(data.firePlatformEvent) {
+            console.log('before calling publish event '+ this.playerBoardId);
+            this.publishPlatformEventHelper(data.data, PLATFORMEVENTTYPESMAP.RANDOMNUMBEREVENT, 
+                            this.playerType, this.playerBoardId, null);
+        }
+    }
+
     // HANDLE NOCHANGEEVENT EVENT
     // this is the no change event 
     // it means no move is done like all coins are not outside block or cant move 
@@ -709,7 +730,6 @@ export default class LudoBoard extends LightningElement {
             this.publishPlatformEventHelper('', PLATFORMEVENTTYPESMAP.NOCHANGEEVENT, 
                             this.playerType, this.playerBoardId, null);
         }
-        
     }
     
     // HANDLE GAMESTARTEVENT EVENT

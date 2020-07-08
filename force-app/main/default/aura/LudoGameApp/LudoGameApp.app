@@ -10,7 +10,9 @@
     ></c:ludoBoard> 
 
    
-    -->
-    <c:testBubbleEventGrantParent></c:testBubbleEventGrantParent>
+    
+    <c:testBubbleEventGrantParent></c:testBubbleEventGrantParent> -->
+
+    <c:testmoment></c:testmoment>
 
 </aura:application>	

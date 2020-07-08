@@ -65,6 +65,7 @@ const COMPONENTEVENTTYPESMAP = {
     'positionchangeevent': 'positionchangeevent',
     'RANDOMNUMBEREVENT': 'RANDOMNUMBEREVENT',
     'BOARDSETUPEVENT': 'BOARDSETUPEVENT',
+    'COINCLICKEDEVENT': 'COINCLICKEDEVENT', // 'positionFrom':, 'positionTo':,isHome:
     'PLAYERMOVECOINPOSITION': 'PLAYERMOVECOINPOSITION'
 };
 //different Perspective based on player1
@@ -120,12 +121,12 @@ const COINOBJECTLIST = [
 
 
 const HARDCODEDBLOCK1VALUESLIST = [ 
-                                    18, 12, 1,
-                                    17, 11, 2,
-                                    16, 10, 3,
-                                    15, 9, 4,
-                                    14, 8, 5,
-                                    13, 7, 6
+                                    1, 12, 18,
+                                    2, 11, 17,
+                                    3, 10, 16,
+                                    4, 9, 15,
+                                    5, 8, 14,
+                                    6, 7, 13
                                 ];
 const HARDCODEDBLOCK2VALUESLIST = [ 
                                     31, 32, 33, 34, 35, 36,

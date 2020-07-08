@@ -1,4 +1,7 @@
 import { LightningElement, api } from 'lwc';
+import {
+    fireComponentEvent, COMPONENTEVENTTYPESMAP 
+} from 'c/utils';
 
 export default class LudoPlayerStartBox extends LightningElement {
     @api boxColor;
@@ -7,6 +10,8 @@ export default class LudoPlayerStartBox extends LightningElement {
 
     MAXPOINTINBOX = 4;
     MINPOINTINBOX = 0;
+
+    canUserClick = false;
 
     @api
     countPointInBox;
@@ -100,6 +105,7 @@ export default class LudoPlayerStartBox extends LightningElement {
     @api
     attachClickEventListener(listOfObjectPosition) {
         console.log(' in attachClickEventListener ');
+        this.canUserClick = true;
         this.addEventListener('click', this.handleClick);
     }
 
@@ -112,12 +118,36 @@ export default class LudoPlayerStartBox extends LightningElement {
 
     handleClick() {
         console.log('in handle click ludoPlayerBox '+this.playerType );
-        //this.removeEventListener('click', this.handleClick);
+        if(!this.canUserClick) {
+            return;
+        }
+        let inputData = {data: {positionFrom: -1, positionTo: 0, isHome: false},
+            isPlatformEvent: true, eventType: COMPONENTEVENTTYPESMAP.COINCLICKEDEVENT};
+        fireComponentEvent(JSON.stringify(inputData), this, false, false);
+        this.removeEventListener('click', this.handleClick);
     }
 
     removeClickEventListener() {
         console.log(' in removeClickEventListener ');
+        this.canUserClick = false;
         this.removeEventListener('click', this.handleClick);
+    }
 
+    @api
+    decrementCountIndexValue() {
+        console.log(' in decrementCountIndexValue ' + this.countPointInBox);
+        this.countPointInBox--;
+        if(this.countPointInBox < this.MINPOINTINBOX) {
+            console.error(' countPointInBox cant be less than '+this.MINPOINTINBOX);
+        }
+    }
+
+    @api
+    incrementCountIndexValue() {
+        console.log(' in decrementCountIndexValue ' + this.countPointInBox);
+        this.countPointInBox++;
+        if(this.countPointInBox > this.MAXPOINTINBOX) {
+            console.error(' countPointInBox cant be more than '+this.MAXPOINTINBOX);
+        }
     }
 }

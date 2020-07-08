@@ -14,6 +14,7 @@ export default class LudoRollModal extends LightningElement {
     fireRandomNumberEvent() {
         console.log('in fireRandomNumberEvent');
         let randNum = Math.floor(Math.random() * 5) + 1;
+        randNum = 1; //hardcode
         let inputData = {data: randNum, isPlatformEvent: false, eventType: COMPONENTEVENTTYPESMAP.RANDOMNUMBEREVENT};
         fireComponentEvent(JSON.stringify(inputData), this, false, false);
     }
