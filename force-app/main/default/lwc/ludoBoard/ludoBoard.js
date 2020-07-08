@@ -712,6 +712,7 @@ export default class LudoBoard extends LightningElement {
             console.error(' empty error in handleCoinClickedEvent '+ data);
             return;
         }
+        // render move the element position
         if(data.firePlatformEvent) {
             console.log('before calling publish event '+ this.playerBoardId);
             this.publishPlatformEventHelper(data.data, PLATFORMEVENTTYPESMAP.RANDOMNUMBEREVENT, 
