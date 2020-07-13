@@ -721,7 +721,7 @@ export default class LudoBoard extends LightningElement {
         console.log(' in reRenderLocationIndBlock method');
         let blockReference = this.getBlockReferenceHelper(posData) ; 
         let coinsInNewPosition = getCoinsOnPositionList(this.coinObjectList, positionToInt);
-        blockReference.reRenderLocation(posData, blockArrayData);
+        blockReference.reRenderLocation(posData, coinsInNewPosition);
 
     }
 
