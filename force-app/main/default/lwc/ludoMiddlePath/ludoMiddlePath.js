@@ -64,10 +64,10 @@ export default class LudoMiddlePath extends LightningElement {
     }
 
     @api
-    reRenderLocation(locationIndex, blockArrayData) {
+    reRenderLocation(locationIndex, coinsList) {
         console.log('  reRenderLocation '+ locationIndex);
         console.log('  details '+ JSON.stringify(blockArrayData));
-        if(!blockArrayData || !blockArrayData.coinsList) {
+        if(!coinsList) {
             return;
         }
         let divToUpdate = this.template.querySelector(`[data-val="${locationIndex}"]`);

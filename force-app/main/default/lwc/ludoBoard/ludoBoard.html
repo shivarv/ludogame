@@ -17,7 +17,9 @@
     <!-- first line box ludo -->
     <div>
         <div style="background-color: red;" class="playerBox"> 
-            <c-ludo-player-start-box class='redcol' player-type='Player2' box-color='red' box-position='top-left' >
+            <c-ludo-player-start-box class='redcol' box-type='Player2' player-type={playerType} box-color='red' box-position='top-left' 
+            oncomponentevent={componentEventHandler}
+            >
             </c-ludo-player-start-box>
         </div>
 
@@ -28,7 +30,9 @@
         </div>
 
         <div style="background-color: green;" class="playerBox"> 
-            <c-ludo-player-start-box class='greencol' player-type='Player3' box-color='green' box-position='top-right'>
+            <c-ludo-player-start-box class='greencol' box-type='Player3' player-type={playerType} box-color='green' box-position='top-right'
+            oncomponentevent={componentEventHandler}
+            >
             </c-ludo-player-start-box>
         </div>
     </div>
@@ -50,7 +54,9 @@
     <!-- third line box ludo -->
     <div>
         <div style="background-color: blue;" class="playerBox"> 
-            <c-ludo-player-start-box class='bluecol' player-type='Player1' box-color='blue' box-position='bottom-left'>
+            <c-ludo-player-start-box class='bluecol' box-type='Player1' player-type={playerType} box-color='blue' box-position='bottom-left'
+            oncomponentevent={componentEventHandler}
+            >
             </c-ludo-player-start-box>
         </div>
         <div style="background-color: white;" class="pathBox"> 
@@ -58,7 +64,9 @@
             </c-ludo-vertical-path>
         </div>
         <div style="background-color: yellow;" class="playerBox"> 
-            <c-ludo-player-start-box class='yellowcol' player-type='Player4'  box-color='yellow' box-position='bottom-right'>
+            <c-ludo-player-start-box class='yellowcol' box-type='Player4' player-type={playerType}  box-color='yellow' box-position='bottom-right'
+            oncomponentevent={componentEventHandler}
+            >
             </c-ludo-player-start-box>
         </div>
     </div>

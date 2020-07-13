@@ -15,7 +15,8 @@ public class LudoEventTypes {
     /* RERUNEVENT, POSITIONCHANGEEVENT
     {
         'positionFrom':, // -1 is the startPoint Position
-		'positionTo':,
+        'positionTo':,
+        'coinId':, // the coin that is moved now
 		'isHome':  // means if the coin is safe
     }
 	*/

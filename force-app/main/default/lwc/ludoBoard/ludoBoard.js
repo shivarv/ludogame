@@ -4,7 +4,8 @@ import { HOME, MAXVALUEFORHOME,
         COLORLIST, PLAYERLIST, BLOCKLIST, COINOBJECTLIST, BLOCKBOXESSIZE, 
         PLATFORMEVENTTYPESMAP, COMPONENTEVENTTYPESMAP, BLOCKMAP, PLAYERNAMEMAP,
         PLAYERINDEXMAP, 
-        getBlockNumberName, getNextPlayerIndex, getNextPlayerName, getPropertyValuesFromObjectList 
+        getBlockNumberName, getNextPlayerIndex, getNextPlayerName, getPropertyValuesFromObjectList,
+        getCoinRefFromId, generateCoinUniqueId, getCoinsOnPositionList 
 } from 'c/utils';
 
 import publishPlatformEventMethod from '@salesforce/apex/LudoUtility.publishPlatformEvent';
@@ -297,6 +298,7 @@ export default class LudoBoard extends LightningElement {
 
     }
 
+    
     coinMove(name, position, color) {
         
     }
@@ -306,61 +308,26 @@ export default class LudoBoard extends LightningElement {
        
     }
 
-    componentEventHandler(event) {
-        console.log('component event handler method');
-        console.log(event.detail);
-        let data = JSON.parse(event.detail);
-        if(!data) {
-            return;
-        }
-        //need to pass data , instead of data.data becz data.data can be null
+    // ALL HANDLERS
+    positionChangeHandler(data) {
+        console.log('in position change handler '+ JSON.stringify(data));
         try {
-            switch(data.eventType) {
-                case PLATFORMEVENTTYPESMAP.RERUNEVENT:
-                    console.log('Game RERUNEVENT event type '+data.data);
-                    break;
-                    
-                case  PLATFORMEVENTTYPESMAP.COINCLICKEDEVENT:
-                    console.log('Game COINCLICKEDEVENT event type '+data.data);
-                    this.handleCoinClickedEvent(data);
-                    break;
-                
-                case PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT:
-                    //this.positionChangeHandler(data);
-                    //this.handlePositionChangeEvent(data);
-                    this.handleNoChangeEvent(data);
-                    break;
-
-                case PLATFORMEVENTTYPESMAP.NOCHANGEEVENT:
-                    console.log('Game NOCHANGEEVENT event type '+data.data);
-                    this.handleNoChangeEvent(data);
-                    break;        
-                case PLATFORMEVENTTYPESMAP.GAMESTARTEVENT:
-                    console.log('Game GAMESTARTEVENT event type '+data.data);
-                    this.handleGameStartEvent(data);
-                    break;
-                case PLATFORMEVENTTYPESMAP.PLAYERJOINEVENT:
-                    console.log('Game PLAYEJOINEVENT event type '+data.data);
-                    this.handlePlayerJoinEvent(data);
-                    break;
-                case PLATFORMEVENTTYPESMAP.GAMEOVEREVENT:
-                    console.log('Game GAMEOVEREVENT event type '+data.data);
-                    break;
-                case COMPONENTEVENTTYPESMAP.RANDOMNUMBEREVENT:
-                    console.log('Comp RANDOMNUMBEREVENT event type '+data.data);
-                    //this.handleNoChangeEvent(data);
-                    this.handleRandomNumberEvent(data);
-                   // this.diceRolledDelegate(data.data);
-                    break;
-                default:
-                    console.log('default '+data.eventType + (data.eventType === PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT));
-                    break;
-            }
+            console.log('Game POSITIONCHANGEEVENT event type '+ data.data);
+            //block reference points to the block component onwhich update is necessary now
+            //let blockReference = this.getBlockReferenceHelper(data.data) ;  
+            //console.log('block reference '+ blockReference.blockType);
+            let blockArrayData =  this.getBlockArrayData(data.data);
+            //dummy coin
+            blockArrayData.coinsList = [0, 0, 1];
+            let blockArrayData2 = this.getBlockArrayData(parseInt(data.data) + parseInt(this.diceMoveVal) );
+            blockArrayData2.coinsList = [0, 0, 1];
+            this.calcNewCoinListData(data.data, parseInt(data.data) + parseInt(this.diceMoveVal), this.playerIndex);
+            this.moveCoinsOnBoardUi(data.data, blockArrayData);
+            this.moveCoinsOnBoardUi(parseInt(data.data) + parseInt(this.diceMoveVal), blockArrayData);
+            //console.log(JSON.stringify(blockReference));
+        } catch(e) {
+            console.log( ' exception '+ e);
         }
-        catch(e) {
-            console.log('exception in handler '+ e);
-        }
-
     }
 
     removeCoinIfPresent(position, movedPlayerIndex) {
@@ -395,8 +362,63 @@ export default class LudoBoard extends LightningElement {
         return this.boardPathBoxList[clickedIndex - 1];
     }
 
-    getCurrentPlayerStartBlockReference(playerType) {
-        console.log(' in getCurrentPlayerStartBlockReference method');
+    componentEventHandler(event) {
+        console.log('component event handler method');
+        console.log(event.detail);
+        let data = JSON.parse(event.detail);
+        if(!data) {
+            return;
+        }
+        //need to pass data , instead of data.data becz data.data can be null
+        try {
+            switch(data.eventType) {
+                case PLATFORMEVENTTYPESMAP.RERUNEVENT:
+                    console.log('Game RERUNEVENT event type '+data.data);
+                    break;
+                    
+                case  COMPONENTEVENTTYPESMAP.COINCLICKEDEVENT:
+                    console.log('Game COINCLICKEDEVENT event type '+data.data);
+                    this.handleCoinClickedEvent(data);
+                    break;
+                
+                case PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT:
+                    this.handlePositionChangeEvent(data);
+                    break;
+
+                case PLATFORMEVENTTYPESMAP.NOCHANGEEVENT:
+                    console.log('Game NOCHANGEEVENT event type '+data.data);
+                    this.handleNoChangeEvent(data);
+                    break;        
+                case PLATFORMEVENTTYPESMAP.GAMESTARTEVENT:
+                    console.log('Game GAMESTARTEVENT event type '+data.data);
+                    this.handleGameStartEvent(data);
+                    break;
+                case PLATFORMEVENTTYPESMAP.PLAYERJOINEVENT:
+                    console.log('Game PLAYEJOINEVENT event type '+data.data);
+                    this.handlePlayerJoinEvent(data);
+                    break;
+                case PLATFORMEVENTTYPESMAP.GAMEOVEREVENT:
+                    console.log('Game GAMEOVEREVENT event type '+data.data);
+                    break;
+                case COMPONENTEVENTTYPESMAP.RANDOMNUMBEREVENT:
+                    console.log('Comp RANDOMNUMBEREVENT event type '+data.data);
+                    //this.handleNoChangeEvent(data);
+                    this.handleRandomNumberEvent(data);
+                   // this.diceRolledDelegate(data.data);
+                    break;
+                default:
+                    console.log('default '+data.eventType + (data.eventType === PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT));
+                    break;
+            }
+        }
+        catch(e) {
+            console.log('exception in handler '+ e);
+        }
+
+    }
+
+    getPlayerStartBlockReference(playerType) {
+        console.log(' in getPlayerStartBlockReference method');
         let allStartBoxReference = this.template.querySelectorAll('c-ludo-player-start-box');
         if(!allStartBoxReference || allStartBoxReference.length !== 4) {
             console.error(' allStartBoxReference is empty ');
@@ -405,16 +427,16 @@ export default class LudoBoard extends LightningElement {
         let startBoxReference = null;
         switch(playerType) {
             case PLAYERNAMEMAP.Player1:
-                startBoxReference =  allStartBoxReference[0];
+                startBoxReference =  allStartBoxReference[2]; // blue
                 break;
             case PLAYERNAMEMAP.Player2:
-                startBoxReference =  allStartBoxReference[1];
+                startBoxReference =  allStartBoxReference[3]; // yellow
                 break;
             case PLAYERNAMEMAP.Player3:
-                startBoxReference =  allStartBoxReference[2];
+                startBoxReference =  allStartBoxReference[1]; //green
                 break;
             case PLAYERNAMEMAP.Player4:
-                startBoxReference =  allStartBoxReference[3];
+                startBoxReference =  allStartBoxReference[0]; //red
                 break;
         }
         return startBoxReference;
@@ -441,16 +463,16 @@ export default class LudoBoard extends LightningElement {
         return pathCmpRefMap;
     }
 
-    //on passing number from 1 to 72 , it returns the block to update
+    //on passing number from 1 to 72 , it returns the block to update , the path block
     getBlockReferenceHelper(clickedIndex) {
         console.log(' in getBlockReferenceHelper ');
         let result = null;  
-        let blockVal = getBlockNumberName(clickedIndex);
+        let pathBlockName = getBlockNumberName(clickedIndex);
         let cmpNameRefMap = this.getAllPathBlocksNameAndCompRefMap();
-        if(!cmpNameRefMap || cmpNameRefMap[blockVal]) {
+        if(!cmpNameRefMap || cmpNameRefMap[pathBlockName]) {
             return result;
         }
-        result = cmpNameRefMap[blockVal];
+        result = cmpNameRefMap[pathBlockName];
         console.log(' all block values '+ cmpNameRefMap[BLOCKMAP.Block1].blockType + ' ' + 
             cmpNameRefMap[BLOCKMAP.Block2].blockType + '    '+ cmpNameRefMap[BLOCKMAP.Block3].blockType
             + '  '+ cmpNameRefMap[BLOCKMAP.Block4].blockType);
@@ -530,51 +552,8 @@ export default class LudoBoard extends LightningElement {
         return currentPlayerCoinsList;
     }
 
-    // ALL HANDLERS
-    positionChangeHandler(data) {
-        console.log('in position change handler '+ JSON.stringify(data));
-        try {
-            console.log('Game POSITIONCHANGEEVENT event type '+ data.data);
-            //block reference points to the block component onwhich update is necessary now
-            //let blockReference = this.getBlockReferenceHelper(data.data) ;  
-            //console.log('block reference '+ blockReference.blockType);
-            let blockArrayData =  this.getBlockArrayData(data.data);
-            //dummy coin
-            blockArrayData.coinsList = [0, 0, 1];
-            let blockArrayData2 = this.getBlockArrayData(parseInt(data.data) + parseInt(this.diceMoveVal) );
-            blockArrayData2.coinsList = [0, 0, 1];
-            this.calcNewCoinListData(data.data, parseInt(data.data) + parseInt(this.diceMoveVal), this.playerIndex);
-            this.moveCoinsOnBoardUi(data.data, blockArrayData);
-            this.moveCoinsOnBoardUi(parseInt(data.data) + parseInt(this.diceMoveVal), blockArrayData);
-            //console.log(JSON.stringify(blockReference));
-        } catch(e) {
-            console.log( ' exception '+ e);
-        }
-    }
 
-    // HANDLE RANDOMNUMBEREVENT or for diceClick event
-    handleRandomNumberEvent(data) {
-        console.log(' in handleRandomNumberEvent method');
-        this.canPlayerClickCoin = true;
-        if(!data || !data.data) {
-            console.error(' no data value or data.data value');
-        }
-        let numberValue = parseInt(data.data);
-        this.diceMoveVal = numberValue;
-        if(this.isMovePresentForPlayer(numberValue)) {
-            this.changePlayerTurnToNextPlayer();
-            this.activateActionListenerToPlayer(numberValue);
-        } else {
-            this.canPlayerClickCoin = false;
-        }
-        if(data.firePlatformEvent === true) {
-            if( this.canPlayerClickCoin === false) {
-                this.publishPlatformEventHelper('', PLATFORMEVENTTYPESMAP.NOCHANGEEVENT, 
-                    this.playerType, this.playerBoardId, null);
-            }
-        }        
-    }
-
+   
     deactivateActionListenerToPlayer() {
         console.log('in deactivateActionListenerToPlayer method');
 
@@ -606,7 +585,7 @@ export default class LudoBoard extends LightningElement {
             return false;
         }
         allBlockNameCmpRef = this.getAllPathBlocksNameAndCompRefMap();
-        allBlockNameCmpRef[HOME] = this.getCurrentPlayerStartBlockReference(this.playerType);
+        allBlockNameCmpRef[HOME] = this.getPlayerStartBlockReference(this.playerType);
         if(!allBlockNameCmpRef) {
             console.error('error no allBlockNameCmpRef ');
             return false;
@@ -694,28 +673,120 @@ export default class LudoBoard extends LightningElement {
     // HANDLE POSITION EVENT
     //position change event is to move from one place to another
     handlePositionChangeEvent(data) {
-        console.log('in handlePositionChangeEvent method');
+        console.log('in handlePositionChangeEvent method '+ JSON.stringify(data));
+        let dataObj = data.data;
+        this.calculateNewCoinDataSet(dataObj.playerType, dataObj.positionFrom,
+                                        dataObj.positionTo, dataObj.coinId);
+        this.changePlayerTurnToNextPlayer();
+    }
+
+    //calculate the newcoinDataSet like new coin position and coin cuts
+    calculateNewCoinDataSet(playerTypeMoved, positionFrom, positionTo, coinId) {
+        console.log('in calculateNewCoinDataSet method, playerTypeMoved'+ playerTypeMoved + 
+            ' positionFrom '+  positionFrom + ' positionTo '+ positionTo + ' coinId ' + coinId
+        );
+        let positionFromInt = parseInt(positionFrom);
+        let positionToInt = parseInt(positionTo);
+        let isStartMove = false;
+        let coinRef =  getCoinRefFromId(this.coinObjectList, coinId);
+        let playerBoxCmpRef;
+        let coinsInNewPosition = getCoinsOnPositionList(this.coinObjectList, positionToInt);
+        if(positionFromInt === -1) {
+            //need to call the decrement
+            coinRef.isStart = true;
+            isStartMove = true; // to say its start block move
+            playerBoxCmpRef = this.getPlayerStartBlockReference(playerTypeMoved);
+            playerBoxCmpRef.decrementCountIndexValue();
+        }
+        for(let i = 0; i < coinsInNewPosition.length; i++) {
+            if(coinsInNewPosition.playerType !== playerTypeMoved) {
+                //need to check if block is safe
+                coinsInNewPosition.position = -1;
+                coinsInNewPosition.isStart = true;
+                //need to call the increment
+                playerBoxCmpRef = this.getPlayerStartBlockReference(coinsInNewPosition.playerType);
+                playerBoxCmpRef.incrementCountIndexValue();
+            }
+        }
+        coinRef.position = positionToInt;
+        if(!isStartMove) {
+            this.reRenderLocationIndBlock(positionFromInt);
+        }
+        this.reRenderLocationIndBlock(positionToInt);
+    }
+
+    //each individualBlocks given here must be reRendered
+    //posList is the list of blockItemLocationValues
+    reRenderLocationIndBlock(posData) {
+        console.log(' in reRenderLocationIndBlock method');
+        let blockReference = this.getBlockReferenceHelper(posData) ; 
+        let coinsInNewPosition = getCoinsOnPositionList(this.coinObjectList, positionToInt);
+        blockReference.reRenderLocation(posData, blockArrayData);
+
     }
 
     // HANDLE RERUNEVENT EVENT
     // this is rerunevent which occurs when 1 or 6 is created
     handleReRunEvent() {
-        
+        console.log(' in handleReRunEvent method');
     }
+
+
+    // HANDLE RANDOMNUMBEREVENT or for diceRolled event
+    handleRandomNumberEvent(data) {
+        console.log(' in handleRandomNumberEvent method');
+        this.canPlayerClickCoin = true;
+        if(!data || !data.data) {
+            console.error(' no data value or data.data value');
+        }
+        let numberValue = parseInt(data.data);
+        this.diceMoveVal = numberValue;
+        //change player turn
+        if(this.isMovePresentForPlayer(numberValue)) {
+            this.activateActionListenerToPlayer(numberValue);
+        } else {
+            this.canPlayerClickCoin = false;
+        }
+       
+        if(data.firePlatformEvent === true) {
+            if( this.canPlayerClickCoin === false) {
+                this.changePlayerTurnToNextPlayer();
+                this.publishPlatformEventHelper('', PLATFORMEVENTTYPESMAP.NOCHANGEEVENT, 
+                    this.playerType, this.playerBoardId, null);
+            }
+        }     
+    }
+
 
     // HANDLE COINCLICKED EVENT
     // this is the event that gets triggered when player clicks on coin
     handleCoinClickedEvent(data) {
         console.log('in handleCoinClickedEvent method ' + JSON.stringify(data));
         this.changePlayerTurnToNextPlayer();
-        if(!data) {
-            console.error(' empty error in handleCoinClickedEvent '+ data);
-            return;
+        let dataObj;
+        let positionChangeEventDataObj = {};
+        let currentPlayerType = this.playerType;
+        if(!data || !data.data) {
+            console.error(' no data value or data.data value');
+        }
+        dataObj = JSON.parse(data.data);
+        let positionValue = parseInt(dataObj.positionFrom);
+        let currentPlayerCoinsList = this.coinObjectList.find(function(indCoin) {
+            return (indCoin.playerType === currentPlayerType && indCoin.position === positionValue);
+        });
+        if(!positionValue) {
+            console.error('positionValue is empty , currentPlayerType : ' 
+                            + currentPlayerType + ' position ' + positionValue);
+            console.error(' current coinObjectList : '+ this.coinObjectList);
         }
         // render move the element position
         if(data.firePlatformEvent) {
+            positionChangeEventDataObj['positionFrom'] = dataObj['positionFrom'];
+            positionChangeEventDataObj['positionTo'] = dataObj['positionTo'];
+            positionChangeEventDataObj['coinId'] = dataObj['coinId'];
+            positionChangeEventDataObj['isHome'] = dataObj['isHome'];
             console.log('before calling publish event '+ this.playerBoardId);
-            this.publishPlatformEventHelper(data.data, PLATFORMEVENTTYPESMAP.RANDOMNUMBEREVENT, 
+            this.publishPlatformEventHelper(positionChangeEventDataObj, PLATFORMEVENTTYPESMAP.POSITIONCHANGEEVENT, 
                             this.playerType, this.playerBoardId, null);
         }
     }
@@ -803,7 +874,9 @@ export default class LudoBoard extends LightningElement {
         console.log(' in publishPlatformEventHelper ' + playerBoardId);
         let mainThis = this;
         console.log('before calling publish eevent '+ this.playerBoardId);
-        publishPlatformEventMethod({'data': '', 'eventType': eventType,
+        //data must be in string
+        let jsonData = !data ? '': data;
+        publishPlatformEventMethod({'data': JSON.stringify(jsonData), 'eventType': eventType,
                             'playerType': playerType, 'ludoBoardId': playerBoardId})
                             .then(result => {
             console.log('success publishPlatformEventHelper ');

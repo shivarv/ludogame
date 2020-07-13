@@ -1,11 +1,12 @@
 import { LightningElement, api } from 'lwc';
 import {
-    fireComponentEvent, COMPONENTEVENTTYPESMAP 
+    fireComponentEvent, generateCoinUniqueId, COMPONENTEVENTTYPESMAP 
 } from 'c/utils';
 
 export default class LudoPlayerStartBox extends LightningElement {
     @api boxColor;
     @api boxPosition;
+    @api boxType; // 'is box player1 or player2 or player3 or player4
     @api playerType;
 
     MAXPOINTINBOX = 4;
@@ -121,8 +122,12 @@ export default class LudoPlayerStartBox extends LightningElement {
         if(!this.canUserClick) {
             return;
         }
-        let inputData = {data: {positionFrom: -1, positionTo: 0, isHome: false},
-            isPlatformEvent: true, eventType: COMPONENTEVENTTYPESMAP.COINCLICKEDEVENT};
+        this.decrementCountIndexValue();
+        let coinIdInput = generateCoinUniqueId(this.countPointInBox, this.playerType);
+        let dataObject = {positionFrom: -1, positionTo: 1,
+                            coinId: coinIdInput, isHome: false};
+        let inputData = {data: JSON.stringify(dataObject),
+            firePlatformEvent: true, eventType: COMPONENTEVENTTYPESMAP.COINCLICKEDEVENT};
         fireComponentEvent(JSON.stringify(inputData), this, false, false);
         this.removeEventListener('click', this.handleClick);
     }

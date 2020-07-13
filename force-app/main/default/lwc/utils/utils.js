@@ -78,10 +78,10 @@ const GAMEPERSPECTIVEMAP = {
 
 //different Perspective based on player1
 const PLAYERSTARTPOSITIONMAP = {
-    'Player1' : 14, // no 14 is for blue
-    'Player2' : 32, // no 32 is for red
-    'Player3' : 50, // no 50 is for green
-    'Player3' : 71 // no 71 is for yellow
+    'Player1' : 1, // no 14 is for blue
+    'Player2' : 31, // no 32 is for red
+    'Player3' : 49, // no 50 is for green
+    'Player3' : 67 // no 71 is for yellow
 }
 
 const BLOCKMAP = {
@@ -97,36 +97,35 @@ const BLOCKLIST = ['Block1', 'Block2', 'Block3', 'Block4'];
 const PLAYERLIST = ['Player1', 'Player2', 'Player3', 'Player4'];
 
 const COINOBJECTLIST = [
-    
-        {name: 'coin1', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player1, uniqueId: ('coin1' + PLAYERNAMEMAP.Player1)},
-        {name: 'coin2', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player1, uniqueId: ('coin2' + PLAYERNAMEMAP.Player1)},
-        {name: 'coin3', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player1, uniqueId: ('coin3' + PLAYERNAMEMAP.Player1)},
-        {name: 'coin4', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player1, uniqueId: ('coin4' + PLAYERNAMEMAP.Player1)},
+    {name: 'coin1', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player1, uniqueId: ('coin1' + PLAYERNAMEMAP.Player1)},
+    {name: 'coin2', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player1, uniqueId: ('coin2' + PLAYERNAMEMAP.Player1)},
+    {name: 'coin3', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player1, uniqueId: ('coin3' + PLAYERNAMEMAP.Player1)},
+    {name: 'coin4', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player1, uniqueId: ('coin4' + PLAYERNAMEMAP.Player1)},
 
-        {name: 'coin1', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player2, uniqueId: ('coin1' + PLAYERNAMEMAP.Player2)},
-        {name: 'coin2', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player2, uniqueId: ('coin2' + PLAYERNAMEMAP.Player2)},
-        {name: 'coin3', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player2, uniqueId: ('coin3' + PLAYERNAMEMAP.Player2)},
-        {name: 'coin4', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player2, uniqueId: ('coin4' + PLAYERNAMEMAP.Player2)},
+    {name: 'coin1', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player2, uniqueId: ('coin1' + PLAYERNAMEMAP.Player2)},
+    {name: 'coin2', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player2, uniqueId: ('coin2' + PLAYERNAMEMAP.Player2)},
+    {name: 'coin3', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player2, uniqueId: ('coin3' + PLAYERNAMEMAP.Player2)},
+    {name: 'coin4', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player2, uniqueId: ('coin4' + PLAYERNAMEMAP.Player2)},
 
-        {name: 'coin1', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player3, uniqueId: ('coin1' + PLAYERNAMEMAP.Player3)},
-        {name: 'coin2', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player3, uniqueId: ('coin2' + PLAYERNAMEMAP.Player3)},
-        {name: 'coin3', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player3, uniqueId: ('coin3' + PLAYERNAMEMAP.Player3)},
-        {name: 'coin4', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player3, uniqueId: ('coin4' + PLAYERNAMEMAP.Player3)},
+    {name: 'coin1', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player3, uniqueId: ('coin1' + PLAYERNAMEMAP.Player3)},
+    {name: 'coin2', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player3, uniqueId: ('coin2' + PLAYERNAMEMAP.Player3)},
+    {name: 'coin3', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player3, uniqueId: ('coin3' + PLAYERNAMEMAP.Player3)},
+    {name: 'coin4', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player3, uniqueId: ('coin4' + PLAYERNAMEMAP.Player3)},
 
-        {name: 'coin1', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player4, uniqueId: ('coin1' + PLAYERNAMEMAP.Player4)},
-        {name: 'coin2', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player4, uniqueId: ('coin2' + PLAYERNAMEMAP.Player4)},
-        {name: 'coin3', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player4, uniqueId: ('coin3' + PLAYERNAMEMAP.Player4)},
-        {name: 'coin4', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player4, uniqueId: ('coin4' + PLAYERNAMEMAP.Player4)}
+    {name: 'coin1', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player4, uniqueId: ('coin1' + PLAYERNAMEMAP.Player4)},
+    {name: 'coin2', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player4, uniqueId: ('coin2' + PLAYERNAMEMAP.Player4)},
+    {name: 'coin3', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player4, uniqueId: ('coin3' + PLAYERNAMEMAP.Player4)},
+    {name: 'coin4', position: -1, isEnd: false, isStart: false, playerType: PLAYERNAMEMAP.Player4, uniqueId: ('coin4' + PLAYERNAMEMAP.Player4)}
 ];
 
 
 const HARDCODEDBLOCK1VALUESLIST = [ 
-                                    1, 12, 18,
-                                    2, 11, 17,
-                                    3, 10, 16,
-                                    4, 9, 15,
-                                    5, 8, 14,
-                                    6, 7, 13
+                                    6, 12, 18,
+                                    5, 11, 17,
+                                    4, 10, 16,
+                                    3, 9, 15,
+                                    2, 8, 14,
+                                    1, 7, 13
                                 ];
 const HARDCODEDBLOCK2VALUESLIST = [ 
                                     31, 32, 33, 34, 35, 36,
@@ -150,8 +149,9 @@ const HARDCODEDBLOCK4VALUESLIST = [
 /* functions 
 */
 
-
 const getNextPlayerName = function(playerType) {
+    console.log(' in getNextPlayerName  method ');
+
     let  index = getNextPlayerIndex(playerType);
     if(index == null || index == -1) {
         return '';
@@ -178,6 +178,8 @@ const getNextPlayerIndex = function(playerType) {
 }
 
 const  setDivCss = function(divEle, playerType, zIndex, totalSize) {
+    console.log(' in setDivCss  method ');
+
     if(!divEle || (!playerType && playerType != 0)  || !PLAYERLIST || !PLAYERLIST[playerType] || !PLAYERCOLORMAP
         || !PLAYERCOLORMAP[PLAYERLIST[playerType]]
         ) {
@@ -196,6 +198,7 @@ const  setDivCss = function(divEle, playerType, zIndex, totalSize) {
 }
 
 const fetchHardCodedBlockValues = function(blockName) {
+    console.log(' in fetchHardCodedBlockValues  method ');
     let data = null
     switch(blockName) {
         case BLOCKMAP.Block1: 
@@ -218,6 +221,7 @@ const fetchHardCodedBlockValues = function(blockName) {
 
 
  const getBlockNumberName = function(val) {
+    console.log(' in getBlockNumberName  method ');
     if(val > 0 && val <= 18) {
          return BLOCKMAP.Block1;
     } else if(val > 18 && val <= 36) {
@@ -233,6 +237,7 @@ const fetchHardCodedBlockValues = function(blockName) {
  // this method is a helper method to get list of values 
  // from the objList based on the propertyValueProvided
  const getPropertyValuesFromObjectList = function(objList, propertyValue) {
+    console.log(' in getPropertyValuesFromObjectList  method ');
     let valuesList = [];
     let len;
     if(!objList || objList.length === 0 || !propertyValue) {
@@ -247,6 +252,38 @@ const fetchHardCodedBlockValues = function(blockName) {
     }
     return valuesList;
  }
+
+ const generateCoinUniqueId = function(coinIndex, playerType) {
+    console.log('in generateCoinUniqueId method coinIndex '+coinIndex + ' playerType '+playerType);
+    let coinUniqueId = ('coin' + (coinIndex + 1) + '' + playerType);
+    console.log(' unique id is '+coinUniqueId);
+    return coinUniqueId;
+ }
+
+ //coinIndex can be 0 or 1 or 2 or 3
+ const getCoinRefFromId = function(playersCoinsList, coinUniqueId) {
+    console.log('in getCoinRefFromId method coinUniqueId '+coinUniqueId);
+    let coinItem = playersCoinsList.find(function(indCoin) {
+        return (indCoin.uniqueId === coinUniqueId);
+    });
+    console.log(JSON.stringify(coinItem));
+    return coinItem;
+ }
+
+ //coinIndex can be 0 or 1 or 2 or 3
+ const getCoinsOnPositionList = function(playersCoinsList, position) {
+    console.log('in getCoinsOnPositionList method coinUniqueId '+coinUniqueId);
+    let coinsList = [];
+    if(!position || position === -1) {
+        return coinsList;
+    }
+    coinsList = playersCoinsList.filter(function(indCoin) {
+        return (indCoin.position === position);
+    });
+    console.log(JSON.stringify(coinsList));
+    return coinsList;
+ }
+
 
 //params must be object
 
@@ -272,6 +309,7 @@ export {
     BLOCKBOXESSIZE, PLATFORMEVENTSUBSCRIPTIONURL, CURRENTORGNAMESPACE, MAXVALUEFORHOME, HOME, 
     fireComponentEvent, fetchHardCodedBlockValues, setDivCss, getBlockNumberName, 
     getNextPlayerIndex, getNextPlayerName, getPropertyValuesFromObjectList,
+    generateCoinUniqueId, getCoinRefFromId, getCoinsOnPositionList,
     HARDCODEDBLOCK1VALUESLIST, HARDCODEDBLOCK2VALUESLIST,
     HARDCODEDBLOCK3VALUESLIST, HARDCODEDBLOCK4VALUESLIST,
     COLORLIST, COINOBJECTLIST, PLAYERLIST, 
